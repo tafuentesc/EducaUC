@@ -1,4 +1,10 @@
 EducaUC::Application.routes.draw do
+
+  match '/login' =>  "login#index", :as => :login
+  match '/logger' => "login#login"
+  match '/logout' => "login#logout"
+  
+  resources :users
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  email: MyString
+  name: MyString
+  lastname: MyString
+  deleted: 1
+  admin: false
+  hash_password: MyString
+  token: MyString
+  salt: MyString
+  profile: MyString
+
+two:
+  email: MyString
+  name: MyString
+  lastname: MyString
+  deleted: 1
+  admin: false
+  hash_password: MyString
+  token: MyString
+  salt: MyString
+  profile: MyString
