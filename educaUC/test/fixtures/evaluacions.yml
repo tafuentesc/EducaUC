@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  nombre_sala: MyString
+  fecha_de_evaluacion: 2013-05-21 23:25:53
+  encargado: 
+  horario_inicial: 2013-05-21 23:25:53
+  horario_final: 2013-05-21 23:25:53
+
+two:
+  nombre_sala: MyString
+  fecha_de_evaluacion: 2013-05-21 23:25:53
+  encargado: 
+  horario_inicial: 2013-05-21 23:25:53
+  horario_final: 2013-05-21 23:25:53

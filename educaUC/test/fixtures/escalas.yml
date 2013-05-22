@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  escala_template_id: 1
+  evaluacion_id: 1
+  eval: 1
+
+two:
+  escala_template_id: 1
+  evaluacion_id: 1
+  eval: 1

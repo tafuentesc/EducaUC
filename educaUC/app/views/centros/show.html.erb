@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Nombre:</b>
+  <%= @centro.nombre %>
+</p>
+
+<p>
+  <b>Direccion:</b>
+  <%= @centro.direccion %>
+</p>
+
+<p>
+  <b>Directora:</b>
+  <%= @centro.directora %>
+</p>
+
+<p>
+  <b>Sostenedor:</b>
+  <%= @centro.sostenedor %>
+</p>
+
+<p>
+  <b>Telefono:</b>
+  <%= @centro.telefono %>
+</p>
+
+
+<%= link_to 'Edit', edit_centro_path(@centro) %> |
+<%= link_to 'Back', centros_path %>

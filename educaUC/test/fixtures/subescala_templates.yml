@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  nombre: MyString
+  numero: 1
+  escala_template_id: MyString
+
+two:
+  nombre: MyString
+  numero: 1
+  escala_template_id: MyString

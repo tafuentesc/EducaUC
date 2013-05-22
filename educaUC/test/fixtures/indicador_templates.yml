@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  descripcion: MyString
+  item_template_id: 1
+  columna: 1
+  fila: 1
+  has_na: false
+
+two:
+  descripcion: MyString
+  item_template_id: 1
+  columna: 1
+  fila: 1
+  has_na: false

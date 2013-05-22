@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  indicador_template_id: 
+  item_id: 1
+  eval: false
+
+two:
+  indicador_template_id: 
+  item_id: 1
+  eval: false

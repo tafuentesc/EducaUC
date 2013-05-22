@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Nombre sala:</b>
+  <%= @evaluacion.nombre_sala %>
+</p>
+
+<p>
+  <b>Fecha de evaluacion:</b>
+  <%= @evaluacion.fecha_de_evaluacion %>
+</p>
+
+<p>
+  <b>Encargado:</b>
+  <%= @evaluacion.encargado %>
+</p>
+
+<p>
+  <b>Horario inicial:</b>
+  <%= @evaluacion.horario_inicial %>
+</p>
+
+<p>
+  <b>Horario final:</b>
+  <%= @evaluacion.horario_final %>
+</p>
+
+
+<%= link_to 'Edit', edit_evaluacion_path(@evaluacion) %> |
+<%= link_to 'Back', evaluacions_path %>

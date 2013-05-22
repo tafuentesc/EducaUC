@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  nombre: MyString
+  descrpcion: MyString
+  subescala_template_id: 1
+  has_na: false
+  numero: 1
+
+two:
+  nombre: MyString
+  descrpcion: MyString
+  subescala_template_id: 1
+  has_na: false
+  numero: 1
