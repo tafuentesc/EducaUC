@@ -1,5 +1,7 @@
 EducaUC::Application.routes.draw do
 
+  root :to => "login#index"
+
   match '/login' =>  "login#index", :as => :login
   match '/logger' => "login#login"
   match '/logout' => "login#logout"
