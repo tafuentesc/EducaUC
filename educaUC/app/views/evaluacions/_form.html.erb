@@ -31,6 +31,12 @@
     <%= f.label :horario_final %><br />
     <%= f.time_select :horario_final %>
   </div>
+  <div class="field">
+    <%= label_tag "Seleccione escala de evaluación"  %>
+    <% @escalas = EscalaTemplate.all %>
+    <%= select_tag "escala", options_from_collection_for_select(@escalas, "id", "nombre") %>
+  </div>
+  <!-- Por ahora cargaremos Iters por defecto -->
   <div class="actions">
     <%= f.submit %>
   </div>
