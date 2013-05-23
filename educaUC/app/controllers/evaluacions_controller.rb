@@ -2,7 +2,11 @@ class EvaluacionsController < ApplicationController
   # GET /evaluacions
   # GET /evaluacions.json
   def index
-    @evaluacions = Evaluacion.all
+    if(@logged_user.admin)
+      @evaluacions = Evaluacion.all
+    else
+      @evaluacions = Evaluacion.where("encargado = ?", @logged_user.id)
+    end
 
     respond_to do |format|
       format.html # index.html.erb
