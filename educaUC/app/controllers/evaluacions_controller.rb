@@ -30,6 +30,16 @@ class EvaluacionsController < ApplicationController
   def new
     @evaluacion = Evaluacion.new
 
+		escala_template = EscalaTemplate.find(1)
+
+		@escala = @evaluacion.build_escala(:escala_template_id => escala_template.id)
+		
+		@sub_escala = []
+		
+		escala_template.subescala_template.each do |subescala_template|
+			@sub_escala = @escala.subescala.build(:subescala_template_id => subescala_template.id)
+		end
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @evaluacion }

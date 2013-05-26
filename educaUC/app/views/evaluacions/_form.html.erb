@@ -36,7 +36,24 @@
     <% @escalas = EscalaTemplate.all %>
     <%= select_tag "escala", options_from_collection_for_select(@escalas, "id", "nombre") %>
   </div>
-  <!-- Por ahora cargaremos Iters por defecto -->
+  
+  <!-- Por ahora cargaremos Iters por defecto --> 
+  <%= f.fields_for :escala do |escala| %>
+  	<div class = escala	>
+			<h1>
+				<%=  "#{@escala.escala_template.nombre}"%>
+			</h1>
+			
+			<%= escala.fields_for :subescala do |sub_escala| %>
+				<div class = "sub_escala">
+				<h2><%="#{@sub_escala.subescala_template.nombre}"%></h2>
+				<%= sub_escala.label :name %>
+				<%= sub_escala.text_field :subescala_template_id %>
+				<div>
+			<% end %>
+			
+  	</div>
+  <% end %>
   <div class="actions">
     <%= f.submit %>
   </div>
