@@ -3,4 +3,6 @@ class Item < ActiveRecord::Base
   has_many :indicador, :dependent => :destroy
   belongs_to :subescala
   belongs_to :item_template
+  
+  accepts_nested_attributes_for :indicador
 end

@@ -43,18 +43,54 @@
 			<h2><%=  "#{@escala.escala_template.nombre}"%></h2>
 			
 			<% @escala.subescala.each.with_index do |subescala, sub_esc_index| %>
+				<%= escala.hidden_field :escala_template_id %>				
+				
 				<%= escala.fields_for :subescala, subescala do |sub_escala| %>
 					<div class = "sub_escala">
 						<h3><%="#{sub_esc_index+1}.- #{subescala.subescala_template.nombre}"%></h3>
-										
-						<% subescala.item.each_with_index do |item, item_index| %>
+						<% subescala.item.each.with_index do |item, item_index| %>
 							<%= sub_escala.fields_for :item, item do |item_f| %>
 								<div class = "item">
 									<h4><%="#{item_index+1}.- #{item.item_template.nombre}" %></h4>
+									<% if item.item_template.has_na %>
+										<%= item_f.check_box :eval, 0 %>
+									<% end %>
 									
 									<div class = "field">
 									<%= item_f.label :observaciones %> <br />
 									<%= item_f.text_field :observaciones, :class => "observaciones" %>
+									<br />
+									<% item.indicador.each.with_index do |indicador, ind_index| %>
+										<%= item_f.fields_for :indicador, indicador do |ind_f| %>
+											<% if indicador.indicador_template.fila == 1 && indicador.indicador_template.columna != 1 %>
+												</th> </table>
+											<% end %>
+											
+											<% if indicador.indicador_template.fila == 1 %>
+											<table>
+												<th>Ind.</th>
+												<th>SI</th>
+												<th>NO</th>
+												<th>N/A</th>
+											<% end %>
+											
+											<tr>
+												<td>
+													<%="#{indicador.indicador_template.columna}.#{indicador.indicador_template.fila}"%>
+												</td>
+											
+												<td><%= ind_f.radio_button :eval, :true %></td>
+												<td><%= ind_f.radio_button :eval, :false %></td>
+												<td>
+													<% if indicador.indicador_template.has_na %>
+														<%= ind_f.radio_button :eval, :nil %>
+													<% end %>
+												</td>
+											</tr>
+											
+											<br />
+										<% end %>
+									<% end %>
 									</div>
 								</div>
 							<% end %>
