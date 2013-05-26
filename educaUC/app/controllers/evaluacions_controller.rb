@@ -28,13 +28,13 @@ class EvaluacionsController < ApplicationController
   # GET /evaluacions/new
   # GET /evaluacions/new.json
   def new
+  	#TODO: vincular usuario con evaluación
     @evaluacion = Evaluacion.new
-
+		@user = @logged_user
+		
 		escala_template = EscalaTemplate.find(1)
 
 		@escala = @evaluacion.build_escala(:escala_template_id => escala_template.id)
-		
-		@sub_escala = []
 		
 		escala_template.subescala_template.each do |subescala_template|
 			sub_escala = @escala.subescala.build(:subescala_template_id => subescala_template.id)
@@ -53,15 +53,18 @@ class EvaluacionsController < ApplicationController
   # GET /evaluacions/1/edit
   def edit
     @evaluacion = Evaluacion.find(params[:id])
+    @escala = @evaluacion.escala
+    @user = User.find(@evaluacion.encargado)
   end
 
   # POST /evaluacions
   # POST /evaluacions.json
   def create
     @evaluacion = Evaluacion.new(params[:evaluacion])
-
+    
     respond_to do |format|
       if @evaluacion.save
+      	@evaluacion.update_attribute(:encargado, @logged_user.id)
         format.html { redirect_to @evaluacion, notice: 'Evaluacion was successfully created.' }
         format.json { render json: @evaluacion, status: :created, location: @evaluacion }
       else

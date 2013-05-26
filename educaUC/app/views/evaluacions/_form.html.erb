@@ -20,8 +20,8 @@
     <%= f.datetime_select :fecha_de_evaluacion %>
   </div>
   <div class="field">
-    <%= f.label :encargado %><br />
-    <%= f.text_field :encargado %>
+    <%= label_tag :encargado, "Encargado:" %>
+    <%= label_tag :encargado, "#{@user.name} #{@user.lastname}" %>
   </div>
   <div class="field">
     <%= f.label :horario_inicial %><br />
