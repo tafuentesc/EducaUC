@@ -37,7 +37,11 @@ class EvaluacionsController < ApplicationController
 		@sub_escala = []
 		
 		escala_template.subescala_template.each do |subescala_template|
-			@sub_escala = @escala.subescala.build(:subescala_template_id => subescala_template.id)
+			sub_escala = @escala.subescala.build(:subescala_template_id => subescala_template.id)
+			
+			subescala_template.item_template.each do |item_template|
+				item = sub_escala.item.build(:item_template_id => item_template.id)
+			end
 		end
 
     respond_to do |format|

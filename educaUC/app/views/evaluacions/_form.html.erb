@@ -40,14 +40,26 @@
   <!-- Por ahora cargaremos Iters por defecto --> 
   <%= f.fields_for :escala do |escala| %>
   	<div class = escala	>
-			<h1><%=  "#{@escala.escala_template.nombre}"%></h1>
+			<h2><%=  "#{@escala.escala_template.nombre}"%></h2>
 			
-			<% @escala.subescala.each.with_index do |subescala, index| %>
+			<% @escala.subescala.each.with_index do |subescala, sub_esc_index| %>
 				<%= escala.fields_for :subescala, subescala do |sub_escala| %>
 					<div class = "sub_escala">
-						<h2><%="#{index+1}.- #{subescala.subescala_template.nombre}"%></h2>
-					
-						
+						<h3><%="#{sub_esc_index+1}.- #{subescala.subescala_template.nombre}"%></h3>
+										
+						<% subescala.item.each_with_index do |item, item_index| %>
+							<%= sub_escala.fields_for :item, item do |item_f| %>
+								<div class = "item">
+									<h4><%="#{item_index+1}.- #{item.item_template.nombre}" %></h4>
+									
+									<div class = "field">
+									<%= item_f.label :observaciones %> <br />
+									<%= item_f.text_field :observaciones, :class => "observaciones" %>
+									</div>
+								</div>
+							<% end %>
+						<% end %>	
+
 					
 					</div>
 				<% end %>			
