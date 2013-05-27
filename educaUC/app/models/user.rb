@@ -1,12 +1,14 @@
 require 'securerandom'
 
 class User < ActiveRecord::Base
-  attr_accessible :admin, :deleted, :email, :hash_password, :lastname, :name, :salt, :profile, :token
+  attr_accessible :admin, :deleted, :email, :hash_password, :id, :lastname, :name, :salt, :profile, :token
 
 	#has_many :dataFiles, :primary_key => :email, :foreign_key => :owner, :dependent => :destroy
 	before_create :generate_password
 	validates_uniqueness_of :email
 	validate :email, :format => { :with => /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/, :message => "Email address not valid" }
+	
+	has_many :evaluaciones, :class_name => Evaluacion, :foreign_key => :encargado
 	
 	def generateToken
 		# generamos session_id
