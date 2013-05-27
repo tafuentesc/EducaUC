@@ -1,31 +1,49 @@
-<h1>Listing evaluacions</h1>
 
-<table>
-  <tr>
-    <th>Nombre sala</th>
-    <th>Fecha de evaluacion</th>
-    <th>Encargado</th>
-    <th>Horario inicial</th>
-    <th>Horario final</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+        <div id="objetados" class="cc01">
+            <p>Objetados</p>
+            <table width="100%">
+                <tr>
+                    <th>Fecha Objecion</th>
+                    <th>Escala</th>
+                    <th>Nombre Centro</th>
+                    <th>Razon Objecion</th>
+                </tr>
 
-<% @evaluacions.each do |evaluacion| %>
-  <tr>
-    <td><%= evaluacion.nombre_sala %></td>
-    <td><%= evaluacion.fecha_de_evaluacion %></td>
-    <td><%= evaluacion.encargado %></td>
-    <td><%= evaluacion.horario_inicial %></td>
-    <td><%= evaluacion.horario_final %></td>
-    <td><%= link_to 'Show', evaluacion %></td>
-    <td><%= link_to 'Edit', edit_evaluacion_path(evaluacion) %></td>
-    <td><%= link_to 'Destroy', evaluacion, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
+                <% @pendientes.each do |evaluacion| %>
+                  <tr>
+                    <td><%= evaluacion.fecha_de_evaluacion.to_s(:short) %></td>
+                    <td><%= evaluacion.escala.escala_template.nombre %></td>
+                    <td><%= evaluacion.centro.nombre %></td>
+                    <td><%= evaluacion.razon %></td>
+                    <td><%= link_to 'Show', evaluacion %></td>
+                    <td><%= link_to 'Edit', edit_evaluacion_path(evaluacion) %></td>
+                    <td><%= link_to 'Destroy', evaluacion, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                  </tr>
+                <% end %>
 
+            </table>
+
+        </div>
+
+        <div id="digitados" class="cc01">
+            <p>Digitados</p>
+            <table width="100%">
+                <tr>
+                    <th>Fecha Emision</th>
+                    <th>Escala</th>
+                    <th>Nombre Centro</th>
+                </tr>
+                <% @completadas.each do |evaluacion| %>
+                  <tr>
+                    <td><%= evaluacion.fecha_de_evaluacion.to_s(:short) %></td>
+                    <td><%= evaluacion.escala.escala_template.nombre %></td>
+                    <td><%= evaluacion.centro.nombre %></td>
+                    <td><%= link_to 'Show', evaluacion %></td>
+                    <td><%= link_to 'Edit', edit_evaluacion_path(evaluacion) %></td>
+                    <td><%= link_to 'Destroy', evaluacion, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                  </tr>
+                <% end %>
+            </table>
+        </div>
 <br />
 
-<%= link_to 'New Evaluacion', new_evaluacion_path %>

@@ -8,7 +8,22 @@
 </head>
 <body>
 
-<%= yield %>
+<div id="page">
+	<% if !(@logged_user.nil?) %>
+	<div id="logo"></div>
+		<div id="log_menu" class="cc01">
+			<p><%= @logged_user.email%> - Digitador</p>
+			<p><b><%= @logged_user.name%> <%= @logged_user.lastname%> <%= link_to '(Logout)', logout_path %> </b></p>
+		</div>
+	<div id="menu" class="cc01">
+		<p><%= link_to 'Nuevo Informe', new_evaluacion_path %> | <%= link_to 'Ver Perfil', user_path(@logged_user) %> </p>
+	</div>
+	<% end %>
 
+	<div id="main" class="cc01">
+	<%= yield %>
+	</div>
+
+</div>
 </body>
 </html>

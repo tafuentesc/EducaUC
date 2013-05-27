@@ -4,8 +4,12 @@ class EvaluacionsController < ApplicationController
   def index
     if(@logged_user.admin)
       @evaluacions = Evaluacion.all
+      @pendientes = Evaluacion.where('estado = ?', 'Pendiente')
+      @completadas = Evaluacion.where('estado != ?', 'Pendiente')
     else
       @evaluacions = Evaluacion.where("encargado = ?", @logged_user.id)
+      @pendientes = @evaluacions.where('estado = ?', 'Pendiente')
+      @completadas = @evaluacions.where('estado != ?', 'Pendiente')
     end
 
     respond_to do |format|

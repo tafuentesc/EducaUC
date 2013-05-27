@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130526034928) do
+ActiveRecord::Schema.define(:version => 20130527123022) do
 
   create_table "centros", :force => true do |t|
     t.string   "nombre"
@@ -43,8 +43,11 @@ ActiveRecord::Schema.define(:version => 20130526034928) do
     t.integer  "encargado"
     t.time     "horario_inicial"
     t.time     "horario_final"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
+    t.string   "estado",              :default => "Pendiente", :null => false
+    t.string   "razon"
+    t.integer  "centro_id"
   end
 
   create_table "indicador_templates", :force => true do |t|
@@ -67,7 +70,7 @@ ActiveRecord::Schema.define(:version => 20130526034928) do
 
   create_table "item_templates", :force => true do |t|
     t.string   "nombre"
-    t.string   "descrpcion"
+    t.string   "descripcion"
     t.integer  "subescala_template_id"
     t.boolean  "has_na"
     t.integer  "numero"

@@ -71,3 +71,5 @@ IndicadorTemplate.create(columna: 5, fila: 2, has_na: false, item_template_id: 6
 IndicadorTemplate.create(columna: 5, fila: 3, has_na: false, item_template_id: 6, descripcion: 'El espacio es accesible a todos los ninos y adultos con discapacidades.')
 IndicadorTemplate.create(columna: 7, fila: 1, has_na: false, item_template_id: 6, descripcion: 'Se puede controlar la luz natural que entra.')
 IndicadorTemplate.create(columna: 7, fila: 2, has_na: false, item_template_id: 6, descripcion: 'Se puede controlar la ventilacion.')
+
+Centro.create(direccion: 'Martin de Zamora 4693', directora: 'Juanita Perez', nombre: 'Jardin Peques', sostenedor: 'Evaristo Moya', telefono: '+5699999999')
