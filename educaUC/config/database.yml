@@ -5,13 +5,10 @@
 #   gem 'sqlite3'
 development:
   adapter: postgresql
-  encoding: unicode
   database: educaUCdb
-  username: educauc
-  password: '123456'
+  username: educaUC
   pool: 5
   timeout: 5000
-  host: localhost
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
