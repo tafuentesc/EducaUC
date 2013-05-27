@@ -66,7 +66,7 @@
 										<%= item_f.text_field :observaciones, :class => "observaciones" %>
 									</div>
 
-									<% item.indicador.each.with_index do |indicador, ind_index| %>
+									<% item.indicador.order("indicador_template_id ASC").each.with_index do |indicador, ind_index| %>
 										<%= item_f.fields_for :indicador, indicador do |ind_f| %>
 											<%= ind_f.hidden_field :indicador_template_id %>				
 											<% if indicador.indicador_template.fila == 1 && indicador.indicador_template.columna != 1 %>
@@ -74,7 +74,7 @@
 											<% end %>
 		
 											<% if indicador.indicador_template.fila == 1 %>
-												<table>
+												<table class = "columna_<%=indicador.indicador_template.columna%>">
 													<th>Ind.</th>
 													<th>SI</th>
 													<th>NO</th>
@@ -86,11 +86,11 @@
 													<%="#{indicador.indicador_template.columna}.#{indicador.indicador_template.fila}"%>
 												</td>
 		
-												<td><%= ind_f.radio_button :eval, :true %></td>
-												<td><%= ind_f.radio_button :eval, :false %></td>
+												<td><%= ind_f.radio_button :eval, true %></td>
+												<td><%= ind_f.radio_button :eval, false %></td>
 												<td>
 													<% if indicador.indicador_template.has_na %>
-														<%= ind_f.radio_button :eval, :nil %>
+														<%= ind_f.radio_button :eval, "asd" %>
 													<% end %>
 												</td>
 											</tr>
