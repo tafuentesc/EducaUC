@@ -1,4 +1,4 @@
-<%= form_for(@evaluacion) do |f| %>
+<%= form_for @evaluacion, :html => { :class => 'form-horizontal' } do |f| %>
   <% if @evaluacion.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@evaluacion.errors.count, "error") %> prohibited this evaluacion from being saved:</h2>
@@ -11,35 +11,65 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :nombre_sala %><br />
-    <%= f.text_field :nombre_sala %>
+  <div class="control-group">
+    <%= f.label :nombre_sala, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :nombre_sala, :class => 'text_field' %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :fecha_de_evaluacion %><br />
-    <%= f.datetime_select :fecha_de_evaluacion %>
+  <div class="control-group">
+    <%= f.label :fecha_de_evaluacion, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.datetime_select :fecha_de_evaluacion, :class => 'datetime_select' %>
+    </div>
   </div>
-  <div class="field">
-    <%= label_tag :encargado, "Encargado:" %>
-    <%= label_tag :encargado, "#{@user.name} #{@user.lastname}" %>
+  <div class="control-group">
+    <%= label_tag :encargado, "Encargado:", :class => 'control-label' %>
+    <div class="controls">
+      <%= label_tag :encargado, "#{@user.name} #{@user.lastname}", :class => 'control-label' %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :horario_inicial %><br />
-    <%= f.time_select :horario_inicial %>
+  <div class="control-group">
+    <%= f.label :horario_inicial, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.time_select :horario_inicial, :class => 'time_select' %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :horario_final %><br />
-    <%= f.time_select :horario_final %>
+  <div class="control-group">
+    <%= f.label :horario_final, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.time_select :horario_final, :class => 'time_select' %>
+    </div>
   </div>
-  <div class="field">
-    <%= label_tag "Seleccione escala de evaluación"  %>
+  <div class="control-group">
+    <%= f.label :estado, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :estado, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :razon, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :razon, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :centro_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :centro_id, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= label_tag :escala, "Seleccione escala de evaluación", :class => 'control-label' %>
+    <div class="controls">
     <% @escalas = EscalaTemplate.all %>
-    <%= select_tag "escala", options_from_collection_for_select(@escalas, "id", "nombre") %>
+    <%= select_tag "escala", options_from_collection_for_select(@escalas, "id", "nombre"), :class => 'select_field' %>
+    </div>
   </div>
   
   <!-- Por ahora cargaremos Iters por defecto --> 
   <%= f.fields_for :escala do |escala| %>
-  	<div class = escala	>
+  	<div class = "escala"	>
 			<h2><%=  "#{@escala.escala_template.nombre}"%></h2>
 			<%= escala.hidden_field :escala_template_id %>				
 			
@@ -66,7 +96,8 @@
 										<%= item_f.text_field :observaciones, :class => "observaciones" %>
 									</div>
 
-									<% item.indicador.order("indicador_template_id ASC").each.with_index do |indicador, ind_index| %>
+									<!-- .order("indicador_template_id ASC") -->
+									<% item.indicador.each.with_index do |indicador, ind_index| %>
 										<%= item_f.fields_for :indicador, indicador do |ind_f| %>
 											<%= ind_f.hidden_field :indicador_template_id %>				
 											<% if indicador.indicador_template.fila == 1 && indicador.indicador_template.columna != 1 %>

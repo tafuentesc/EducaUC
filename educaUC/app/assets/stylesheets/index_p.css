@@ -11,7 +11,7 @@ div#main            {
 	left            :  81.00pt;
 	top             : 115.50pt;
 	width           : 584.25pt;
-	height          : 320.75pt;
+	min-height          : 320.75pt;
 	}
 div#objetados            { 
 	background-color: white;

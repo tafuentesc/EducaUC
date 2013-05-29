@@ -1,30 +1,35 @@
-<p id="notice"><%= notice %></p>
+<%- model_class = Evaluacion -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
+</div>
 
-<p>
-  <b>Nombre sala:</b>
-  <%= @evaluacion.nombre_sala %>
-</p>
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:nombre_sala) %>:</strong></dt>
+  <dd><%= @evaluacion.nombre_sala %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:fecha_de_evaluacion) %>:</strong></dt>
+  <dd><%= @evaluacion.fecha_de_evaluacion %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:encargado) %>:</strong></dt>
+  <dd><%= @evaluacion.encargado %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:horario_inicial) %>:</strong></dt>
+  <dd><%= @evaluacion.horario_inicial %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:horario_final) %>:</strong></dt>
+  <dd><%= @evaluacion.horario_final %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:estado) %>:</strong></dt>
+  <dd><%= @evaluacion.estado %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:razon) %>:</strong></dt>
+  <dd><%= @evaluacion.razon %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:centro_id) %>:</strong></dt>
+  <dd><%= @evaluacion.centro_id %></dd>
+</dl>
 
-<p>
-  <b>Fecha de evaluacion:</b>
-  <%= @evaluacion.fecha_de_evaluacion %>
-</p>
-
-<p>
-  <b>Encargado:</b>
-  <%= @evaluacion.encargado %>
-</p>
-
-<p>
-  <b>Horario inicial:</b>
-  <%= @evaluacion.horario_inicial %>
-</p>
-
-<p>
-  <b>Horario final:</b>
-  <%= @evaluacion.horario_final %>
-</p>
-
-
-<%= link_to 'Edit', edit_evaluacion_path(@evaluacion) %> |
-<%= link_to 'Back', evaluacions_path %>
+<div class="form-actions">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              evaluacions_path, :class => 'btn'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_evaluacion_path(@evaluacion), :class => 'btn' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              evaluacion_path(@evaluacion),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+</div>
