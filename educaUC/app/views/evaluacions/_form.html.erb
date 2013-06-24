@@ -59,85 +59,111 @@
       <%= f.number_field :centro_id, :class => 'number_field' %>
     </div>
   </div>
+  <% if @evaluacion.escala.id != nil %>
   <div class="control-group">
-    <%= label_tag :escala, "Seleccione escala de evaluación", :class => 'control-label' %>
+    <%= label_tag :escala, "Escala de evaluación:", :class => 'control-label' %>
     <div class="controls">
-    <% @escalas = EscalaTemplate.all %>
-    <%= select_tag "escala", options_from_collection_for_select(@escalas, "id", "nombre"), :class => 'select_field' %>
+      <%= label_tag :escala,  "#{@evaluacion.escala.escala_template.nombre}", :class => 'control-label'%>
     </div>
-  </div>
+  </div>  
+  <% else %>
+		<div class="control-group">
+		  <%= label_tag :escala, "Seleccione escala de evaluación", :class => 'control-label' %>
+		  <div class="controls">
+		  <% @escalas = EscalaTemplate.all %>
+		  <%= select_tag "escala", options_from_collection_for_select(@escalas, "id", "nombre"), :class => 'select_field', :prompt => "Seleccione escala" %>
+		  </div>
+		</div>
+	<% end %>
   
-  <!-- Por ahora cargaremos Iters por defecto --> 
+  <!-- Por ahora cargaremos Iters por defecto  -->
   <%= f.fields_for :escala do |escala| %>
-  	<div class = "escala"	>
-			<h2><%=  "#{@escala.escala_template.nombre}"%></h2>
-			<%= escala.hidden_field :escala_template_id %>				
-			
-			<% @escala.subescala.each.with_index do |subescala, sub_esc_index| %>				
-				<%= escala.fields_for :subescala, subescala do |sub_escala| %>
-					<div class = "sub_escala">
-						<h3><%="#{sub_esc_index+1}.- #{subescala.subescala_template.nombre}"%></h3>
-						<%= sub_escala.hidden_field :subescala_template_id %>				
+	<div class = "escala"	>
+		<h2><%=  "#{@escala.escala_template.nombre}"%></h2>
+		<%= escala.hidden_field :escala_template_id %>				
+		
+		<% if @escala.id != nil %>
+			<% subescalas = @escala.subescala.order("subescala_template_id ASC") %>
+		<% else %>
+			<% subescalas = @escala.subescala %>
+		<% end %>
+		<% subescalas.each.with_index do |subescala, sub_esc_index| %>				
+			<%= escala.fields_for :subescala, subescala do |sub_escala| %>
+				<div class = "sub_escala">
+					<h3><%="#{sub_esc_index+1}.- #{subescala.subescala_template.nombre}"%></h3>
+					<%= sub_escala.hidden_field :subescala_template_id %>				
 
-						<% subescala.item.each.with_index do |item, item_index| %>
-							<%= sub_escala.fields_for :item, item do |item_f| %>
+					<% if subescala.id != nil %>
+						<% items = subescala.item.order("item_template_id ASC") %>
+					<% else %>
+						<% items = subescala.item %>
+					<% end %>
+					<% items.each.with_index do |item, item_index| %>
+						<%= sub_escala.fields_for :item, item do |item_f| %>
+							
+							<div class = "item">
+								<h4><%="#{item_index+1}.- #{item.item_template.nombre}" %></h4>
+								<%= item_f.hidden_field :item_template_id %>				
+
+								<% if item.item_template.has_na %>
+									<%= item_f.label "N/A" %>
+									<%= item_f.check_box :eval, 0 %>
+								<% end %>
 								
-								<div class = "item">
-									<h4><%="#{item_index+1}.- #{item.item_template.nombre}" %></h4>
-									<%= item_f.hidden_field :item_template_id %>				
+								<div class = "observaciones" >
+									<%= item_f.label :observaciones %> <br />
+									<%= item_f.text_field :observaciones, :class => "observaciones" %>
+								</div>
 
-									<% if item.item_template.has_na %>
-										<%= item_f.label "N/A" %>
-										<%= item_f.check_box :eval, 0 %>
-									<% end %>
-									
-									<div class = "observaciones" >
-										<%= item_f.label :observaciones %> <br />
-										<%= item_f.text_field :observaciones, :class => "observaciones" %>
-									</div>
-
-									<!-- .order("indicador_template_id ASC") -->
-									<% item.indicador.each.with_index do |indicador, ind_index| %>
-										<%= item_f.fields_for :indicador, indicador do |ind_f| %>
-											<%= ind_f.hidden_field :indicador_template_id %>				
-											<% if indicador.indicador_template.fila == 1 && indicador.indicador_template.columna != 1 %>
-												</table>
-											<% end %>
-		
-											<% if indicador.indicador_template.fila == 1 %>
-												<table class = "columna_<%=indicador.indicador_template.columna%>">
-													<th>Ind.</th>
-													<th>SI</th>
-													<th>NO</th>
-													<th>N/A</th>
-											<% end %>
-		
-											<tr>
-												<td>
-													<%="#{indicador.indicador_template.columna}.#{indicador.indicador_template.fila}"%>
-												</td>
-		
-												<td><%= ind_f.radio_button :eval, true %></td>
-												<td><%= ind_f.radio_button :eval, false %></td>
-												<td>
-													<% if indicador.indicador_template.has_na %>
-														<%= ind_f.radio_button :eval, "asd" %>
-													<% end %>
-												</td>
+								<!-- .order("indicador_template_id ASC") -->
+								<% if item.id != nil %>
+									<% indicadores = item.indicador.order("indicador_template_id ASC") %>
+								<% else %>
+									<% indicadores = item.indicador %>
+								<% end %>
+								<% indicadores.each.with_index do |indicador, ind_index| %>
+									<%= item_f.fields_for :indicador, indicador do |ind_f| %>
+										<%= ind_f.hidden_field :indicador_template_id %>				
+										<% if indicador.indicador_template.fila == 1 && indicador.indicador_template.columna != 1 %>
+											</table>
+										<% end %>
+	
+										<% if indicador.indicador_template.fila == 1 %>
+											<table class = "columna_<%=indicador.indicador_template.columna%>">
+											<tr class='table_header'>
+												<th>Ind.</th>
+												<th>SI</th>
+												<th>NO</th>
+												<th>N/A</th>
 											</tr>
 										<% end %>
+	
+										<tr>
+											<td>
+												<%="#{indicador.indicador_template.columna}.#{indicador.indicador_template.fila}"%>
+											</td>
+	
+											<td><%= ind_f.radio_button :eval, true, :class => "#{indicador.indicador_template.columna==1? 'no_node' : ''}"%></td>
+											<td><%= ind_f.radio_button :eval, false, :class =>"#{indicador.indicador_template.columna!=1? 'no_node' : ''}" %></td>
+											<td>
+												<% if indicador.indicador_template.has_na %>
+													<%= ind_f.radio_button :eval, "nil", :class => '' %>
+												<% end %>
+											</td>
+										</tr>
 									<% end %>
-									</table>								
-								</div>
-							<% end %>
-						<% end %>	
-				
-					</div>
-				<% end %>			
-			<% end %>
-						
-  	</div>
-  <% end %>
+								<% end %>
+								</table>								
+							</div>
+						<% end %>
+					<% end %>					
+				</div>
+			<% end %>			
+		<% end %>				
+	</div>
+<% end %>
+  <div id="escala_container">
+  </div>
   
   <div class="actions">
     <%= f.submit %>

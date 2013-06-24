@@ -5,7 +5,11 @@ EducaUC::Application.routes.draw do
   match '/login' =>  "login#index", :as => :login
   match '/logger' => "login#login"
   match '/logout' => "login#logout"
-  resources :evaluacions
+  
+  match '/evaluaciones/escala/:id' => "evaluacions#load_escala", :as => :load_escala
+  
+  # :path cambia la ruta que se despliega al usuario
+  resources :evaluacions, :path => "evaluaciones"
   resources :centros
   resources :users
   # The priority is based upon order of creation:
