@@ -71,7 +71,7 @@
 		  <%= label_tag :escala, "Seleccione escala de evaluación", :class => 'control-label' %>
 		  <div class="controls">
 		  <% @escalas = EscalaTemplate.all %>
-		  <%= select_tag "escala", options_from_collection_for_select(@escalas, "id", "nombre"), :class => 'select_field', :prompt => "Seleccione escala" %>
+		  <%= select_tag "escala", options_from_collection_for_select(@escalas, "id", "nombre"), :class => 'select_field', :prompt => "--------------------" %>
 		  </div>
 		</div>
 	<% end %>
@@ -80,7 +80,7 @@
   <% if @evaluacion.escala.id != nil %>
   	<%= render 'escala' %>
   <% else %>
-  	<div position="relative">
+  	<div id="ajax_container">
   	<div id="error"></div>
 		
 		<div id="loading"></div>

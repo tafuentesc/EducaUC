@@ -8,6 +8,13 @@ $(function(){
 	$("select#escala").change(function(){
 		// Primero, extraemos el id seleccionado
 		id = $(this).val();
+		
+		// En caso de que sea el placeholder (o algún valor no válido) no hacemos nada
+		if(!(id == "1" || id == "2"))
+			return;		
+		
+		// Almacenamos la posición del escroll bar
+		scrollTop = $("body").scrollTop();
 				
 		// Construimos la llamada Ajax:
 		$.ajax({
@@ -23,12 +30,22 @@ $(function(){
 				$("div#loading").hide();
 			},
 			success: function(result){
+				// antes de hacer fadeOut le agregamos un alto, para que el scrollTop no se vaya a cualquier lado
+				$("div#ajax_container").css('min-height','500px');
+				
 				$("div#escala_container").fadeOut(function(){
-					$("div#escala_container").html(result).fadeIn();
+					$("div#escala_container").html(result).fadeIn(function(){
+						// No es lo que quiero, pero servirá para avanzar por los ítems al presionar teclas
+						$("body").animate({scrollTop: scrollTop}, 500);
+					});
 				})
+
+				// Removemos tamaño? (no es necesario)
 
 				// vinculamos con la función markPreviousIndicators
 				$("input.no_node").click(markPreviousIndicators);
+				
+				// Seteamos scrollTop:
 			},
 			error: function()
 			{

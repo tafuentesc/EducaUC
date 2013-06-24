@@ -23,60 +23,64 @@
 						<% items.each.with_index do |item, item_index| %>
 							<%= sub_escala.fields_for :item, item do |item_f| %>
 							
-								<div class = "item">
-									<h4><%="#{item_index+1}.- #{item.item_template.nombre}" %></h4>
-									<%= item_f.hidden_field :item_template_id %>				
+								<section class = "item">
+									<header>
+										<h4><%="#{item_index+1}.- #{item.item_template.nombre}" %></h4>
+										<%= item_f.hidden_field :item_template_id %>				
 
-									<% if item.item_template.has_na %>
-										<%= item_f.label "N/A" %>
-										<%= item_f.check_box :eval, 0 %>
-									<% end %>
-								
-									<div class = "observaciones" >
-										<%= item_f.label :observaciones %> <br />
-										<%= item_f.text_field :observaciones, :class => "observaciones" %>
-									</div>
+										<% if item.item_template.has_na %>
+											<%= item_f.label "N/A" %>
+											<%= item_f.check_box :eval, 0 %>
+										<% end %>
+									</header>
 
-									<!-- .order("indicador_template_id ASC") -->
-									<% if item.id != nil %>
-										<% indicadores = item.indicador.order("indicador_template_id ASC") %>
-									<% else %>
-										<% indicadores = item.indicador %>
-									<% end %>
-									<% indicadores.each.with_index do |indicador, ind_index| %>
-										<%= item_f.fields_for :indicador, indicador do |ind_f| %>
-											<%= ind_f.hidden_field :indicador_template_id %>				
-											<% if indicador.indicador_template.fila == 1 && indicador.indicador_template.columna != 1 %>
-												</table>
-											<% end %>
+									<div class="item_body">
+										<div class = "observaciones" >
+											<%= item_f.label :observaciones %> <br />
+											<%= item_f.text_field :observaciones, :class => "observaciones" %>
+										</div>
+
+										<!-- .order("indicador_template_id ASC") -->
+										<% if item.id != nil %>
+											<% indicadores = item.indicador.order("indicador_template_id ASC") %>
+										<% else %>
+											<% indicadores = item.indicador %>
+										<% end %>
+										<% indicadores.each.with_index do |indicador, ind_index| %>
+											<%= item_f.fields_for :indicador, indicador do |ind_f| %>
+												<%= ind_f.hidden_field :indicador_template_id %>				
+												<% if indicador.indicador_template.fila == 1 && indicador.indicador_template.columna != 1 %>
+													</table>
+												<% end %>
 	
-											<% if indicador.indicador_template.fila == 1 %>
-												<table class = "columna_<%=indicador.indicador_template.columna%>">
-												<tr class='table_header'>
-													<th>Ind.</th>
-													<th>SI</th>
-													<th>NO</th>
-													<th>N/A</th>
+												<% if indicador.indicador_template.fila == 1 %>
+													<table class = "columna_<%=indicador.indicador_template.columna%>">
+													<tr class='table_header'>
+														<th>Ind.</th>
+														<th>SI</th>
+														<th>NO</th>
+														<th>N/A</th>
+													</tr>
+												<% end %>
+	
+												<tr>
+													<td>
+														<%="#{indicador.indicador_template.columna}.#{indicador.indicador_template.fila}"%>
+													</td>
+	
+													<td><%= ind_f.radio_button :eval, true, :class => "#{indicador.indicador_template.columna==1? 'no_node' : ''}"%></td>
+													<td><%= ind_f.radio_button :eval, false, :class =>"#{indicador.indicador_template.columna!=1? 'no_node' : ''}" %></td>
+													<td>
+														<% if indicador.indicador_template.has_na %>
+															<%= ind_f.radio_button :eval, "nil", :class => '' %>
+														<% end %>
+													</td>
 												</tr>
 											<% end %>
-	
-											<tr>
-												<td>
-													<%="#{indicador.indicador_template.columna}.#{indicador.indicador_template.fila}"%>
-												</td>
-	
-												<td><%= ind_f.radio_button :eval, true, :class => "#{indicador.indicador_template.columna==1? 'no_node' : ''}"%></td>
-												<td><%= ind_f.radio_button :eval, false, :class =>"#{indicador.indicador_template.columna!=1? 'no_node' : ''}" %></td>
-												<td>
-													<% if indicador.indicador_template.has_na %>
-														<%= ind_f.radio_button :eval, "nil", :class => '' %>
-													<% end %>
-												</td>
-											</tr>
 										<% end %>
-									<% end %>
-									</table>								
-								</div>
+										</table>
+									</div>								
+								</section>
 							<% end %>
 						<% end %>					
 					</div>
