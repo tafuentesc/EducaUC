@@ -8,13 +8,25 @@ $(function(){
 	$("select#escala").change(function(){
 		// Primero, extraemos el id seleccionado
 		id = $(this).val();
-		
+				
 		// Construimos la llamada Ajax:
 		$.ajax({
 			url: '/evaluaciones/escala/' + id,
 			type: "GET",
+			timeout: 8000,
+			before: function(){
+				// Ponemos el gif de "cargando"
+				$("div#loading").show();
+			},
+			complete: function(){
+				// Ocultamos el gif:
+				$("div#loading").hide();
+			},
 			success: function(result){
-				$("div#escala_container").html(result);
+				$("div#escala_container").fadeOut(function(){
+					$("div#escala_container").html(result).fadeIn();
+				})
+
 				// vinculamos con la función markPreviousIndicators
 				$("input.no_node").click(markPreviousIndicators);
 			},

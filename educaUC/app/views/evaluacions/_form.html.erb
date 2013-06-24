@@ -80,7 +80,12 @@
   <% if @evaluacion.escala.id != nil %>
   	<%= render 'escala' %>
   <% else %>
-		<div id="escala_container">
+  	<div position="relative">
+  	<div id="error"></div>
+		
+		<div id="loading"></div>
+		
+		<div id="escala_container"></div>
 		</div>
   <% end %>
   
