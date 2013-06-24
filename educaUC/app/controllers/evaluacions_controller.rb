@@ -31,10 +31,11 @@ class EvaluacionsController < ApplicationController
 
 	# GET /evaluaciones/escala/:id
 	def load_escala	
+		@evaluacion = Evaluacion.new
 		escala_template = EscalaTemplate.find(params[:id])
 
-		@escala = Escala.new(:escala_template_id => escala_template.id)
-		#@escala = @evaluacion.build_escala(:escala_template_id => escala_template.id)
+		#@escala = Escala.new(:escala_template_id => escala_template.id)
+		@escala = @evaluacion.build_escala(:escala_template_id => escala_template.id)
 		
 		escala_template.subescala_template.each do |subescala_template|
 			sub_escala = @escala.subescala.build(:subescala_template_id => subescala_template.id)
@@ -49,7 +50,7 @@ class EvaluacionsController < ApplicationController
 		end
 		
     respond_to do |format|
-      format.html { render :partial => 'escala', :locals => {:evaluacion_escala => @escala}}
+      format.html { render :partial => 'escala'}
       format.js 
       #format.json { render json: @evaluacion }
     end
@@ -60,23 +61,8 @@ class EvaluacionsController < ApplicationController
   def new
   	#TODO: vincular usuario con evaluación
     @evaluacion = Evaluacion.new
+		@escala = @evaluacion.build_escala
 		@user = @logged_user
-		
-		escala_template = EscalaTemplate.find(1)
-
-		@escala = @evaluacion.build_escala(:escala_template_id => escala_template.id)
-		
-		escala_template.subescala_template.each do |subescala_template|
-			sub_escala = @escala.subescala.build(:subescala_template_id => subescala_template.id)
-			
-			subescala_template.item_template.each do |item_template|
-				item = sub_escala.item.build(:item_template_id => item_template.id)
-				
-				item_template.indicador_template.each do |indicador_template|
-					indicador = item.indicador.build(:indicador_template_id => indicador_template.id)
-				end
-			end
-		end
 
     respond_to do |format|
       format.html # new.html.erb
