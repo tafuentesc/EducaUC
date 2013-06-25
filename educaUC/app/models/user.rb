@@ -5,13 +5,17 @@ class User < ActiveRecord::Base
 	# deleted/ changed attributes: deleted->active, profile
 
 	#has_many :dataFiles, :primary_key => :email, :foreign_key => :owner, :dependent => :destroy
-	before_save :encrypt_password
+	before_save :encrypt_password, :set_defaults
 	
 	validates_presence_of :admin, :name, :lastname
 	validates_uniqueness_of :email
 	validate :email, :format => { :with => /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/, :message => "Email address not valid" }
 	
 	has_many :evaluaciones, :class_name => Evaluacion, :foreign_key => :encargado
+	
+	def set_defaults
+		self.active = 1
+	end
 	
 	def generateToken
 		# generamos session_id

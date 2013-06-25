@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130625213114) do
+ActiveRecord::Schema.define(:version => 20130625220034) do
 
   create_table "centros", :force => true do |t|
     t.string   "nombre"
@@ -51,14 +51,14 @@ ActiveRecord::Schema.define(:version => 20130625213114) do
   end
 
   create_table "indicador_templates", :force => true do |t|
-    t.string   "descripcion"
+    t.text     "descripcion"
     t.integer  "item_template_id"
     t.integer  "columna"
     t.integer  "fila"
     t.boolean  "has_na"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
-    t.string   "tooltip"
+    t.text     "tooltip"
   end
 
   create_table "indicadors", :force => true do |t|

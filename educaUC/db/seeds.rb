@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 #users
-User.create(email: 'luke@rebels.com', name:'Luke', lastname:'Skywalker', hash_password: '123456');
+User.create(email: 'luke@rebels.com', name:'Luke', lastname:'Skywalker', hash_password: '123456', admin: true);
 #Templates
 
 #Escalas
