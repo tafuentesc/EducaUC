@@ -8,4 +8,12 @@ class Evaluacion < ActiveRecord::Base
 	
 	validates_presence_of :nombre_sala
   
+  # Attributo virtual para asignar sala:
+  def sala
+  	return Sala.find_by_name(nombre_sala)
+  end
+  
+  def sala=(sala)
+  	self.nombre_sala = sala.nombre
+  end
 end
