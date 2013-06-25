@@ -1,31 +1,40 @@
-<h1>Listing centros</h1>
-
-<table>
-  <tr>
-    <th>Nombre</th>
-    <th>Direccion</th>
-    <th>Directora</th>
-    <th>Sostenedor</th>
-    <th>Telefono</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @centros.each do |centro| %>
-  <tr>
-    <td><%= centro.nombre %></td>
-    <td><%= centro.direccion %></td>
-    <td><%= centro.directora %></td>
-    <td><%= centro.sostenedor %></td>
-    <td><%= centro.telefono %></td>
-    <td><%= link_to 'Show', centro %></td>
-    <td><%= link_to 'Edit', edit_centro_path(centro) %></td>
-    <td><%= link_to 'Destroy', centro, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
+<%- model_class = Centro -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:nombre) %></th>
+      <th><%= model_class.human_attribute_name(:direccion) %></th>
+      <th><%= model_class.human_attribute_name(:directora) %></th>
+      <th><%= model_class.human_attribute_name(:sostenedor) %></th>
+      <th><%= model_class.human_attribute_name(:telefono) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @centros.each do |centro| %>
+      <tr>
+        <td><%= centro.nombre %></td>
+        <td><%= centro.direccion %></td>
+        <td><%= centro.directora %></td>
+        <td><%= centro.sostenedor %></td>
+        <td><%= centro.telefono %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_centro_path(centro), :class => 'btn btn-mini' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      centro_path(centro),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
 
-<br />
-
-<%= link_to 'New Centro', new_centro_path %>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_centro_path,
+            :class => 'btn btn-primary' %>

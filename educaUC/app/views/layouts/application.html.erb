@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<div class="navbar navbar-fixed-top">
+<div class="navbar navbar-static-top">
   <div class="navbar-inner">
     <a class="brand" href="/">EducaUC</a>
     <ul class="nav">
@@ -38,32 +38,25 @@
 </div>
 
 <div id="page">
-	<% if !(@logged_user.nil?) %>
-	<div id="logo"></div>
-		<div id="log_menu" class="cc01">
-			<p><%= @logged_user.email%> - Digitador</p>
-			<p><b><%= @logged_user.name%> <%= @logged_user.lastname%> <%= link_to '(Logout)', logout_path %> </b></p>
-		</div>
-	<div id="menu" class="cc01">
-		<p><%= link_to 'Nuevo Informe', new_evaluacion_path %> | <%= link_to 'Ver Perfil', user_path(@logged_user) %> </p>
-	</div>
-	<% end %>
 
 	<!-- creamos vista 4/8 para menú al lado izquierdo -->
 	<div id="main" class="row">
 		<% if !(@logged_user.nil?) %>
 			<ul class="span3 nav nav-tabs nav-stacked">
-				<li><a href="#">ASD</a></li>
-				<li><a>ASD</a></li>
-				<li><a>ASD</a></li>
-				<li><a>ASD</a></li>
+				<li><%= link_to 'Ver Perfil', user_path(@logged_user) %></li>
+				<li><%= link_to 'Nuevo Informe', new_evaluacion_path %></li>
+				<% if(@logged_user.admin?) %>
+				<li><%= link_to "Editar Centros", centros_path %></li>
+				<li><%= link_to "Editar Usuarios", users_path %></li>
+				<% end %>
 			</ul>
 		<% end %>
-		<div class="span8">	
+		<div class="span9">	
 			<%= yield %>
 		</div>
 	</div>
 
 </div>
+
 </body>
 </html>

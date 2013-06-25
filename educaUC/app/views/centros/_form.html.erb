@@ -1,37 +1,38 @@
-<%= form_for(@centro) do |f| %>
-  <% if @centro.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@centro.errors.count, "error") %> prohibited this centro from being saved:</h2>
-
-      <ul>
-      <% @centro.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+<%= form_for @centro, :html => { :class => 'form-horizontal' } do |f| %>
+  <div class="control-group">
+    <%= f.label :nombre, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :nombre, :class => 'text_field' %>
     </div>
-  <% end %>
+  </div>
+  <div class="control-group">
+    <%= f.label :direccion, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :direccion, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :directora, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :directora, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :sostenedor, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :sostenedor, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :telefono, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :telefono, :class => 'text_field' %>
+    </div>
+  </div>
 
-  <div class="field">
-    <%= f.label :nombre %><br />
-    <%= f.text_field :nombre %>
-  </div>
-  <div class="field">
-    <%= f.label :direccion %><br />
-    <%= f.text_field :direccion %>
-  </div>
-  <div class="field">
-    <%= f.label :directora %><br />
-    <%= f.text_field :directora %>
-  </div>
-  <div class="field">
-    <%= f.label :sostenedor %><br />
-    <%= f.text_field :sostenedor %>
-  </div>
-  <div class="field">
-    <%= f.label :telefono %><br />
-    <%= f.text_field :telefono %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="form-actions">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                centros_path, :class => 'btn' %>
   </div>
 <% end %>

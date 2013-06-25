@@ -1,30 +1,29 @@
-<p id="notice"><%= notice %></p>
+<%- model_class = Centro -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
+</div>
 
-<p>
-  <b>Nombre:</b>
-  <%= @centro.nombre %>
-</p>
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:nombre) %>:</strong></dt>
+  <dd><%= @centro.nombre %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:direccion) %>:</strong></dt>
+  <dd><%= @centro.direccion %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:directora) %>:</strong></dt>
+  <dd><%= @centro.directora %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:sostenedor) %>:</strong></dt>
+  <dd><%= @centro.sostenedor %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:telefono) %>:</strong></dt>
+  <dd><%= @centro.telefono %></dd>
+</dl>
 
-<p>
-  <b>Direccion:</b>
-  <%= @centro.direccion %>
-</p>
-
-<p>
-  <b>Directora:</b>
-  <%= @centro.directora %>
-</p>
-
-<p>
-  <b>Sostenedor:</b>
-  <%= @centro.sostenedor %>
-</p>
-
-<p>
-  <b>Telefono:</b>
-  <%= @centro.telefono %>
-</p>
-
-
-<%= link_to 'Edit', edit_centro_path(@centro) %> |
-<%= link_to 'Back', centros_path %>
+<div class="form-actions">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              centros_path, :class => 'btn'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_centro_path(@centro), :class => 'btn' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              centro_path(@centro),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+</div>
