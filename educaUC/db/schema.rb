@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130625063035) do
+ActiveRecord::Schema.define(:version => 20130625213114) do
 
   create_table "centros", :force => true do |t|
     t.string   "nombre"
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(:version => 20130625063035) do
     t.boolean  "has_na"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+    t.string   "tooltip"
   end
 
   create_table "indicadors", :force => true do |t|
@@ -114,12 +115,11 @@ ActiveRecord::Schema.define(:version => 20130625063035) do
     t.string   "email"
     t.string   "name"
     t.string   "lastname"
-    t.integer  "deleted"
+    t.integer  "active"
     t.boolean  "admin"
     t.string   "hash_password"
     t.string   "token"
     t.string   "salt"
-    t.string   "profile"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end

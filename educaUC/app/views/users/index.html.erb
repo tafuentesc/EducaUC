@@ -1,33 +1,40 @@
 <%- model_class = User -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+  <h1><%=t '.title', :default => 'Usuarios' %></h1>
 </div>
-<table class="table table-striped">
+<table class="table">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th>Nombre</th>
+      <th>Apellido</th>
       <th><%= model_class.human_attribute_name(:email) %></th>
-      <th><%= model_class.human_attribute_name(:name) %></th>
-      <th><%= model_class.human_attribute_name(:lastname) %></th>
-      <th><%= model_class.human_attribute_name(:deleted) %></th>
+      <th><%= model_class.human_attribute_name(:active) %></th>
       <th><%= model_class.human_attribute_name(:admin) %></th>
-      <th><%= model_class.human_attribute_name(:profile) %></th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     <% @users.each do |user| %>
-      <tr>
-        <td><%= link_to user.id, user_path(user) %></td>
-        <td><%= user.email %></td>
+      <tr class="user-record" data-id="<%= user.id %>">
         <td><%= user.name %></td>
         <td><%= user.lastname %></td>
-        <td><%= user.deleted %></td>
-        <td><%= user.admin %></td>
-        <td><%= user.profile %></td>
+        <td><%= user.email %></td>
+        <td>
+        	<div id="active" class="switch switch-mini">
+        		<%= check_box_tag :active, '', user.active? %>
+	        </div>
+        </td>
+        <td>
+        	<%= select_tag :admin, 
+        	"<option value=1>Administrador</option><option value=0>Digitador</option>".html_safe, 
+        	:class =>'btn-mini' %>
+        </td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_user_path(user), :class => 'btn btn-mini' %>
+        </td>
+        <td>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                       user_path(user),
                       :method => :delete,
