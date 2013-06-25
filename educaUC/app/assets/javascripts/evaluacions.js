@@ -3,10 +3,14 @@
 // You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $(function(){
+	// NOTA: Delegates no funcionan si el selector también se carga dede ajax!
+
 	// vinculamos con la función markPreviousIndicators
 	$("section.item").delegate("input.no_node","click",markPreviousIndicators);
+	//$("ajax_container").delegate("input.no_node","click",markPreviousIndicators);
 	// vinculamos con la función toggleVisibility
 	$("div.sub-escala").delegate("a", "click", toggleVisibility)
+	//$("ajax_container").delegate("a", "click", toggleVisibility)
 
 	// Variable para almacenar el valor previamente seleccionado en select#escala:
 	var previous_option = 0;
@@ -31,6 +35,8 @@ $(function(){
 		
 		// Almacenamos la posición del escroll bar
 		scrollTop = $("body").scrollTop();
+
+		$("div#loading").show();
 				
 		// Construimos la llamada Ajax:
 		$.ajax({
@@ -39,7 +45,6 @@ $(function(){
 			timeout: 8000,
 			before: function(){
 				// Ponemos el gif de "cargando"
-				$("div#loading").show();
 			},
 			complete: function(){
 				// Ocultamos el gif:
@@ -53,16 +58,22 @@ $(function(){
 					$("div#escala_container").html(result).fadeIn(function(){
 						// No es lo que quiero, pero servirá para avanzar por los ítems al presionar teclas
 						$("body").animate({scrollTop: scrollTop}, 500);
+
+						// vinculamos con delegate:
+						$("section.item input.no_node").click(markPreviousIndicators);
+						$("div#ajax_container a").click(toggleVisibility)
+						
+						// Actualizamos el valor de previous_option
+						previous_option = id;
+
 					});
 				})								
-				// Actualizamos el valor de previous_option
-				previous_option = id;
 			},
 			error: function()
 			{
 				// volvemos select#escala al previous_option y mostramos mensaje de error:
 				$("select#escala").val(previous_option);
-				alert("An error ocurred!");
+				alert("An error ocurred! " + previous_option);
 			}
 		});
 	
@@ -121,7 +132,7 @@ $(function(){
 	function toggleVisibility(e)
 	{
 		e.preventDefault();
-		
+
 		$parent = $(this).parents(".navbar").first();
 		
 		// Si está expandido, lo contraemos

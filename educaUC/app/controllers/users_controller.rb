@@ -5,7 +5,12 @@ class UsersController < ApplicationController
   skip_before_filter :check_token, only: [:new, :create]
   
   def index
-    @users = User.all
+  	if(@logged_user.admin?)
+	    @users = User.all
+	  else
+    	redirect_to user_path(@logged_user), :notice => "No tiene permisos para acceder a esta vista"
+    	return
+		end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -38,6 +43,11 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     @user = User.find(params[:id])
+    
+    # Agregamos verificación para saber si es el mismo usuario que el que está logueado
+    if(!(@user == @logged_user || @logged_user.admin?))
+    	redirect_to user_path(@logged_user), :error => "No tiene permisos para acceder a esta vista"
+    end
   end
 
   # POST /users

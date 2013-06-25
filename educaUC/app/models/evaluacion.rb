@@ -5,5 +5,7 @@ class Evaluacion < ActiveRecord::Base
 	belongs_to :centro, :foreign_key => :centro_id
 	accepts_nested_attributes_for :escala
   #TODO: Agregar condiciones de rechazo (:reject_if)
+	
+	validates_presence_of :nombre_sala
   
 end
