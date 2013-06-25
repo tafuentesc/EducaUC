@@ -1,0 +1,28 @@
+<%= ind_f.hidden_field :indicador_template_id %>				
+<% if indicador.indicador_template.fila == 1 && indicador.indicador_template.columna != 1 %>
+	</table>
+<% end %>
+
+<% if indicador.indicador_template.fila == 1 %>
+	<table class = "columna_<%=indicador.indicador_template.columna%> span">
+	<tr class='table_header'>
+		<th>Ind.</th>
+		<th>SI</th>
+		<th>NO</th>
+		<th>N/A</th>
+	</tr>
+<% end %>
+
+<tr>
+	<td>
+		<%="#{indicador.indicador_template.columna}.#{indicador.indicador_template.fila}"%>
+	</td>
+
+	<td><%= ind_f.radio_button :eval, true, :class => "#{indicador.indicador_template.columna==1? 'no_node' : ''}"%></td>
+	<td><%= ind_f.radio_button :eval, false, :class =>"#{indicador.indicador_template.columna!=1? 'no_node' : ''}" %></td>
+	<td>
+		<% if indicador.indicador_template.has_na %>
+			<%= ind_f.radio_button :eval, "nil", :class => '' %>
+		<% end %>
+	</td>
+</tr>

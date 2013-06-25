@@ -1,0 +1,40 @@
+<section class = "item navbar">
+	<header class="navbar-inner">
+		<%= item_f.hidden_field :item_template_id %>				
+
+		<ul class="nav">
+			<li class="number"><h4><%="#{item_index+1}"%></h4></li>
+			<li class="divider-vertical"></li>
+			<li><h4><%="#{item.item_template.nombre}" %></h4></li>
+		</ul>
+		<ul class="nav pull-right">
+			<% if item.item_template.has_na %>
+				<li>
+					<%= item_f.label "N/A" %>
+					<%= item_f.check_box :eval, 0 %>
+				</li>
+				<li class="divider-vertical"></li>
+			<% end %>											
+			<li class="pull-right"><a href="#"><i class="icon-chevron-left"></i></a> </li>											
+		</ul>
+	</header>
+
+	<div class="item_body row well">
+		<% if item.id != nil %>
+			<% indicadores = item.indicador.order("indicador_template_id ASC") %>
+		<% else %>
+			<% indicadores = item.indicador %>
+		<% end %>
+		<% indicadores.each.with_index do |indicador, ind_index| %>
+			<%= item_f.fields_for :indicador, indicador do |ind_f| %>
+				<%= render 'indicador_fields', :indicador => indicador, :ind_f => ind_f %>
+			<% end %>
+		<% end %>
+		</table>
+
+		<div class = "observaciones span" >
+			<%= item_f.label :observaciones %> <br />
+			<%= item_f.text_field :observaciones, :class => "observaciones" %>
+		</div>
+	</div>								
+</section>

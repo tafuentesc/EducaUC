@@ -3,9 +3,25 @@
 // You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $(function(){
+	// vinculamos con la función markPreviousIndicators
+	$("section.item").delegate("input.no_node","click",markPreviousIndicators);
+	// vinculamos con la función toggleVisibility
+	$("div.sub-escala").delegate("a", "click", toggleVisibility)
 
+	// Variable para almacenar el valor previamente seleccionado en select#escala:
+	var previous_option = 0;
+	
 	// Función para cargar dinámicamente la escala dependiendo de la opción seleccionada:
 	$("select#escala").change(function(){
+		// Antes que nada, verificamos que no haya nada seleccionado. De ser así, pedimos confirmación,
+		// puesto que cambiar la escala borrará la información agregada:
+		if($("div#escala_container").find("input:checked").length > 0)
+		{
+			// TODO: Agregar diálogo que confirme acción
+			alert("NO puede, hay elementos seleccionados. DES-SELECCIONE TODO MANUALMENTE ANTES DE CONTINUAR... o wait... NO PUEDES! MUAJAJAJAAA!!!! >:D");
+			return;
+		}
+	
 		// Primero, extraemos el id seleccionado
 		id = $(this).val();
 		
@@ -38,17 +54,14 @@ $(function(){
 						// No es lo que quiero, pero servirá para avanzar por los ítems al presionar teclas
 						$("body").animate({scrollTop: scrollTop}, 500);
 					});
-				})
-
-				// Removemos tamaño? (no es necesario)
-
-				// vinculamos con la función markPreviousIndicators
-				$("input.no_node").click(markPreviousIndicators);
-				
-				// Seteamos scrollTop:
+				})								
+				// Actualizamos el valor de previous_option
+				previous_option = id;
 			},
 			error: function()
 			{
+				// volvemos select#escala al previous_option y mostramos mensaje de error:
+				$("select#escala").val(previous_option);
 				alert("An error ocurred!");
 			}
 		});
@@ -103,9 +116,28 @@ $(function(){
 
 			row = row.prev();
 		}
-		
-		//alert("the checkbox has " + count + " previous rows");
 	};
+		
+	function toggleVisibility(e)
+	{
+		e.preventDefault();
+		
+		$parent = $(this).parents(".navbar").first();
+		
+		// Si está expandido, lo contraemos
+		if($(this).children("i").hasClass("icon-chevron-down"))
+		{
+			$(this).children("i").removeClass("icon-chevron-down");
+			$parent.children("div.item_body").slideUp();
+			$(this).children("i").addClass("icon-chevron-left");
+		}
+		else if($(this).children("i").hasClass("icon-chevron-left"))
+		{
+			$(this).children("i").removeClass("icon-chevron-left");
+			$parent.children("div.item_body").slideDown();
+			$(this).children("i").addClass("icon-chevron-down");
+		}
+	}
 	
 });
 

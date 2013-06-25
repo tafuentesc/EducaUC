@@ -21,3 +21,38 @@ div#loading
 	width: 100%;
 	height:	100%;
 }
+
+section.item *
+{
+	color: black;
+}
+
+section.item 
+{	
+	margin-left: 45px;
+	margin-right: 150px;
+}
+div.item_body 
+{ 
+	margin-left: 0;
+	background-color: white;
+	display: none;
+}
+
+header.navbar-inner
+{
+	padding-right: 0;
+} 
+header.navbar-inner li.number
+{
+	padding-right: 10px;
+}
+
+table.columna_1
+{
+	position: relative;
+	margin-left: 35px;
+}
+
+div.controls { width: 220px;}
+div.controls.time select { width: 45%;}

@@ -8,6 +8,37 @@
 </head>
 <body>
 
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <a class="brand" href="/">EducaUC</a>
+    <ul class="nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="#">Link</a></li>
+      <li><a href="#">Link</a></li>
+    </ul>
+    <ul class="nav pull-right">
+      <% if !(@logged_user.nil?) %>
+		    <% if(@logged_user.admin?) %>
+		    	<% role = 'Admin' %>
+		    <% else %>
+		    	<% role = 'Digitador' %>
+		    <% end %>
+		    <li>
+		    	<a href=<%="#{user_path(@logged_user)}"%>>
+		    		<i class='icon-user'></i>
+		    		<%= "#{@logged_user.name} #{@logged_user.lastname} - #{role}" %>
+		    	</a>
+		    </li>
+		    <li class="divider-vertical"></li>
+		    <li>
+		    	<a href="">logout</a>
+		    </li>
+      <% end %>
+
+    </ul>
+  </div>
+</div>
+
 <div id="page">
 	<% if !(@logged_user.nil?) %>
 	<div id="logo"></div>

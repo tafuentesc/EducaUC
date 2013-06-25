@@ -1,0 +1,26 @@
+<div class = "sub-escala navbar">
+	<%= sub_escala.hidden_field :subescala_template_id %>				
+	<header class="navbar-inner">
+		<ul class="nav">
+			<li class="number"><h3><%="#{sub_esc_index+1}"%></h3></li>
+			<li class="divider-vertical"></li>
+			<li><h3><%="#{subescala.subescala_template.nombre}"%></h3></li>
+		</ul>
+		<ul class="nav pull-right">
+			<li class="pull-right"><a href="#"><i class="icon-chevron-left"></i></a> </li>											
+		</ul>
+	</header>
+	<div class="item_body well">
+	
+	<% if subescala.id != nil %>
+		<% items = subescala.item.order("item_template_id ASC") %>
+	<% else %>
+		<% items = subescala.item %>
+	<% end %>
+	<% items.each.with_index do |item, item_index| %>
+		<%= sub_escala.fields_for :item, item do |item_f| %>
+			<%= render 'item_fields', :item => item, :item_index => item_index, :item_f => item_f %>
+		<% end %>
+	<% end %>					
+	</div>
+</div>
