@@ -13,7 +13,7 @@ SubescalaTemplate.create(nombre: 'Espacio y Mueble', numero: 1, escala_template_
 SubescalaTemplate.create(nombre: 'Rutinas del Cuidado Personal', numero: 2, escala_template_id: 1);
 SubescalaTemplate.create(nombre: 'Escuchar y Hablar', numero: 3, escala_template_id: 1);
 SubescalaTemplate.create(nombre: 'Actividades', numero: 4, escala_template_id: 1);
-SubescalaTemplate.create(nombre: 'Interaccion', numero: 5, escala_template_id: 1);
+SubescalaTemplate.create(nombre: 'Interacción', numero: 5, escala_template_id: 1);
 SubescalaTemplate.create(nombre: 'Estructura del Programa', numero: 6, escala_template_id: 1);
 SubescalaTemplate.create(nombre: 'Padres y Personal', numero: 7, escala_template_id: 1);
 
@@ -22,7 +22,7 @@ SubescalaTemplate.create(nombre: 'Espacio y Mueble', numero: 1, escala_template_
 SubescalaTemplate.create(nombre: 'Rutinas del Cuidado Personal', numero: 2, escala_template_id: 2);
 SubescalaTemplate.create(nombre: 'Lenguaje-Razonamiento', numero: 3, escala_template_id: 2);
 SubescalaTemplate.create(nombre: 'Actividades', numero: 4, escala_template_id: 2);
-SubescalaTemplate.create(nombre: 'Interaccion', numero: 5, escala_template_id: 2);
+SubescalaTemplate.create(nombre: 'Interacción', numero: 5, escala_template_id: 2);
 SubescalaTemplate.create(nombre: 'Estructura del Programa', numero: 6, escala_template_id: 2);
 SubescalaTemplate.create(nombre: 'Padres y Personal', numero: 7, escala_template_id: 2);
 
@@ -30,8 +30,8 @@ SubescalaTemplate.create(nombre: 'Padres y Personal', numero: 7, escala_template
 ItemTemplate.create(nombre: 'Espacio Interior', numero: 1, subescala_template_id: 1);
 ItemTemplate.create(nombre: 'Muebles para el cuidado rutinario y el juego', numero: 2, subescala_template_id: 1);
 ItemTemplate.create(nombre: 'Provisiones para el relajamiento y el confort', numero: 3, subescala_template_id: 1);
-ItemTemplate.create(nombre: 'Organizacion de la sala', numero: 4, subescala_template_id: 1);
-ItemTemplate.create(nombre: 'Exhibiciones para los ninos', numero: 5, subescala_template_id: 1);
+ItemTemplate.create(nombre: 'Organización de la sala', numero: 4, subescala_template_id: 1);
+ItemTemplate.create(nombre: 'Exhibiciones para los niños', numero: 5, subescala_template_id: 1);
 
 #Item --- Sub-escala 2, Escala ITERS-R
 ItemTemplate.create(nombre: 'Recibimiento y Despedida', numero: 1, subescala_template_id: 2);
@@ -83,9 +83,9 @@ ItemTemplate.create(nombre: 'Oportunidades para el desarrollo profesional', nume
 ItemTemplate.create(nombre: 'Espacio Interior', numero: 1, subescala_template_id: 8);
 ItemTemplate.create(nombre: 'Muebles para el cuidado rutinario, el juego y el aprendizaje', numero: 2, subescala_template_id: 8);
 ItemTemplate.create(nombre: 'Muebles para el relajamiento y el confort', numero: 3, subescala_template_id: 8);
-ItemTemplate.create(nombre: 'Organizacion de la sala para el juego', numero: 4, subescala_template_id: 8);
+ItemTemplate.create(nombre: 'Organización de la sala para el juego', numero: 4, subescala_template_id: 8);
 ItemTemplate.create(nombre: 'Espacio para la privacidad', numero: 5, subescala_template_id: 8);
-ItemTemplate.create(nombre: 'Exhibiciones relacionadas con los ninos', numero: 6, subescala_template_id: 8);
+ItemTemplate.create(nombre: 'Exhibiciones relacionadas con los niños', numero: 6, subescala_template_id: 8);
 ItemTemplate.create(nombre: 'Espacio para el juego motor grueso', numero: 7, subescala_template_id: 8);
 ItemTemplate.create(nombre: 'Equipo para actividades motoras gruesas', numero: 8, subescala_template_id: 8);
 
@@ -682,20 +682,20 @@ IndicadorTemplate.create(columna: 7, fila: 2, has_na: false, item_template_id: 3
 IndicadorTemplate.create(columna: 7, fila: 3, has_na: true, item_template_id: 39, descripcion: 'El personal con menos de un titulo de Asociado en Artes (Associate in Arts AA)  (dos años de universidad) en educación de la infancia temprana tiene como requisito seguir con su educación formal (p. ej. estudiar para obtener un certificado de Desarrollo Educativo General {General Equivilancy Diploma GED} {equivalencia de la secundaria} una credencial de Asociando de Desarrollo Infantil {Child Developement Associate CDA} o un titulo AA) NA PERMITIDO.', tooltip: '¿Hay algún requisito de que el personal con menos de un titulo AA continúe su educación formal? Describa los requisitos.')
 
 # Indicadores Item 1, Sub-escala 1, Escala ECERS
-IndicadorTemplate.create(columna: 1, fila: 1, has_na: false, item_template_id: 40, descripcion: 'No hay suficiente espacio para ninos, adultos, y muebles.', tooltip: 'Base la necesidad de espacio en el número más alto de niños presentes en un momento determinado')
-IndicadorTemplate.create(columna: 1, fila: 2, has_na: false, item_template_id: 40, descripcion: 'El espacio no tiene suficiente luz, ventilacion, control de temperatura, o materiales que absorben el sonido.', tooltip: 'Sonido = importante que NO afecte el ambiente   /   Se tienen que cumplir las 4 : luz ventilación temperatura y sonido')
+IndicadorTemplate.create(columna: 1, fila: 1, has_na: false, item_template_id: 40, descripcion: 'No hay suficiente espacio para niños, adultos, y muebles.', tooltip: 'Base la necesidad de espacio en el número más alto de niños presentes en un momento determinado')
+IndicadorTemplate.create(columna: 1, fila: 2, has_na: false, item_template_id: 40, descripcion: 'El espacio no tiene suficiente luz, ventilación, control de temperatura, o materiales que absorben el sonido.', tooltip: 'Sonido = importante que NO afecte el ambiente   /   Se tienen que cumplir las 4 : luz ventilación temperatura y sonido')
 IndicadorTemplate.create(columna: 1, fila: 3, has_na: false, item_template_id: 40, descripcion: 'El espacio esta en malas condiciones.', tooltip: 'Debe haber UNO o más problemas que sean un riesgo para la salud o seguridad de los niños.   /   Por ejemplo se está cascando la pintura de las paredes y del techo los pisos no están lisos y están dañados.')
 IndicadorTemplate.create(columna: 1, fila: 4, has_na: false, item_template_id: 40, descripcion: 'El espacio esta mal mantenido.', tooltip: 'Por ejemplo dejan los pisos sucios o pegajosos los basureros se están desbordando')
-IndicadorTemplate.create(columna: 3, fila: 1, has_na: false, item_template_id: 40, descripcion: 'Hay suficiente espacio interior para ninos, adultos, y muebles.', tooltip: 'Preguntarse ¿Cómo funciona el espacio si todo lo básico estuviera incluido y todos los niños estuvieran presente?   /   Debiera haber espacio para gatear jugar guardar el material comer sin tener que sacar o mover cosas.')
-IndicadorTemplate.create(columna: 3, fila: 2, has_na: false, item_template_id: 40, descripcion: 'El espacio tiene suficiente luz, ventilacion control de temperatura, y materiales que absorben el sonido.', tooltip: '')
+IndicadorTemplate.create(columna: 3, fila: 1, has_na: false, item_template_id: 40, descripcion: 'Hay suficiente espacio interior para niños, adultos, y muebles.', tooltip: 'Preguntarse ¿Cómo funciona el espacio si todo lo básico estuviera incluido y todos los niños estuvieran presente?   /   Debiera haber espacio para gatear jugar guardar el material comer sin tener que sacar o mover cosas.')
+IndicadorTemplate.create(columna: 3, fila: 2, has_na: false, item_template_id: 40, descripcion: 'El espacio tiene suficiente luz, ventilación control de temperatura, y materiales que absorben el sonido.', tooltip: '')
 IndicadorTemplate.create(columna: 3, fila: 3, has_na: false, item_template_id: 40, descripcion: 'El espacio esta en buenas condiciones.', tooltip: 'Se acepta si hay máximo 2 o 3 pequeños problemas.')
 IndicadorTemplate.create(columna: 3, fila: 4, has_na: false, item_template_id: 40, descripcion: 'El espacio esta bastante limpio y bien mantenido.', tooltip: 'Se espera que haya un poco de suciedad como resultado de las actividades normales del día. "Bastante limpio" significa que hay evidencia de manteniemiento diario como barrer trapear los pisos y que las ensuciadas grandes com oel jugo derramado se limpian inmediatamente.')
-IndicadorTemplate.create(columna: 3, fila: 5, has_na: true, item_template_id: 40, descripcion: 'El espacio es accesible a todos los ninos y adultos que estan usando la sala de clase.', tooltip: 'Ancho de la puerta: 80 cm.   /    Ojo con las manillas de las puertas    /   El niño con discapacidad debe tener acceso a al menos un  baño donde se van regularmente sus compañeros.    /   Por ejemplo rampas y barandas acceso para sillas de ruedas y bastones.')
-IndicadorTemplate.create(columna: 5, fila: 1, has_na: false, item_template_id: 40, descripcion: 'Hay espacio amplio al interior que les permite a los ninos y a los adultos moverse facilmente.', tooltip: 'Por ejemplo los muebles no limitan los movimientos de los niños; hay suficiente espacio para el equipo que necesitan los niños con discapacidades.   /   Si hay 2 o más áreas SIN espacio para jugar = NO')
-IndicadorTemplate.create(columna: 5, fila: 2, has_na: false, item_template_id: 40, descripcion: 'Hay buena ventilacion, entra alguna luz natural a traves de las ventanas o por un tragaluz.', tooltip: '')
-IndicadorTemplate.create(columna: 5, fila: 3, has_na: false, item_template_id: 40, descripcion: 'El espacio es accesible a todos los ninos y adultos con discapacidades.', tooltip: 'La accesibilidad es necesaria aunque no hayan individuos con discapacidades en el programa.')
+IndicadorTemplate.create(columna: 3, fila: 5, has_na: true, item_template_id: 40, descripcion: 'El espacio es accesible a todos los niños y adultos que estan usando la sala de clase.', tooltip: 'Ancho de la puerta: 80 cm.   /    Ojo con las manillas de las puertas    /   El niño con discapacidad debe tener acceso a al menos un  baño donde se van regularmente sus compañeros.    /   Por ejemplo rampas y barandas acceso para sillas de ruedas y bastones.')
+IndicadorTemplate.create(columna: 5, fila: 1, has_na: false, item_template_id: 40, descripcion: 'Hay espacio amplio al interior que les permite a los niños y a los adultos moverse facilmente.', tooltip: 'Por ejemplo los muebles no limitan los movimientos de los niños; hay suficiente espacio para el equipo que necesitan los niños con discapacidades.   /   Si hay 2 o más áreas SIN espacio para jugar = NO')
+IndicadorTemplate.create(columna: 5, fila: 2, has_na: false, item_template_id: 40, descripcion: 'Hay buena ventilación, entra alguna luz natural a través de las ventanas o por un tragaluz.', tooltip: '')
+IndicadorTemplate.create(columna: 5, fila: 3, has_na: false, item_template_id: 40, descripcion: 'El espacio es accesible a todos los niños y adultos con discapacidades.', tooltip: 'La accesibilidad es necesaria aunque no hayan individuos con discapacidades en el programa.')
 IndicadorTemplate.create(columna: 7, fila: 1, has_na: false, item_template_id: 40, descripcion: 'Se puede controlar la luz natural que entra.', tooltip: 'Por ejemplo persianas o cortinad ajustables.')
-IndicadorTemplate.create(columna: 7, fila: 2, has_na: false, item_template_id: 40, descripcion: 'Se puede controlar la ventilacion.', tooltip: 'Por ejemplo se pueden abrir las ventanas el personal usa un ventilador.    /    Fijarse que no hayan malos olores o que éstos se vayan rápido.   /   Las puertas que dan para afuera cuentan con control de ventilación sólo si se pueden dejar abiertas sin ser una amenaza para la seguridad (por ejemplo si tienen una rejita para evitar que los niños salgan solos)')
+IndicadorTemplate.create(columna: 7, fila: 2, has_na: false, item_template_id: 40, descripcion: 'Se puede controlar la ventilación.', tooltip: 'Por ejemplo se pueden abrir las ventanas el personal usa un ventilador.    /    Fijarse que no hayan malos olores o que éstos se vayan rápido.   /   Las puertas que dan para afuera cuentan con control de ventilación sólo si se pueden dejar abiertas sin ser una amenaza para la seguridad (por ejemplo si tienen una rejita para evitar que los niños salgan solos)')
 
 # Indicadores Item 2, Sub-escala 1, Escala ECERS
 IndicadorTemplate.create(columna: 1, fila: 1, has_na: false, item_template_id: 41, descripcion: 'No hay suficientes muebles básicos para el cuidado rutinario juego y aprendizaje.', tooltip: 'Muebles básicos: mesas y sillas utilizadas para las comidas/las meriendas y las actividades; las colchonetas o los catres para descansar o para la siesta; estantes u otro espacio para guardar las cosas de los niños; estantes abiertos y bajos para materiales de juego/ aprendizaje. Para poder dar crédito por estantes abiertos y bajos tienen que  ser usados para juguetes y materiales que los niños pueden alcanzar solos.   /   Por ejemplo no hay suficientes sillas para que todos los niños las usen a la misma vez; hay muy pocos estantes abiertos para los juguetes.   /  No se incluye el material para motricidad gruesa')
