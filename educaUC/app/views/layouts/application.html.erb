@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <title>EducaUC</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
@@ -30,9 +30,7 @@
 		    	</a>
 		    </li>
 		    <li class="divider-vertical"></li>
-		    <li>
-		    	<a href="">logout</a>
-		    </li>
+		    <li><%= link_to '(Logout)', logout_path %> </li>
       <% end %>
 
     </ul>
@@ -51,8 +49,19 @@
 	</div>
 	<% end %>
 
-	<div id="main" class="cc01 container">
-	<%= yield %>
+	<!-- creamos vista 4/8 para menú al lado izquierdo -->
+	<div id="main" class="row">
+		<% if !(@logged_user.nil?) %>
+			<ul class="span3 nav nav-tabs nav-stacked">
+				<li><a href="#">ASD</a></li>
+				<li><a>ASD</a></li>
+				<li><a>ASD</a></li>
+				<li><a>ASD</a></li>
+			</ul>
+		<% end %>
+		<div class="span8">	
+			<%= yield %>
+		</div>
 	</div>
 
 </div>

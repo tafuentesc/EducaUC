@@ -3,5 +3,5 @@ class Sala < ActiveRecord::Base
   belongs_to :centro
   
   # el nombre debe ser único!
-  validates_uniqueness_of :nombre
+  validates_uniqueness_of :nombre, :scope => [:centro_id]
 end

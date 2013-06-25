@@ -53,12 +53,14 @@
       <%= f.text_field :razon, :class => 'text_field' %>
     </div>
   </div>
-  <div class="control-group">
-    <%= f.label :centro_id, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.number_field :centro_id, :class => 'number_field' %>
-    </div>
-  </div>
+
+	<div class="control-group">
+	  <%= label_tag :escala, "Seleccione centro en que se realizó la evaluación", :class => 'control-label' %>
+	  <div class="controls">
+	  <% @centros = Centro.all %>
+	  <%= f.select :centro_id, options_from_collection_for_select(@centros, "id", "nombre"), :class => 'select_field', :prompt => "--------------------" %>
+	  </div>
+	</div>
   <% if @evaluacion.escala.id != nil %>
   <div class="control-group">
     <%= label_tag :escala, "Escala de evaluación:", :class => 'control-label' %>
@@ -81,11 +83,11 @@
   	<%= render 'escala' %>
   <% else %>
   	<div id="ajax_container">
-  	<div id="error"></div>
+			<div id="error"></div>
 		
-		<div id="loading"></div>
+			<div id="loading"></div>
 		
-		<div id="escala_container"></div>
+			<div id="escala_container"></div>
 		</div>
   <% end %>
   

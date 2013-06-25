@@ -80,7 +80,6 @@ class EvaluacionsController < ApplicationController
   # POST /evaluacions
   # POST /evaluacions.json
   def create
-  	params[:evaluacion][:escala_attributes].merge(:escala_template_id => 1)
     @evaluacion = Evaluacion.new(params[:evaluacion])
     
     respond_to do |format|
