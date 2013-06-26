@@ -31,6 +31,19 @@
                       :method => :delete,
                       :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
                       :class => 'btn btn-mini btn-danger' %>
+          <%= link_to 'Generar PDF', '/evaluaciones/generate/'+evaluacion.id.to_s, :remote => true, :id => 'pdf_create_button'+evaluacion.id.to_s, :class => 'btn btn-mini' %>
+          <%= link_to 'Download PDF', "/evaluaciones/download/#{evaluacion.id}", :id => 'pdf_download_button'+evaluacion.id.to_s, :class => 'btn btn-mini', :style => 'display: none;' %>
+
+          <script>
+            $("#pdf_create_button<%=evaluacion.id.to_s%>").bind('ajax:loading',function(evt,data,status,xhr){
+
+            }); 
+            $("#pdf_create_button<%=evaluacion.id.to_s%>").bind('ajax:success',function(evt,data,status,xhr){
+              $('#pdf_download_button<%=evaluacion.id.to_s%>').fadeToggle();
+              $('#pdf_create_button<%=evaluacion.id.to_s%>').fadeToggle();
+            });
+          </script>
+
         </td>
       </tr>
     <% end %>
