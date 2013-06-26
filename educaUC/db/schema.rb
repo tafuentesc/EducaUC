@@ -46,7 +46,6 @@ ActiveRecord::Schema.define(:version => 20130625220034) do
     t.datetime "created_at",                                   :null => false
     t.datetime "updated_at",                                   :null => false
     t.string   "estado",              :default => "Pendiente", :null => false
-    t.string   "razon"
     t.integer  "centro_id"
   end
 
@@ -86,6 +85,14 @@ ActiveRecord::Schema.define(:version => 20130625220034) do
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
     t.string   "observaciones"
+  end
+
+  create_table "objetados", :force => true do |t|
+    t.integer  "evaluacion_id"
+    t.integer  "admin_id"
+    t.string   "razon"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "salas", :force => true do |t|

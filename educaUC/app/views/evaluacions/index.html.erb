@@ -1,6 +1,6 @@
 <%- model_class = Evaluacion -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+  <h1><%=t '.title', :default => "Evaluaciones" %></h1>
 </div>
 <table class="table table-striped">
   <thead>
@@ -8,12 +8,8 @@
       <th><%= model_class.human_attribute_name(:nombre_sala) %></th>
       <th><%= model_class.human_attribute_name(:fecha_de_evaluacion) %></th>
       <th><%= model_class.human_attribute_name(:encargado) %></th>
-      <th><%= model_class.human_attribute_name(:horario_inicial) %></th>
-      <th><%= model_class.human_attribute_name(:horario_final) %></th>
       <th><%= model_class.human_attribute_name(:estado) %></th>
-      <th><%= model_class.human_attribute_name(:razon) %></th>
-      <th><%= model_class.human_attribute_name(:centro_id) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th>Centro</th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
@@ -22,13 +18,9 @@
       <tr>
         <td><%= evaluacion.nombre_sala %></td>
         <td><%= evaluacion.fecha_de_evaluacion %></td>
-        <td><%= evaluacion.encargado %></td>
-        <td><%= evaluacion.horario_inicial %></td>
-        <td><%= evaluacion.horario_final %></td>
+        <td><%= "#{evaluacion.user.name} #{evaluacion.user.lastname}" %></td>
         <td><%= evaluacion.estado %></td>
-        <td><%= evaluacion.razon %></td>
-        <td><%= evaluacion.centro_id %></td>
-        <td><%=l evaluacion.created_at %></td>
+        <td><%= evaluacion.centro.nombre %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_evaluacion_path(evaluacion), :class => 'btn btn-mini' %>

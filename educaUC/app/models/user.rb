@@ -5,7 +5,8 @@ class User < ActiveRecord::Base
 	# deleted/ changed attributes: deleted->active, profile
 
 	#has_many :dataFiles, :primary_key => :email, :foreign_key => :owner, :dependent => :destroy
-	before_save :encrypt_password, :set_defaults
+	before_save :encrypt_password
+	before_create :set_defaults
 	
 	validates_presence_of :admin, :name, :lastname
 	validates_uniqueness_of :email
@@ -33,14 +34,15 @@ class User < ActiveRecord::Base
 				self.salt = SecureRandom.hex(16) 
 			end
 			
-			password = self.salt + self.hash_password
+			if(self.hash_password_changed?)
+				password = self.salt + self.hash_password
 			
-			10.times do |x|
-				password = Digest::SHA1.hexdigest(password)
-			end
+				10.times do |x|
+					password = Digest::SHA1.hexdigest(password)
+				end
 
-			self.hash_password = password
-			
+				self.hash_password = password
+			end
 			# enviamos mail al usuario con su contraseñas
 			# UserMailer.welcome_email(self, unencripted_pass).deliver
 	end
