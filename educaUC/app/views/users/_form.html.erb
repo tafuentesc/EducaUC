@@ -18,9 +18,9 @@
     </div>
   </div>
   <div class="control-group">
-    <%= f.label :deleted, :class => 'control-label' %>
+    <%= f.label :active, :class => 'control-label' %>
     <div class="controls">
-      <%= f.number_field :deleted, :class => 'number_field' %>
+      <%= f.check_box :active, :class => 'check_box' %>
     </div>
   </div>
   <div class="control-group">
@@ -33,24 +33,6 @@
     <%= f.label :hash_password, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :hash_password, :class => 'text_field' %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :token, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :token, :class => 'text_field' %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :salt, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :salt, :class => 'text_field' %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :profile, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :profile, :class => 'text_field' %>
     </div>
   </div>
 

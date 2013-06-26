@@ -44,7 +44,7 @@ class EvaluacionsController < ApplicationController
 			subescala_template.item_template.each do |item_template|
 				item = sub_escala.item.build(:item_template_id => item_template.id)
 				
-				item_template.indicador_template.each do |indicador_template|
+				item_template.indicador_template.order("id ASC").each do |indicador_template|
 					indicador = item.indicador.build(:indicador_template_id => indicador_template.id)
 				end
 			end

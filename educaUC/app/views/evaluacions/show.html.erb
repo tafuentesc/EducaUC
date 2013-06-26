@@ -16,10 +16,8 @@
   <dd><%= @evaluacion.horario_final %></dd>
   <dt><strong><%= model_class.human_attribute_name(:estado) %>:</strong></dt>
   <dd><%= @evaluacion.estado %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:razon) %>:</strong></dt>
-  <dd><%= @evaluacion.razon %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:centro_id) %>:</strong></dt>
-  <dd><%= @evaluacion.centro_id %></dd>
+  <dt><strong>Centro:</strong></dt>
+  <dd><%= @evaluacion.centro.nombre %></dd>
 </dl>
 
 <div class="form-actions">

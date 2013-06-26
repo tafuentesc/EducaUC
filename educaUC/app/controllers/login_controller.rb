@@ -7,7 +7,7 @@ def index
 end
 
 def login
-   	user_name = params[:user]
+  user_name = params[:user]
 	password = params[:password]
 		
 	user = User.find_by_email(user_name)
