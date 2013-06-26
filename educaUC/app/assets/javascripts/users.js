@@ -3,9 +3,9 @@
 // You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $(function(){
-	$("tr.user-record td").click(loadUserRecord);
+	$("tr.record td").click(loadRecord);
 	
-	function loadUserRecord()
+	function loadRecord()
 	{
 		// primero, verificamos que no contenga un switch o botón
 		// en caso de ser así, no hacemos nada
@@ -14,9 +14,10 @@ $(function(){
 	
 		// En caso contrario, procedemos a cargar la url del usuario:
 		var id = $(this).parent().attr("data-id");
+		var record_class = $(this).parent().attr("data-class")
 		
 		// construimos url:
-		var url = '/users/'+id;
+		var url = '/' + record_class + '/' + id;
 		
 		// redirijimos:
 		window.location = url;

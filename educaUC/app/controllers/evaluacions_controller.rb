@@ -61,7 +61,6 @@ class EvaluacionsController < ApplicationController
   def new
   	#TODO: vincular usuario con evaluación
     @evaluacion = Evaluacion.new
-		@escala = @evaluacion.build_escala
 		@user = @logged_user
 
     respond_to do |format|
@@ -74,7 +73,7 @@ class EvaluacionsController < ApplicationController
   def edit
     @evaluacion = Evaluacion.find(params[:id])
     @escala = @evaluacion.escala
-    @user = User.find(@evaluacion.encargado)
+    @user = @evaluacion.user
   end
 
   # POST /evaluacions

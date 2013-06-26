@@ -154,9 +154,16 @@ $(function(){
 	}
 		
 	function validateData(){
-		//$('div#escala_container').find('div.sub-escala section.item div.item_body input[type="radio"]').length
+		// Primero, validamos nombre_sala, centro_id
 		
+		
+		// Validamos que tenga escala:
 		$escalaContainer = $('div#escala_container');
+		
+		// Si no cargó nada, agregamos el error:
+		if($escalaContainer.find('div.sub-escala section.item div.item_body input[type="radio"]').length == 0)
+
+		// validamos la escala:
 		has_blank = validateEscala($escalaContainer);
 		
 //		if(!has_blank)

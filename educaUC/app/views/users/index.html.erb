@@ -16,7 +16,7 @@
   </thead>
   <tbody>
     <% @users.each do |user| %>
-      <tr class="user-record" data-id="<%= user.id %>">
+      <tr class="record" data-class="users" data-id="<%= user.id %>">
         <td><%= user.name %></td>
         <td><%= user.lastname %></td>
         <td><%= user.email %></td>
