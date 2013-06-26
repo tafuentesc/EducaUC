@@ -149,6 +149,8 @@ $(function(){
 			$(this).children("i").addClass("icon-chevron-down");
 		}
 	}
+
+
 	
 });
 

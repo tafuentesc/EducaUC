@@ -7,6 +7,9 @@ EducaUC::Application.routes.draw do
   match '/logout' => "login#logout"
   
   match '/evaluaciones/escala/:id' => "evaluacions#load_escala", :as => :load_escala
+
+  match '/evaluaciones/generate/:id' => "evaluacions#createPDF"
+  match '/evaluaciones/download/:id' => "evaluacions#download"
   
   # :path cambia la ruta que se despliega al usuario
   resources :evaluacions, :path => "evaluaciones"
