@@ -17,7 +17,9 @@
     <% @evaluacions.each do |evaluacion| %>
       <tr>
         <td><%= evaluacion.nombre_sala %></td>
-        <td><%= evaluacion.fecha_de_evaluacion %></td>
+        <td><% date = evaluacion.fecha_de_evaluacion %>
+        		<%= "#{date.day}-#{date.month}-#{date.year}" %>
+        </td>
         <td><%= "#{evaluacion.user.name} #{evaluacion.user.lastname}" %></td>
         <td><%= evaluacion.estado %></td>
         <td><%= evaluacion.centro.nombre %></td>

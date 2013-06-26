@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
 	before_save :encrypt_password
 	before_create :set_defaults
 	
-	validates_presence_of :admin, :name, :lastname
+	validates_presence_of :name, :lastname
 	validates_uniqueness_of :email
 	validate :email, :format => { :with => /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/, :message => "Email address not valid" }
 	
@@ -16,6 +16,10 @@ class User < ActiveRecord::Base
 	
 	def set_defaults
 		self.active = 1
+		
+		if(self.admin==nil)
+			self.admin = false
+		end
 	end
 	
 	def generateToken

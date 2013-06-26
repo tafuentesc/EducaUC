@@ -13,10 +13,10 @@ def login
 	user = User.find_by_email(user_name)
 		
 	if(user.nil?)
-		redirect_to :login, notice: 'bad dataaaa'
+		redirect_to :login, notice: "email y/o contraseña incorrectos."
 		return
 	end
-		
+	
 	salt = user.salt
 	password = salt + password
 		
@@ -25,8 +25,12 @@ def login
 	end
 
 		
-	if(user.hash_password!=password)
-		redirect_to :login, notice: 'bad dataaaa'
+	if (user.active != 1)
+		session[:user_id] = user.id
+		redirect_to :login, notice: 'La cuenta se encuentra desactivada, para más detalles contacte a un administrador.'
+		return
+	elsif(user.hash_password!=password)
+		redirect_to :login, notice: 'email y/o contraseña incorrectos.'
 		return
 	end
 	session[:token] = user.generateToken
@@ -35,6 +39,6 @@ def login
 
 def logout
     session[:token] = nil
-    redirect_to :login, notice: 'Logged out.'
+    redirect_to :login, notice: 'Sesión cerrada exitosamente.'
 end
 end

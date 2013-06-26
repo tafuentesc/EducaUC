@@ -9,8 +9,9 @@ $(function(){
 	$("section.item").delegate("input.no_node","click",markPreviousIndicators);
 	//$("ajax_container").delegate("input.no_node","click",markPreviousIndicators);
 	// vinculamos con la función toggleVisibility
-	$("div.sub-escala").delegate("a", "click", toggleVisibility)
+	$("div.sub-escala").delegate("header", "click", toggleVisibility)
 	//$("ajax_container").delegate("a", "click", toggleVisibility)
+	$("form#edit_evaluacion").submit(validateData);
 
 	// Variable para almacenar el valor previamente seleccionado en select#escala:
 	var previous_option = 0;
@@ -61,8 +62,9 @@ $(function(){
 
 						// vinculamos con delegate:
 						$("section.item input.no_node").click(markPreviousIndicators);
-						$("div#ajax_container a").click(toggleVisibility)
-						
+						$("div#ajax_container header").click(toggleVisibility)
+						$("form#new_evaluacion").submit(validateData);
+
 						// Actualizamos el valor de previous_option
 						previous_option = id;
 
@@ -78,7 +80,7 @@ $(function(){
 		});
 	
 	});
-
+	
 	// Función para rellenar con "SI" los espacios vacíos	
 	function markPreviousIndicators(){
 		// Obtenemos el valor del radio_button (si es la primera columna, true; caso contrario, false)
@@ -132,24 +134,87 @@ $(function(){
 	function toggleVisibility(e)
 	{
 		e.preventDefault();
-
-		$parent = $(this).parents(".navbar").first();
+	
+		$item_body = $(this).siblings('div.item_body');
+		$icon = $(this).find('ul.nav.pull-right li a i');
 		
 		// Si está expandido, lo contraemos
-		if($(this).children("i").hasClass("icon-chevron-down"))
+		if($icon.hasClass("icon-chevron-down"))
 		{
-			$(this).children("i").removeClass("icon-chevron-down");
-			$parent.children("div.item_body").slideUp();
-			$(this).children("i").addClass("icon-chevron-left");
+			$icon.removeClass("icon-chevron-down");
+			$item_body.slideUp();
+			$icon.addClass("icon-chevron-left");
 		}
-		else if($(this).children("i").hasClass("icon-chevron-left"))
+		else if($icon.hasClass("icon-chevron-left"))
 		{
-			$(this).children("i").removeClass("icon-chevron-left");
-			$parent.children("div.item_body").slideDown();
-			$(this).children("i").addClass("icon-chevron-down");
+			$icon.removeClass("icon-chevron-left");
+			$item_body.slideDown();
+			$icon.addClass("icon-chevron-down");
 		}
 	}
+		
+	function validateData(){
+		//$('div#escala_container').find('div.sub-escala section.item div.item_body input[type="radio"]').length
+		
+		$escalaContainer = $('div#escala_container');
+		has_blank = validateEscala($escalaContainer);
+		
+//		if(!has_blank)
+//			form.submit();
+			
+		alert('se llamó!, has_blank = '+has_blank);	
+		return false;
+	}
 	
+	function validateEscala($escalaContainer)
+	{
+		// variable que indica si se ha encontrado un registro en blanco:
+		has_blank = false;
+
+		// Para cada Item, en cada sub-escala do:
+		$escalaContainer.find('div.sub-escala').each(function(sub_esc_index, subEscala){
+			$(subEscala).find('section.item').each(function(item_index, item){
+				// Buscamos el primer no_node
+				$first_no =	$(item).find('div.item_body input[type="radio"].no_node:checked').first();
+					
+				// Ahora, revisamos que todos los elementos antes de estén marcados:
+
+				// en este caso, $first_no es el radio button => td es el padre... tr es el padre del padre!
+				row = $first_no.parent().parent();
+
+				// no nos interesa partir de éste, sino de su antecesor:
+				row = row.prev();
+		
+				count = 0;
+	
+				// row.length == 0 <=> row = []
+				while(row.length != 0)
+				{			
+					// En caso de que row sea el header de la tabla, cambiamos de tabla
+					if(row.hasClass('table_header'))
+						row = row.parent().parent().prev().find('tr:last')
+				
+					// NOTA: parent() es tbody => parent().parent() es table!
+					if(row.is('tr'))
+					{
+						// Si es fila, revisamos si algún valor está chequeado
+						// De no ser así, lo marcamos como en blanco:
+						if(row.find('input:checked').length == 0)
+						{
+							has_blank = true;
+							row.addClass('blank_entry');
+						}
+						else
+							row.removeClass('blank_entry');
+					}
+
+					row = row.prev();
+				}				 
+			});
+		});
+		
+		return has_blank;
+	}
 });
 
 // OBSERVACIÓN!!!

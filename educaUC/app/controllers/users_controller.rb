@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   
   def index
   	if(@logged_user.admin?)
-	    @users = User.all
+	    @users = User.where("id != #{@logged_user.id}")
 	  else
     	redirect_to user_path(@logged_user), :notice => "No tiene permisos para acceder a esta vista"
     	return

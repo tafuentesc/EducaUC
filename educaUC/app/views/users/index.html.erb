@@ -26,8 +26,18 @@
 	        </div>
         </td>
         <td>
+        	<%
+        		adm = '', dig = ''
+        		if user.admin?
+        			adm = 'selected'
+        			dig = ''
+        		else
+        			adm = ''
+        			dig = 'selected'
+        		end 
+        	%>
         	<%= select_tag :admin, 
-        	"<option value=1>Administrador</option><option value=0>Digitador</option>".html_safe, 
+        	("<option value='1' "+adm+">Administrador</option><option value='0' "+dig+">Digitador</option>").html_safe, 
         	:class =>'btn-mini' %>
         </td>
         <td>
