@@ -25,6 +25,9 @@ class EvaluacionsController < ApplicationController
     @evaluacion = Evaluacion.find(params[:id])
 		@escala = @evaluacion.escala
 		
+	if(!(@logged_user.admin?))
+    	redirect_to user_path(@logged_user), :error => "No tiene permisos para acceder a esta vista"
+    end		
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @evaluacion }
@@ -76,6 +79,10 @@ class EvaluacionsController < ApplicationController
     @evaluacion = Evaluacion.find(params[:id])
     @escala = @evaluacion.escala
     @user = @evaluacion.user
+	
+	if(!(@user == @logged_user || @logged_user.admin?))
+    	redirect_to user_path(@logged_user), :error => "No tiene permisos para acceder a esta vista"
+    end
   end
 
   # POST /evaluacions
