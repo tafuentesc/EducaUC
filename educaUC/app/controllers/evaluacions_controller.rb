@@ -538,14 +538,14 @@ class EvaluacionsController < ApplicationController
 
     end
 
-    def objetar
-	@ojetado = Objetado.new
+  def objetar
+	  @ojetado = Objetado.new
     @evaluacion = Evaluacion.find(params[:id])
     
-	respond_to do |format|
+	  respond_to do |format|
       if @objetado.save
-		@evaluacion.estado = -1
-		@evaluacion.save
+		    @evaluacion.estado = -1
+		    @evaluacion.save
         format.html { redirect_to @evaluacion, notice: 'Evaluacion objetada con exito.' }
         format.json { render json: @evaluacion, status: :created, location: @evaluacion }
       else
@@ -553,11 +553,12 @@ class EvaluacionsController < ApplicationController
         format.json { render json: @evaluacion.errors, status: :unprocessable_entity }
       end
     end
-def aceptar
+  end
+  def aceptar
     @evaluacion = Evaluacion.find(params[:id])
     @evaluacion.estado = 2
 	
-	respond_to do |format|
+	  respond_to do |format|
       if @evaluacion.save
         format.html { redirect_to @evaluacion, notice: 'Evaluacion aceptada con exito.' }
         format.json { render json: @evaluacion, status: :created, location: @evaluacion }
