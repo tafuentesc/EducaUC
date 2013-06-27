@@ -94,6 +94,45 @@ class EvaluacionsController < ApplicationController
     respond_to do |format|
       if @evaluacion.save
       	@evaluacion.update_attribute(:encargado, @logged_user.id)
+		@evaluacion.update_attribute(:estado, 1)
+		@evaluacion.escala
+		escala.subescala.each do |subescala|
+		  sume = 0
+		  nume = 0
+		  subescala.item.each do |item|
+			sum = 0
+			num = 0
+			  item.indicador.each do |indicador|
+			    if (indicador.indicador_template.columna == 1)
+				  if (indicador.eval == true)
+				    item.eval = 1
+					break
+				  end
+				elsif (indicador.eval == false)
+				  if (indicador.fila > (IndicadorTemplate.where('item_template_id = ? AND columna = ?', indicador.item_template_id, indicador.columna).size)/2)
+				    item.eval = indicador.columna - 1
+				  else
+				    item. eval = indicador.columna -2
+				  end
+				  break
+				end
+			  end
+			  item.save
+			  if (item.eval > 0)
+			    sum = sum + item.eval
+				num = num + 1
+			  end
+			  subescala.eval = sum/num
+			  subescala.save
+			  if (subescala.eval > 0)
+			    sume = sume + subescala.eval
+			    nume = nume + 1
+			  end
+			end
+			escala.eval = sume/nume
+			escala.save
+		  end
+		@evaluacion.save
         format.html { redirect_to @evaluacion, notice: 'Evaluacion was successfully created.' }
         format.json { render json: @evaluacion, status: :created, location: @evaluacion }
       else
@@ -356,8 +395,17 @@ class EvaluacionsController < ApplicationController
     def objetar
 	@ojetado = Objetado.new
     @evaluacion = Evaluacion.find(params[:id])
-    @evaluacion.estado = -1
-	@evaluacion.save
-	@objetado.save
+    
+	respond_to do |format|
+      if @objetado.save
+		@evaluacion.estado = -1
+		@evaluacion.save
+        format.html { redirect_to @evaluacion, notice: 'Evaluacion objetada con exito.' }
+        format.json { render json: @evaluacion, status: :created, location: @evaluacion }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @evaluacion.errors, status: :unprocessable_entity }
+      end
+    end
   end
 end
