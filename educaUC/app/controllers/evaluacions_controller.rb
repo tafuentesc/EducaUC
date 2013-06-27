@@ -407,5 +407,19 @@ class EvaluacionsController < ApplicationController
         format.json { render json: @evaluacion.errors, status: :unprocessable_entity }
       end
     end
+	
+	def aceptar
+    @evaluacion = Evaluacion.find(params[:id])
+    @evaluacion.estado = 2
+	
+	respond_to do |format|
+      if @evaluacion.save
+        format.html { redirect_to @evaluacion, notice: 'Evaluacion aceptada con exito.' }
+        format.json { render json: @evaluacion, status: :created, location: @evaluacion }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @evaluacion.errors, status: :unprocessable_entity }
+      end
+    end
   end
 end
