@@ -11,17 +11,47 @@
  *= require_self
  *= require_tree .
  */
- 
-body
+
+*, body
 {
-	padding-top: 45px;
+	margin: 0 auto;
+}
+ 
+body.container
+{
+	position: absolute;
+	padding: 40px 0px 0px 0px;
+	top: 0;
+	bottom: 0;	
+	margin-left: 0px;
+}
+
+body div#page
+{
+	position: relative;
+	background-color: white;
+	height: 100%;
+	left: 26px;
+}
+
+div#content
+{
+	background-color: white;
+	height: 100%;
+	position: relative;
+	right: 0px;
+	top: 20px;
+	left: 20px;
+	padding: 0px 40px 40px 40px;
 }
 
 ul#left-menu
 {
 position: fixed;
-margin-left: 0;
+margin-left: 45px;
 top: 120px;
+left: 25px;
+width: 200px;
 }
  
 ul#errorUl 

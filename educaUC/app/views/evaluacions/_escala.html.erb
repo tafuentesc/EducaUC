@@ -1,7 +1,7 @@
 <%= fields_for @evaluacion do |f| %>
 	<%= f.fields_for :escala do |escala| %>
 		<div class = "escala"	>
-			<h2><%=  "Escala: #{@escala.escala_template.nombre}"%></h2>
+			<h3><%=  "Escala: #{@escala.escala_template.nombre}"%></h3>
 			<%= escala.hidden_field :escala_template_id %>				
 		
 			<% if @escala.id != nil %>

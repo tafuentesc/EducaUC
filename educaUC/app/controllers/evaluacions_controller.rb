@@ -26,7 +26,7 @@ class EvaluacionsController < ApplicationController
     @evaluacion = Evaluacion.find(params[:id])
 		@escala = @evaluacion.escala
 		
-	if(!(@logged_user.admin?))
+		if(!(@logged_user.admin?))
     	redirect_to user_path(@logged_user), :error => "No tiene permisos para acceder a esta vista"
     end		
     respond_to do |format|
@@ -353,11 +353,16 @@ class EvaluacionsController < ApplicationController
     send_file file, :type=>"application/pdf", :x_sendfile=>true
   end
 
-    def objetar
-	@ojetado = Objetado.new
+  def objetar
+		@objetado = Objetado.new(params[:objetado])
     @evaluacion = Evaluacion.find(params[:id])
     @evaluacion.estado = -1
-	@evaluacion.save
-	@objetado.save
+		@evaluacion.save
+		@objetado.save
+		
+    respond_to do |format|
+      format.html {redirect_to @evaluacion}
+      format.json { render json: @evaluacion }
+    end
   end
 end

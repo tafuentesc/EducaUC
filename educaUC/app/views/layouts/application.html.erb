@@ -8,7 +8,8 @@
   
   <!-- bootstrapSwitch components -->
 </head>
-<body>
+<!--style="background-color: grey;"-->
+<body class="container">
 
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
@@ -29,15 +30,13 @@
   </div>
 </div>
 
-<div id="page">
+<div id="page" class="row">
 
 	<!-- creamos vista 3/9 para menú al lado izquierdo -->
-	<div id="main" class="row">
 		<% if !(@logged_user.nil?) %>
-			<div class="span3">
 			<ul id="left-menu" class="nav nav-tabs nav-stacked span3">
 				<li><%= link_to 'Ver Perfil', user_path(@logged_user) %></li>
-				<li><%= link_to 'Nuevo Informe', new_evaluacion_path %></li>
+				<li><%= link_to 'Crear Evaluación', new_evaluacion_path %></li>
 				<li><%= link_to 'Ver Evaluaciones', evaluacions_path %></li>
 				<li></li>
 				<% if(@logged_user.admin?) %>
@@ -45,14 +44,12 @@
 				<li><%= link_to "Editar Usuarios", users_path %></li>
 				<% end %>
 			</ul>
-			</div>
 		<% end %>
-		<div class="span9">	
+		<div id="content" class="offset3 span8">	
 			<ul id="errorUl">
 			</ul>
 			<%= yield %>
 		</div>
-	</div>
 
 </div>
 

@@ -11,6 +11,8 @@ EducaUC::Application.routes.draw do
   match '/evaluaciones/generate/:id' => "evaluacions#createPDF"
   match '/evaluaciones/download/:id' => "evaluacions#download"
   
+  match '/evaluaciones/:id/objetar_informe' => "evaluacions#objetar", :as => :objetar
+  
   # :path cambia la ruta que se despliega al usuario
   resources :evaluacions, :path => "evaluaciones"
   resources :centros

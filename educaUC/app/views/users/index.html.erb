@@ -40,12 +40,10 @@
         	("<option value='1' "+adm+">Administrador</option><option value='0' "+dig+">Digitador</option>").html_safe, 
         	:class =>'btn-mini' %>
         </td>
-        <td>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+        <td class="btn-group">
+          <%= link_to "Editar",
                       edit_user_path(user), :class => 'btn btn-mini' %>
-        </td>
-        <td>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+          <%= link_to "Eliminar",
                       user_path(user),
                       :method => :delete,
                       :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },

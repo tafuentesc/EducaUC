@@ -21,13 +21,13 @@
         <td><%= centro.directora %></td>
         <td><%= centro.sostenedor %></td>
         <td><%= centro.telefono %></td>
-        <td>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+        <td class="btn-group">
+          <%= link_to "Editar",
                       edit_centro_path(centro), :class => 'btn btn-mini' %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+          <%= link_to "Eliminar",
                       centro_path(centro),
                       :method => :delete,
-                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :data => { :confirm => "¿Está seguro que desea borrar esta cuenta? Toda la información sse perderá." },
                       :class => 'btn btn-mini btn-danger' %>
         </td>
       </tr>
