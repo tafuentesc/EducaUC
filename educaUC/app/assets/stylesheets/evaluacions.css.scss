@@ -7,8 +7,6 @@ div#ajax_container
 	position: relative;
 }
 
-div#escala_container{ min-height: 200px;}
-
 div#loading
 {
 	position: absolute;
@@ -16,7 +14,7 @@ div#loading
 	cursor: wait;
 
 	background: url('loading.gif') no-repeat;
-	background-position-x: center;
+	background-position: center;
 	background-color: white;
 	opacity: 0.5;
 	z-index: 9999;
@@ -24,9 +22,38 @@ div#loading
 	height:	100%;
 }
 
-section.item *
+div#escala_container{ min-height: 200px;}
+
+div#escala_container *, div#show-escala *
 {
 	color: black;
+}
+
+div#escala_container header.navbar-inner:hover
+{
+	cursor: hand;	cursor: pointer;
+}
+
+div#escala_container.not_loaded
+{
+	border: solid whiteSmoke 2px;
+	background-color: #FDFDFD;
+	margin-bottom: 10px;
+}
+
+div#escala_container section.item div.item_body td
+{
+	text-align: center;
+}
+
+tr.blank_entry, div.control-group .blank_entry
+{
+	border: solid red 2px;
+}
+div.control-group.blank_entry
+{
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
 section.item 

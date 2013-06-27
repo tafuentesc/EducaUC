@@ -2,7 +2,7 @@
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
 </div>
-<table class="table table-striped">
+<table class="table">
   <thead>
     <tr>
       <th><%= model_class.human_attribute_name(:nombre) %></th>
@@ -15,7 +15,7 @@
   </thead>
   <tbody>
     <% @centros.each do |centro| %>
-      <tr>
+      <tr class="record" data-class="centros" data-id="<%= centro.id %>">
         <td><%= centro.nombre %></td>
         <td><%= centro.direccion %></td>
         <td><%= centro.directora %></td>

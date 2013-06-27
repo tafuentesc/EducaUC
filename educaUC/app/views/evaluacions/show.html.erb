@@ -20,6 +20,24 @@
   <dd><%= @evaluacion.centro.nombre %></dd>
 </dl>
 
+<div id="show-escala">
+	<%= render :partial => 'escala' %>
+</div>
+
+<div id="razon-objecion">
+  <% form_for :objetado, :url => { :action => :objetar } do |form| %>
+    <%= form.hidden_field :admin_id, :value => @logged_user.id %>
+	<%= form.hidden_field :evaluacion_id, :value => @evaluacion.id %>
+   <p> 
+     <label for="razon">Razón:</label>
+     <%= form.text_area :razon, :rows => 3, :cols => 40 %>
+   </p>
+   <%= submit_tag "Objetar", :class => "submit" %>
+   <% end %>
+</div>
+
+<%= button_to "Aceptar", :action => "aceptar" %>
+
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
               evaluacions_path, :class => 'btn'  %>

@@ -1,6 +1,18 @@
+GIT
+  remote: git@github.com:prawnpdf/prawn.git
+  revision: 8028ca0cd2aae8c72df9fc4bf16388948423bcb2
+  branch: master
+  specs:
+    prawn (1.0.0.rc2)
+      afm
+      pdf-reader (~> 1.2)
+      ruby-rc4
+      ttfunk (~> 1.0.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
+    Ascii85 (1.0.2)
     actionmailer (3.2.13)
       actionpack (= 3.2.13)
       mail (~> 2.5.3)
@@ -28,6 +40,7 @@ GEM
     activesupport (3.2.13)
       i18n (= 0.6.1)
       multi_json (~> 1.0)
+    afm (0.2.0)
     arel (3.0.2)
     builder (3.0.4)
     coffee-rails (3.2.2)
@@ -41,6 +54,7 @@ GEM
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    hashery (2.1.0)
     hike (1.2.2)
     i18n (0.6.1)
     journey (1.0.4)
@@ -59,6 +73,12 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.23)
     multi_json (1.7.3)
+    pdf-reader (1.3.3)
+      Ascii85 (~> 1.0.0)
+      afm (~> 0.2.0)
+      hashery (~> 2.0)
+      ruby-rc4
+      ttfunk
     pg (0.14.1)
     polyglot (0.3.3)
     rack (1.4.5)
@@ -86,6 +106,7 @@ GEM
     rake (10.0.4)
     rdoc (3.12.2)
       json (~> 1.4)
+    ruby-rc4 (0.1.5)
     sass (3.2.9)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -103,6 +124,7 @@ GEM
     treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
+    ttfunk (1.0.3)
     twitter-bootstrap-rails (2.1.6)
       actionpack (>= 3.1)
       execjs
@@ -121,6 +143,7 @@ DEPENDENCIES
   jquery-rails
   less-rails
   pg
+  prawn!
   rails (= 3.2.13)
   sass-rails (~> 3.2.3)
   therubyracer

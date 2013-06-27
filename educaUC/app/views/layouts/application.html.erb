@@ -10,27 +10,19 @@
 </head>
 <body>
 
-<div class="navbar navbar-static-top">
+<div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <a class="brand" href="/">EducaUC</a>
-    <ul class="nav">
-      <li <% if request.fullpath == evaluacions_path %> class="active" <% end %>><%=link_to 'Evaluaciones', evaluacions_path%></li>
-    </ul>
     <ul class="nav pull-right">
       <% if !(@logged_user.nil?) %>
-		    <% if(@logged_user.admin?) %>
-		    	<% role = 'Admin' %>
-		    <% else %>
-		    	<% role = 'Digitador' %>
-		    <% end %>
 		    <li>
 		    	<a href=<%="#{user_path(@logged_user)}"%>>
 		    		<i class='icon-user'></i>
-		    		<%= "#{@logged_user.name} #{@logged_user.lastname} - #{role}" %>
+		    		<%= "#{@logged_user.name} #{@logged_user.lastname} - #{@logged_user.role}" %>
 		    	</a>
 		    </li>
 		    <li class="divider-vertical"></li>
-		    <li><%= link_to '(Logout)', logout_path %> </li>
+		    <li><%= link_to '(Cerrar sesión)', logout_path %> </li>
       <% end %>
 
     </ul>
@@ -42,16 +34,22 @@
 	<!-- creamos vista 3/9 para menú al lado izquierdo -->
 	<div id="main" class="row">
 		<% if !(@logged_user.nil?) %>
-			<ul class="span3 nav nav-tabs nav-stacked">
+			<div class="span3">
+			<ul id="left-menu" class="nav nav-tabs nav-stacked span3">
 				<li><%= link_to 'Ver Perfil', user_path(@logged_user) %></li>
 				<li><%= link_to 'Nuevo Informe', new_evaluacion_path %></li>
+				<li><%= link_to 'Ver Evaluaciones', evaluacions_path %></li>
+				<li></li>
 				<% if(@logged_user.admin?) %>
 				<li><%= link_to "Editar Centros", centros_path %></li>
 				<li><%= link_to "Editar Usuarios", users_path %></li>
 				<% end %>
 			</ul>
+			</div>
 		<% end %>
 		<div class="span9">	
+			<ul id="errorUl">
+			</ul>
 			<%= yield %>
 		</div>
 	</div>

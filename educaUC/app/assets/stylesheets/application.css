@@ -11,3 +11,32 @@
  *= require_self
  *= require_tree .
  */
+ 
+body
+{
+	padding-top: 45px;
+}
+
+ul#left-menu
+{
+position: fixed;
+margin-left: 0;
+top: 120px;
+}
+ 
+ul#errorUl 
+{	
+	list-style: none;
+	margin-left: 0;
+}
+ul#errorUl li
+{ 
+	margin-bottom: 5px;	
+} 
+
+ul#errorUl li:hover
+{ 
+	border: solid 1px;
+	margin-bottom: 5px;	
+} 
+

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130625220034) do
+ActiveRecord::Schema.define(:version => 20130627043241) do
 
   create_table "centros", :force => true do |t|
     t.string   "nombre"
@@ -43,9 +43,9 @@ ActiveRecord::Schema.define(:version => 20130625220034) do
     t.integer  "encargado"
     t.time     "horario_inicial"
     t.time     "horario_final"
-    t.datetime "created_at",                                   :null => false
-    t.datetime "updated_at",                                   :null => false
-    t.string   "estado",              :default => "Pendiente", :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.integer  "estado",              :default => 0, :null => false
     t.integer  "centro_id"
   end
 

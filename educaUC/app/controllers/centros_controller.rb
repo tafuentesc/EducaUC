@@ -2,8 +2,14 @@ class CentrosController < ApplicationController
   # GET /centros
   # GET /centros.json
   def index
-    @centros = Centro.all
-
+	if(@logged_user.admin?)
+	  @centros = Centro.all
+	else
+      redirect_to user_path(@logged_user), :notice => "No tiene permisos para acceder a esta vista"
+      return
+	end
+    
+	
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @centros }
@@ -15,6 +21,10 @@ class CentrosController < ApplicationController
   def show
     @centro = Centro.find(params[:id])
 
+	if(!(@logged_user.admin?))
+      redirect_to user_path(@logged_user), :error => "No tiene permisos para acceder a esta vista"
+    end
+	
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @centro }
@@ -24,8 +34,13 @@ class CentrosController < ApplicationController
   # GET /centros/new
   # GET /centros/new.json
   def new
-    @centro = Centro.new
-
+	if(@logged_user.admin?)
+      @centro = Centro.new
+	else
+      redirect_to user_path(@logged_user), :notice => "No tiene permisos para acceder a esta vista"
+      return
+	end	
+	
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @centro }
@@ -35,6 +50,9 @@ class CentrosController < ApplicationController
   # GET /centros/1/edit
   def edit
     @centro = Centro.find(params[:id])
+	if(!(@logged_user.admin?))
+      redirect_to user_path(@logged_user), :error => "No tiene permisos para acceder a esta vista"
+    end
   end
 
   # POST /centros

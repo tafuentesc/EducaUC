@@ -41,13 +41,6 @@
       <%= f.time_select :horario_final, :class => 'time_select' %>
     </div>
   </div>
-  <div class="control-group">
-    <%= f.label :estado, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :estado, :class => 'text_field' %>
-    </div>
-  </div>
-
 	<div class="control-group">
 	  <%= label_tag :escala, "Seleccione centro en que se realizó la evaluación", :class => 'control-label' %>
 	  <div class="controls">
@@ -55,7 +48,7 @@
 	  <%= f.select :centro_id, options_from_collection_for_select(@centros, "id", "nombre"), :class => 'select_field', :prompt => "--------------------" %>
 	  </div>
 	</div>
-  <% if @evaluacion.escala.id != nil %>
+  <% if @evaluacion.escala != nil %>
   <div class="control-group">
     <%= label_tag :escala, "Escala de evaluación:", :class => 'control-label' %>
     <div class="controls">
@@ -73,7 +66,7 @@
 	<% end %>
   
   <!-- Por ahora cargaremos Iters por defecto  -->
-  <% if @evaluacion.escala.id != nil %>
+  <% if @evaluacion.escala != nil %>
   	<%= render 'escala' %>
   <% else %>
   	<div id="ajax_container">
@@ -81,7 +74,7 @@
 		
 			<div id="loading"></div>
 		
-			<div id="escala_container"></div>
+			<div id="escala_container" class="not_loaded"></div>
 		</div>
   <% end %>
   

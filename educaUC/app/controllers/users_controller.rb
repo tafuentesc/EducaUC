@@ -6,11 +6,11 @@ class UsersController < ApplicationController
   
   def index
   	if(@logged_user.admin?)
-	    @users = User.all
-	  else
-    	redirect_to user_path(@logged_user), :notice => "No tiene permisos para acceder a esta vista"
-    	return
-		end
+	  @users = User.where("id != #{@logged_user.id}")
+	else
+      redirect_to user_path(@logged_user), :notice => "No tiene permisos para acceder a esta vista"
+      return
+	end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -23,6 +23,10 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
 
+	if(!(@user == @logged_user || @logged_user.admin?))
+    	redirect_to user_path(@logged_user), :error => "No tiene permisos para acceder a esta vista"
+    end
+	
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }
@@ -33,7 +37,9 @@ class UsersController < ApplicationController
   # GET /users/new.json
   def new
     @user = User.new
-
+	if(!(@logged_user.admin?))
+    	redirect_to user_path(@logged_user), :error => "No tiene permisos para acceder a esta vista"
+    end
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @user }
