@@ -162,6 +162,12 @@ $(function(){
 		
 		// Si no cargó nada, agregamos el error:
 		if($escalaContainer.find('div.sub-escala section.item div.item_body input[type="radio"]').length == 0)
+			return false;
+			
+		// Si se cargó, verificamos que haya, al menos, un indicador seleccionado:
+		if($escalaContainer.find('div.sub-escala section.item div.item_body input[type="radio"]:checked').length == 0)
+			return false;
+		
 
 		// validamos la escala:
 		has_blank = validateEscala($escalaContainer);
