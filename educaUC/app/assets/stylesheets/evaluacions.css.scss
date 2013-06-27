@@ -7,8 +7,6 @@ div#ajax_container
 	position: relative;
 }
 
-div#escala_container{ min-height: 200px;}
-
 div#loading
 {
 	position: absolute;
@@ -24,7 +22,9 @@ div#loading
 	height:	100%;
 }
 
-div#escala_container *
+//div#escala_container{ min-height: 200px;}
+
+div#escala_container *, div#show-escala *
 {
 	color: black;
 }

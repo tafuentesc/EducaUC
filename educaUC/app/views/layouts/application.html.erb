@@ -41,7 +41,7 @@
 			<ul id="left-menu" class="nav nav-tabs nav-stacked span3">
 				<li><%= link_to 'Ver Perfil', user_path(@logged_user) %></li>
 				<li><%= link_to 'Nuevo Informe', new_evaluacion_path %></li>
-				<li><%= link_to 'Ver Informes', evaluacions_path %></li>
+				<li><%= link_to 'Ver Evaluaciones', evaluacions_path %></li>
 				<li></li>
 				<% if(@logged_user.admin?) %>
 				<li><%= link_to "Editar Centros", centros_path %></li>

@@ -13,6 +13,8 @@ $(function(){
 	//$("ajax_container").delegate("a", "click", toggleVisibility)
 	$("form#edit_evaluacion").submit(validateData);
 
+	$("div#show-escala input").attr("disabled", "disabled");
+
 	// Variable para almacenar el valor previamente seleccionado en select#escala:
 	var previous_option = 0;
 	

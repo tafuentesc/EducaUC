@@ -23,7 +23,8 @@ class EvaluacionsController < ApplicationController
   # GET /evaluacions/1.json
   def show
     @evaluacion = Evaluacion.find(params[:id])
-
+		@escala = @evaluacion.escala
+		
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @evaluacion }
