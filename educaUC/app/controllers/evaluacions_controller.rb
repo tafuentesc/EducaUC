@@ -5,12 +5,13 @@ class EvaluacionsController < ApplicationController
   def index
     if(@logged_user.admin)
       @evaluacions = Evaluacion.all
-      @pendientes = Evaluacion.where('estado = ?', 'Pendiente')
-      @completadas = Evaluacion.where('estado != ?', 'Pendiente')
+	  @pendientes = Evaluacion.where('estado = ?', 0)
+      @enviadas = Evaluacion.where('estado = ?', 1)
+      @completadas = Evaluacion.where('estado = ?', 2)
     else
       @evaluacions = Evaluacion.where("encargado = ?", @logged_user.id)
-      @pendientes = @evaluacions.where('estado = ?', 'Pendiente')
-      @completadas = @evaluacions.where('estado != ?', 'Pendiente')
+      @objetadas = @evaluacions.where('estado = ?', -1)
+      @pendientes = @evaluacions.where('estado != ?', 0)
     end
 
     respond_to do |format|
@@ -352,4 +353,11 @@ class EvaluacionsController < ApplicationController
     send_file file, :type=>"application/pdf", :x_sendfile=>true
   end
 
+    def objetar
+	@ojetado = Objetado.new
+    @evaluacion = Evaluacion.find(params[:id])
+    @evaluacion.estado = -1
+	@evaluacion.save
+	@objetado.save
+  end
 end
