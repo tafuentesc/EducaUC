@@ -13,9 +13,6 @@
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <a class="brand" href="/">EducaUC</a>
-    <ul class="nav">
-      <li <% if request.fullpath == evaluacions_path %> class="active" <% end %>><%=link_to 'Evaluaciones', evaluacions_path%></li>
-    </ul>
     <ul class="nav pull-right">
       <% if !(@logged_user.nil?) %>
 		    <li>
@@ -51,6 +48,8 @@
 			</div>
 		<% end %>
 		<div class="span9">	
+			<ul id="errorUl">
+			</ul>
 			<%= yield %>
 		</div>
 	</div>

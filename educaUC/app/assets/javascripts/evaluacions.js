@@ -16,6 +16,9 @@ $(function(){
 	$("form input[name='commit']").click(validateData)
 
 	$("div#show-escala input").attr("disabled", "disabled");
+	
+	// Vinculamos los errores a goToError:	
+	$("body").delegate("li.alert.alert-error","click",goToError);
 
 	// Variable para almacenar el valor previamente seleccionado en select#escala:
 	var previous_option = 0;
@@ -57,7 +60,7 @@ $(function(){
 			},
 			success: function(result){
 				// antes de hacer fadeOut le agregamos un alto, para que el scrollTop no se vaya a cualquier lado
-				$("div#ajax_container").css('min-height','500px');
+				$("div#ajax_container").css('min-height','1000px');
 				
 				$("div#escala_container").fadeOut(function(){
 					$("div#escala_container").html(result).fadeIn(function(){
@@ -73,6 +76,8 @@ $(function(){
 						previous_option = id;
 
 					});
+					// Quitamos clase not_loaded:
+					$("div#escala_container").removeClass("not_loaded");
 				})								
 			},
 			error: function()
@@ -159,15 +164,16 @@ $(function(){
 	
 	function goToError(){
 		// buscamos pading del body:
-		var offset = $("body").css('padding-top');
+		var offset = parseInt($('body').css('padding-top'));
 	
 		// Leemos posición del error:
 		var scrollPos = $(this).attr("data-scrollTop");
+		var scrollPos = scrollPos - offset;
 		
 		// Animamos hacia el scrollTop
 		 $('html, body').animate({
 		  scrollTop: scrollPos
-		 }, 2000);
+		 }, 1000);
 	}
 	
 	function buildError($obj, $errorUl, error)
@@ -180,9 +186,6 @@ $(function(){
 					
 			// Agregamos el error a $errorUl:
 			$errorUl.append(errorHTML);	
-			
-			// Vinculamos el evento click:
-			$(errorHTML).click(goToError);
 	}
 	
 	// chequea si el valor de $obj es '' o null; en caso de serlo, agrega el
@@ -232,8 +235,17 @@ $(function(){
 		
 		// Agrupamos resultados:		
 		dataOk = salaOk && centroOk && escalaOk;
+		
+		// si la data tiene errores, desplazamos la ventana hacia arriba
+		if(!dataOk)
+		{
+			// Animamos hacia el scrollTop
+			$('html, body').animate({
+			scrollTop: 0
+			}, 1000);
+
+		}
 			
-		alert('se llamó!, return = ' + escalaOk);	
 		return dataOk;
 	}
 	
@@ -274,51 +286,63 @@ $(function(){
 			
 				// Buscamos el primer no_node
 				$first_no =	$(item).find('div.item_body input[type="radio"].no_node:checked').first();
-					
-				// Ahora, revisamos que todos los elementos antes de estén marcados:
-
-				// en este caso, $first_no es el radio button => td es el padre... tr es el padre del padre!
-				row = $first_no.parent().parent();
-
-				// no nos interesa partir de éste, sino de su antecesor:
-				row = row.prev();
-		
-				count = 0;
-	
-				// row.length == 0 <=> row = []
-				while(row.length != 0)
-				{			
-					// En caso de que row sea el header de la tabla, cambiamos de tabla
-					if(row.hasClass('table_header'))
-						row = row.parent().parent().prev().find('tr:last')
+				si_count = $(item).find('div.item_body input[type="radio"]:checked').length;
 				
-					// NOTA: parent() es tbody => parent().parent() es table!
-					if(row.is('tr'))
-					{
-						// Si es fila, revisamos si algún valor está chequeado
-						// De no ser así, lo marcamos como en blanco:
-						if(row.find('input:checked').length == 0)
-						{
-							escalaOk = false;
-							itemOk = false;
-							row.addClass('blank_entry');
-						}
-						else
-							row.removeClass('blank_entry');
-					}
-
-					row = row.prev();
-				}
-				
-				// Revisamos si el item está OK. En caso de no estarlo, agregamos el error:				 
-				if(!itemOk)
+				// si está vacío, debemos ver si tiene algún 'sí'; en ese caso, levantamos un error:
+				if($first_no.length == 0 && si_count > 0)
 				{
-					buildError($(item),$errorUl,"Item inválido: No todos los indicadores antes del primer 'no' son positivos (En el caso de la primera columna, deben ser negativos).");
-					
+					buildError($(item),$errorUl,"Ítem inválido: El último indicador marcado debe ser 'no'.");
 					$(item).addClass("blank_entry");
 				}
 				else
+				{
+					// En caso contrario, procedemos a evaluar el resto:
 					$(item).addClass("blank_entry");				
+
+					// Ahora, revisamos que todos los elementos antes de estén marcados:
+					// ==================================================================
+
+					// en este caso, $first_no es el radio button => td es el padre... tr es el padre del padre!
+					row = $first_no.parent().parent();
+
+					// no nos interesa partir de éste, sino de su antecesor:
+					row = row.prev();
+		
+					// row.length == 0 <=> row = []
+					while(row.length != 0)
+					{			
+						// En caso de que row sea el header de la tabla, cambiamos de tabla
+						if(row.hasClass('table_header'))
+							row = row.parent().parent().prev().find('tr:last')
+				
+						// NOTA: parent() es tbody => parent().parent() es table!
+						if(row.is('tr'))
+						{
+							// Si es fila, revisamos si algún valor está chequeado
+							// De no ser así, lo marcamos como en blanco:
+							if(row.find('input:checked').length == 0)
+							{
+								escalaOk = false;
+								itemOk = false;
+								row.addClass('blank_entry');
+							}
+							else
+								row.removeClass('blank_entry');
+						}
+
+						row = row.prev();
+					}
+				
+					// Revisamos si el item está OK. En caso de no estarlo, agregamos el error:				 
+					if(!itemOk)
+					{
+						buildError($(item),$errorUl,"Ítem inválido: No todos los indicadores antes del primer 'no' son positivos (En el caso de la primera columna, deben ser negativos).");
+					
+						$(item).addClass("blank_entry");
+					}
+					else
+						$(item).addClass("blank_entry");				
+				}				
 			});
 		});
 		

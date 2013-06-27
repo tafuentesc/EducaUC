@@ -34,6 +34,13 @@ div#escala_container header.navbar-inner:hover
 	cursor: hand;	cursor: pointer;
 }
 
+div#escala_container.not_loaded
+{
+	border: solid whiteSmoke 2px;
+	background-color: #FDFDFD;
+	margin-bottom: 10px;
+}
+
 div#escala_container section.item div.item_body td
 {
 	text-align: center;
