@@ -539,9 +539,11 @@ class EvaluacionsController < ApplicationController
     end
 
   def objetar
-	  @ojetado = Objetado.new
-    @evaluacion = Evaluacion.find(params[:id])
-    
+	  @objetado = Objetado.new
+    @evaluacion = Evaluacion.find(params[:objetado][:evaluacion_id])
+    @objetado.evaluacion = @evaluacion
+    @objetado.user = User.find(params[:objetado][:admin_id])
+    @objetado.razon = params[:objetado][:razon]
 	  respond_to do |format|
       if @objetado.save
 		    @evaluacion.estado = -1

@@ -25,7 +25,7 @@
 </div>
 
 <div id="razon-objecion">
-  <% form_for :objetado, :url => { :action => :objetar } do |form| %>
+  <%= form_for :objetado, :url => { :action => :objetar } do |form| %>
     <%= form.hidden_field :admin_id, :value => @logged_user.id %>
 	<%= form.hidden_field :evaluacion_id, :value => @evaluacion.id %>
    <p> 
