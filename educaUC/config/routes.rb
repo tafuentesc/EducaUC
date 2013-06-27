@@ -10,6 +10,7 @@ EducaUC::Application.routes.draw do
 
   match '/evaluaciones/generate/:id' => "evaluacions#createPDF"
   match '/evaluaciones/download/:id' => "evaluacions#download"
+  #match 'evaluacions/objetar/:id' => "evaluacion#objetar"
   
   match '/evaluaciones/:id/objetar_informe' => "evaluacions#objetar", :as => :objetar
   
@@ -72,5 +73,5 @@ EducaUC::Application.routes.draw do
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id))(.:format)'
+  match ':controller(/:action(/:id))(.:format)'
 end

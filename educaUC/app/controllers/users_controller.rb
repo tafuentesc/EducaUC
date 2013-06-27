@@ -1,8 +1,6 @@
 class UsersController < ApplicationController
   # GET /users
   # GET /users.json
-
-  skip_before_filter :check_token, only: [:new, :create]
   
   def index
   	if(@logged_user.admin?)
