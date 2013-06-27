@@ -217,8 +217,10 @@ class EvaluacionsController < ApplicationController
       month = evaluacion.fecha_de_evaluacion.month
       evaluaciones = evaluacion.centro.evaluacions.where('extract(month from fecha_de_evaluacion) = ? AND extract(year from fecha_de_evaluacion) = ?', month,year)
       notas = Array.new(7,0)
+      sub_escalas = []
       evaluaciones.each do |eval|
         eval.escala.subescala.each_with_index do |sub,index|
+          sub_escalas.push sub.subescala_template.nombre
           notas[index] += sub.eval.to_i
         end
       end
@@ -247,6 +249,19 @@ class EvaluacionsController < ApplicationController
       pdf.start_new_page
 
       ##################################################
+      # Evaluation graph ###############################
+      ##################################################
+      string = "GRÁFICO GENERAL DEL CENTRO\n\n"
+      pdf.text string, :style => :bold 
+      string = "A continuación se presenta un gráfico resumen con los puntajes obtenidos por el Centro en cada Sub Escala.\n\n"
+      pdf.text string
+
+      graph = {:bottom => pdf.bounds.height/3, :top => (pdf.bounds.height/3)*2 }
+      stroke_axis({:height => pdf.bounds.height/3},pdf,sub_escalas,notas)
+
+
+      pdf.start_new_page
+      ##################################################
       # Repeatable Evaluations #########################
       ##################################################
 
@@ -254,38 +269,93 @@ class EvaluacionsController < ApplicationController
         ################################################
         # INFORME DE RESULTADOS ########################
         ################################################
-        string = "INFORME DE RESULTADOS SALA "+eval.nombre_sala+"\n\n"
-        pdf.text string, :style => :bold 
+        string = "INFORME DE RESULTADOS SALA: "+eval.nombre_sala+"\n\n"
+        pdf.text string, :style => :bold
 
         string = "DATOS OBSERVACIÓN\n\n"
         pdf.text string, :style => :bold 
         ###tabla de datos de evaluacion
+        pdf.table ([["Fecha de observación",eval.fecha_de_evaluacion.day.to_s+" de "+months[eval.fecha_de_evaluacion.month.to_i]+" de "+eval.fecha_de_evaluacion.year.to_s],["Tipo de escala utilizada",eval.escala.escala_template.nombre]]), :position => :center, :width => pdf.bounds.width 
+        pdf.move_down 20
 
         string = "PUNTUACIÓN GENERAL\n\n"
         pdf.text string, :style => :bold
         ###tabla de puntuacion de evaluacion
+        table = []
+        eval.escala.subescala.each do |sub|
+          element = []
+          element.push sub.subescala_template.nombre
+          element.push sub.eval.to_i.to_s
+          table.push element
+        end
+        pdf.table table, :position => :center, :width => pdf.bounds.width 
+        pdf.move_down 20
 
-        pdf.start_new_page
 
-        ################################################
-        # ITEMES NA ####################################
-        ################################################
 
         string = "ITEMES CALIFICADOS COMO NO APLICABLES\n\n"
         pdf.text string, :style => :bold 
         ###tabla de datos de evaluacion
+        table = []
+        eval.escala.subescala.each do |sub|
+          element = []
+          element[0] = ""
+          not_applicable_count = 0
+          sub.item.each do |item|
+            if item.eval.to_i.to_s == "0"
+              element[0] = element[0]+item.item_template.nombre+"\n"
+              not_applicable_count+=1
+            end
+          end
+          if not_applicable_count>0
+            element.unshift sub.subescala_template.nombre
+            table.push element
+          end
+        end
+        pdf.table table, :position => :center, :width => pdf.bounds.width
+        pdf.move_down 20
+
 
         pdf.start_new_page
 
         ################################################
         # FORTALEZAS ###################################
         ################################################
-
+        roman = %w(I. II. III. IV. V. VI. VII. VIII. IX. X. XI. XII. XIII. XIV. XV. XVI. XVII. XVIII. XIX. XX.)
         string = "FORTALEZAS: ITEMES CON RESULTADOS IGUALES O SUPERIORES A 3\n\n"
         pdf.text string, :style => :bold 
         string = "En esta sección se describen los ítemes con puntajes iguales o superiores a 3. Las puntuaciones en este rango son consideradas por las Escalas de Calificación del Ambiente Educativo como prácticas apropiadas al desarrollo, por lo que se ubican en un rango de calidad que va desde \"Mínimo\" (3 puntos) a \"Excelente\" (7 puntos). Estos Ítemes son considerados como los aspectos más fuertes en esta Sala, ya que promueven y apoyan el desarrollo positivo del niño/a\n\n\n"
         pdf.text string
         ###tabla de datos de evaluacion
+        eval.escala.subescala.each_with_index do |sub,index|
+          bullet_item(1,sub.subescala_template.nombre+"\n\n",pdf,roman[index]+" ")
+          written = false;
+          sub.item.each_with_index do |item, sub_index|
+            punt = item.eval.to_i
+            if punt >= 3 
+              bullet_item(3,item.item_template.nombre+"\n\n",pdf,(1+sub_index).to_s+". ")
+              pdf.text "Puntuación: "+punt.to_s+"\n", :align => :right
+              written = true;
+              col = punt
+              if punt%2 == 0
+                col+=1
+              end
+              indicadores = []
+              item.indicador.each do |indicador|
+                if(indicador.indicador_template.columna == col && indicador.eval)
+                  indicadores.push indicador
+                end
+              end
+              indicadores.each do |indicador|
+                bullet_item(5,indicador.indicador_template.descripcion+"\n",pdf,nil)
+              end
+                bullet_item(5,"Observaciones: "+item.observaciones+"\n\n",pdf,nil)
+            end
+          end
+          unless written
+            bullet_item(3,"(No hay fortalezas en este ítem)\n\n",pdf,"")
+          end
+        end
 
         pdf.start_new_page
 
@@ -295,8 +365,40 @@ class EvaluacionsController < ApplicationController
 
         string = "ÁREAS DE CRECIMIENTO POTENCIAL: ITEMES CON PUNTAJES INFERIORES A 3\n\n"
         pdf.text string, :style => :bold 
-        string = "Los ítemes con puntajes inferiores a 3 en las Escalas de Calificación del Ambiente Educativo reflejan prácticas inapropiadas para el desarrollo del niño/a. La sección ''áreas de crecimiento potencial '' proporciona información acerca de la razón para la puntuación de ciertos indicadores. Este detalle puede ayudar a entender cómo el evaluador llegó a la puntuación de cada ítem de esta sección."
+        string = "Los ítemes con puntajes inferiores a 3 en las Escalas de Calificación del Ambiente Educativo reflejan prácticas inapropiadas para el desarrollo del niño/a. La sección ''áreas de crecimiento potencial '' proporciona información acerca de la razón para la puntuación de ciertos indicadores. Este detalle puede ayudar a entender cómo el evaluador llegó a la puntuación de cada ítem de esta sección.\n\n\n"
         pdf.text string
+        eval.escala.subescala.each_with_index do |sub,index|
+          bullet_item(1,sub.subescala_template.nombre+"\n\n",pdf,roman[index]+" ")
+          written = false;
+          sub.item.each_with_index do |item, sub_index|
+            punt = item.eval.to_i
+            if punt < 3 && punt > 0
+              bullet_item(3,item.item_template.nombre,pdf,(1+sub_index).to_s+". ")
+              pdf.text "Puntuación: "+punt.to_s+"\n", :align => :right
+              col = punt
+              if punt%2 == 0
+                col+=1
+              end
+              indicadores = []
+              item.indicador.each do |indicador|
+                if(indicador.indicador_template.columna == col)
+                  if(col == 1 && indicador.eval)
+                    indicadores.push indicador
+                  elsif(col == 3 && !indicador.eval)
+                    indicadores.push indicador 
+                  end
+                end
+              end
+              indicadores.each do |indicador|
+                bullet_item(5,indicador.indicador_template.descripcion+"\n",pdf,nil)
+              end
+                bullet_item(5,"Observaciones: "+item.observaciones+"\n\n",pdf,nil)
+            end
+          end
+          unless written
+            bullet_item(3,"(No hay debilidades en este ítem)\n\n",pdf,"")
+          end
+        end
 
         pdf.start_new_page
 
@@ -323,7 +425,11 @@ class EvaluacionsController < ApplicationController
         if num.nil? 
           num = "• "
         end
-        pdf.text num + string
+        if(level == 1)
+          pdf.text num + string, :style => :bold
+        else
+          pdf.text num + string
+        end
     end
   end
 
@@ -344,5 +450,44 @@ class EvaluacionsController < ApplicationController
     file = createFileName(evaluacion.centro,"abril","mayo")
     send_file file, :type=>"application/pdf", :x_sendfile=>true
   end
+
+      # Draws X and Y axis rulers beginning at the margin box origin. Used on
+    # examples.
+    #
+    def stroke_axis(options={}, pdf, subscales,notas)
+      options = { :height => (pdf.cursor - 20).to_i,
+                  :width => pdf.bounds.width.to_i
+                }.merge(options)
+
+      
+      step_num = 0
+      (100..options[:width]).step(options[:width]/8) do |point|
+        note = notas[step_num]
+        if(note<1)
+          note = 1
+        end
+        old_color = pdf.fill_color
+        pdf.fill_color = "598EDE"
+        pdf.fill_rectangle [point-(options[:width]/8)+10,options[:height]+(options[:height]/7)*note],(options[:width]/8)-20,(options[:height]/7)*note
+        pdf.fill_color = old_color
+        pdf.rotate(330, :origin => [point-(options[:width]/16), options[:height]]) do
+          pdf.draw_text subscales[step_num], :at => [point-(options[:width]/16), options[:height]-15], :size => 10
+        end
+        pdf.fill_circle [point-(options[:width]/16), options[:height]], 3
+        step_num+=1
+      end
+
+      step_num = 1
+      ((options[:height]+options[:height]/7)..(options[:height]*2)).step(options[:height]/7) do |point|
+        pdf.fill_circle [0, point], 3
+        pdf.draw_text step_num.to_s, :at => [-17, point-2], :size => 10
+        step_num+=1
+      end
+
+
+      pdf.stroke_horizontal_line(-21, options[:width], :at => options[:height])
+      pdf.stroke_vertical_line(options[:height]-21, options[:height]*2, :at => 0)
+
+    end
 
 end
