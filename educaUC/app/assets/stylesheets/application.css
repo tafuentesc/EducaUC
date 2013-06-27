@@ -12,6 +12,11 @@
  *= require_tree .
  */
  
+body
+{
+	padding-top: 45px;
+}
+
  ul#left-menu
  {
  	position: fixed;

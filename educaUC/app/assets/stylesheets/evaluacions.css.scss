@@ -22,7 +22,7 @@ div#loading
 	height:	100%;
 }
 
-//div#escala_container{ min-height: 200px;}
+div#escala_container{ min-height: 200px;}
 
 div#escala_container *, div#show-escala *
 {
@@ -39,9 +39,14 @@ div#escala_container section.item div.item_body td
 	text-align: center;
 }
 
-tr.blank_entry
+tr.blank_entry, div.control-group .blank_entry
 {
 	border: solid red 2px;
+}
+div.control-group.blank_entry
+{
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
 section.item 

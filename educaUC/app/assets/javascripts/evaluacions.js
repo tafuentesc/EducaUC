@@ -11,7 +11,9 @@ $(function(){
 	// vinculamos con la función toggleVisibility
 	$("div.sub-escala").delegate("header", "click", toggleVisibility)
 	//$("ajax_container").delegate("a", "click", toggleVisibility)
-	$("form#edit_evaluacion").submit(validateData);
+	
+	//$("form#new_evaluacion").live("submit",validateData);
+	$("form input[name='commit']").click(validateData)
 
 	$("div#show-escala input").attr("disabled", "disabled");
 
@@ -65,7 +67,7 @@ $(function(){
 						// vinculamos con delegate:
 						$("section.item input.no_node").click(markPreviousIndicators);
 						$("div#ajax_container header").click(toggleVisibility)
-						$("form#new_evaluacion").submit(validateData);
+						//$("form#new_evaluacion").submit(validateData);
 
 						// Actualizamos el valor de previous_option
 						previous_option = id;
@@ -154,41 +156,122 @@ $(function(){
 			$icon.addClass("icon-chevron-down");
 		}
 	}
+	
+	function goToError(){
+		// buscamos pading del body:
+		var offset = $("body").css('padding-top');
+	
+		// Leemos posición del error:
+		var scrollPos = $(this).attr("data-scrollTop");
 		
+		// Animamos hacia el scrollTop
+		 $('html, body').animate({
+		  scrollTop: scrollPos
+		 }, 2000);
+	}
+	
+	function buildError($obj, $errorUl, error)
+	{
+			// Obtenemos scroll position del objeto:
+			var scrollTop = $obj.position().top;
+			
+			// construimos error:
+			var errorHTML = "<li class='alert alert-error' data-scrollTop='"+scrollTop+"'><button type='button' class='close' data-dismiss='alert'>&times;</button>"+error+"</li>"
+					
+			// Agregamos el error a $errorUl:
+			$errorUl.append(errorHTML);	
+			
+			// Vinculamos el evento click:
+			$(errorHTML).click(goToError);
+	}
+	
+	// chequea si el valor de $obj es '' o null; en caso de serlo, agrega el
+	// error a $errorUl
+	function checkIfBlank($obj, $errorUl, error){
+		if($obj.val()==null || $obj.val()=='')
+		{
+			buildError($obj,$errorUl,error);		
+			$obj.addClass("blank_entry");
+			return true;
+		}
+		$obj.removeClass("blank_entry");
+		return false;
+	}	
+	
 	function validateData(){
-		// Primero, validamos nombre_sala, centro_id
+
+		// Variable que verificaremos:
+		var dataOk = true;
+	
+		// <ul> donde cargaremos los errores:
+		var $errorUl = $("ul#errorUl");
 		
+		// limpiamos su contenido:
+		$errorUl.html('');		
+		
+		// ----------------------------------------
+		// Comenzamos las validaciones:
+		// ----------------------------------------
+	
+		// Primero, validamos nombre_sala, centro_id
+		var $salaObj = $("input#evaluacion_nombre_sala");
+		var $centroObj = $("select#evaluacion_centro_id");
+		
+		var salaOk = checkIfBlank($salaObj, $errorUl, "El nombre de la sala no puede estar vacío.")
+		var centroOk = checkIfBlank($centroObj, $errorUl, "La evaluación debe tener un centro asociado.")
+
+		// NO ES NECESARIO VALIDARLO PUES SE HACE AL llamar a validateEscala
+		//var $escalaObj = $("select#escala");
+		// var escalaOk = checkIfBlank($escalaObj, $errorUl, "Debe .")
 		
 		// Validamos que tenga escala:
 		$escalaContainer = $('div#escala_container');
+				
+		// validamos la escala:
+		escalaOk = validateEscala($escalaContainer, $errorUl);
+		
+		// Agrupamos resultados:		
+		dataOk = salaOk && centroOk && escalaOk;
+			
+		alert('se llamó!, return = ' + escalaOk);	
+		return dataOk;
+	}
+	
+	function validateEscala($escalaContainer, $errorUl)
+	{
+		// variable que indica si la escala está correcta:
+		escalaOk = true;
 		
 		// Si no cargó nada, agregamos el error:
 		if($escalaContainer.find('div.sub-escala section.item div.item_body input[type="radio"]').length == 0)
+		{
+			// En este caso escala container está vacío => lo vinculamos con el selector de escala:
+			buildError($("select#escala"),$errorUl, "La evaluación debe tener una escala asociada.");
+			
+			// En este caso tendremos que agregar y remover la escala manualmente:
+			$("select#escala").addClass("blank_entry");
 			return false;
+		}
+		else
+			$("select#escala").removeClass("blank_entry");
+
 			
 		// Si se cargó, verificamos que haya, al menos, un indicador seleccionado:
 		if($escalaContainer.find('div.sub-escala section.item div.item_body input[type="radio"]:checked').length == 0)
-			return false;
-		
+		{
+			// agregamos error:
+			buildError($escalaContainer,$errorUl, "La evaluación no puede estar vacía.");
 
-		// validamos la escala:
-		has_blank = validateEscala($escalaContainer);
-		
-//		if(!has_blank)
-//			form.submit();
-			
-		alert('se llamó!, has_blank = '+has_blank);	
-		return false;
-	}
-	
-	function validateEscala($escalaContainer)
-	{
-		// variable que indica si se ha encontrado un registro en blanco:
-		has_blank = false;
+			// Retornamos pues no hay nada más que validar:		
+			return false;
+		}
 
 		// Para cada Item, en cada sub-escala do:
 		$escalaContainer.find('div.sub-escala').each(function(sub_esc_index, subEscala){
 			$(subEscala).find('section.item').each(function(item_index, item){
+				// Variable que indica si el ítem está ok:
+				itemOk = true;
+			
 				// Buscamos el primer no_node
 				$first_no =	$(item).find('div.item_body input[type="radio"].no_node:checked').first();
 					
@@ -216,7 +299,8 @@ $(function(){
 						// De no ser así, lo marcamos como en blanco:
 						if(row.find('input:checked').length == 0)
 						{
-							has_blank = true;
+							escalaOk = false;
+							itemOk = false;
 							row.addClass('blank_entry');
 						}
 						else
@@ -224,11 +308,21 @@ $(function(){
 					}
 
 					row = row.prev();
-				}				 
+				}
+				
+				// Revisamos si el item está OK. En caso de no estarlo, agregamos el error:				 
+				if(!itemOk)
+				{
+					buildError($(item),$errorUl,"Item inválido: No todos los indicadores antes del primer 'no' son positivos (En el caso de la primera columna, deben ser negativos).");
+					
+					$(item).addClass("blank_entry");
+				}
+				else
+					$(item).addClass("blank_entry");				
 			});
 		});
 		
-		return has_blank;
+		return escalaOk;
 	}
 });
 
