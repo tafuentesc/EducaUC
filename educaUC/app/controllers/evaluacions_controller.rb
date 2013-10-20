@@ -185,37 +185,47 @@ class EvaluacionsController < ApplicationController
       pdf.text "INFORME DE RESULTADOS", :align => :center, :size => 22, :style => :bold
       pdf.move_down 20
       pdf.text "Escalas de Calificación del ambiente Educativo", :align => :center, :size => 22, :style => :bold
-      pdf.text "#{evaluacion.escala.escala_template.nombre}", :align => :center, :size => 22, :style => :bold
+      pdf.text "(ITERS-R/ECERS-R)", :align => :center, :size => 22, :style => :bold
       pdf.move_down 40
-      pdf.text "#{evaluacion.centro.nombre}", :align => :center, :size => 18, :style => :bold
+      pdf.text "Jardín Infantil #{evaluacion.centro.nombre}", :align => :center, :size => 18, :style => :bold
       pdf.move_down (pdf.bounds.height/3)
       months = %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre)
       pdf.text "#{months[evaluacion.fecha_de_evaluacion.month]}", :align => :center, :size => 18, :style => :bold
       pdf.start_new_page
       
       ##################################################
-      # Presentación ###################################
+      # Presentación pag.1 #############################
       ##################################################
 
       string = "PRESENTACIÓN"
       pdf.text string, :size => 22, :style => :bold 
       pdf.move_down 40
-      string = "EducaUC Inicial como parte de su gestión, ha adoptado el uso de las Escalas de Calificación del Ambiente de la Infancia Temprana ITERS-R y ECERS-R¹, para conocer la calidad educativa de los Centros. Estas Escalas fueron desarrolladas por investigadores del Centro de Desarrollo Infantil Frank Porter Graham, de la Universidad de Carolina del Norte de Estados Unidos y han sido parte importante de las investigaciones de primera infancia tanto en el extranjero como en nuestro país.\n\nCon el objetivo de conocer y analizar los resultados obtenidos, se presenta el siguiente informe en tres apartados. El primero de ellos da a conocer una breve descripción de las características de los instrumentos aplicados, acompañada del resumen de los contenidos que aborda cada Escala.\n\nPosteriormente, en el segundo punto, se entregan algunas consideraciones respecto a los procedimientos de aplicación y los resguardos que deben tenerse presentes frente a los resultados de las Escalas de Calificación.\n\nEn tercer lugar, se presenta los resultados obtenidos por el Centro: un breve resumen del Centro y el detalle de cada sala evaluada."
-      pdf.text string, :size => 14
+      string = "EducaUC Inicial como parte de su gestión, ha adoptado el uso de las Escalas de Calificación del Ambiente de la Infancia Temprana ITERS-R y ECERS-R¹, para conocer la calidad educativa de los Centros. Estas Escalas fueron desarrolladas por investigadores del Centro de Desarrollo Infantil Frank Porter Graham, de la Universidad de Carolina del Norte de Estados Unidos y han sido parte importante de las investigaciones de primera infancia, tanto en el extranjero como en nuestro país.\n\nCon el objetivo de conocer y analizar los resultados obtenidos, se presenta el siguiente informe en tres apartados. El primero de ellos da a conocer una breve descripción de las características de los instrumentos aplicados, acompañada del resumen de los contenidos que aborda cada Escala.\n\nPosteriormente se entregan algunas consideraciones respecto a los procedimientos de aplicación y los resguardos que deben tenerse presentes frente a los resultados de las Escalas de Calificación.\n\nEn tercer lugar, se presenta los resultados obtenidos por el Centro: un breve resumen del Centro y el detalle de cada sala evaluada."
+      pdf.text string, :size => 14, :align => :justify    	
+      
+      # Agregamos pie de nota con la explicación de las escalas:
+      pdf.bounding_box [pdf.bounds.left, pdf.bounds.bottom + 25], :width  => pdf.bounds.width do
+      	#pdf.stroke_bounds
+        #pdf.font "Helvetica"
+        pdf.stroke_horizontal_rule
+        pdf.move_down(5)
+        pdf.text "1. Clifford, Cryer & Harms, Escala de Calificación del Ambiente de la Infancia Temprana-Edición revisada, Nueva York (2002).", :size => 10, :align => :justify
+    	end
+
       pdf.start_new_page
       
       ##################################################
-      # Antecedentes de las escalas ####################
+      # Antecedentes de las escalas pag.2 ##############
       ##################################################
 
       string = "I.   ANTECEDENTES DE LAS ESCALAS"
       pdf.text string, :style => :bold 
       pdf.move_down 40
       string = "A continuación se detalla información respecto a las características principales de las escalas aplicadas."
-      pdf.text string, :size => 14
+      pdf.text string, :size => 14, :align => :justify
       original_size = pdf.font_size.inspect
       
-      pdf.table([["Escala     ", "ITERS-R", "ECERS-R"],["Rango de edad", "Desde los primeros meses hasta los 2 años y medio", "Desde los 2 años y medio hasta los 5 años"],["Sub Escalas", {:content => "• Espacio y Mueble\n• Rutinas de Cuidado Personal\n• Escuchar y Hablar / Lenguaje-Razonamiento\n• Actividades\n• Interacción\n• Estructura del programa\n• Padres y Personal", :colspan => 2}],["Antecedente", {:content => "Evalúan la calidad del proceso y cuantifican la observación de lo que ocurre en una sala de clases.\n\nCuentan con respaldo científico: estudios de validación, confiabilidad y coherencia interna.\n\nLas fuentes principales para su creación tienen su base en evidencias empíricas: pruebas de investigación en el campo de la salud, del desarrollo y de la educación.\n\nHan sido utilizadas en importantes proyectos de investigación, lo que ha evidenciado su confiabilidad en a cuanto uso y validez (EEUU, Canadá, Alemania, Italia, Rusia, Inglaterra, Brasil, Hong Kong, Corea, entre otros).", :colspan => 2}]])
+      pdf.table([["Escala     ", "ITERS-R", "ECERS-R"],["Rango de edad", "Desde los primeros meses hasta los 2 años y medio", "Desde los 2 años y medio hasta los 5 años"],["Sub Escalas", {:content => "• Espacio y Muebles\n• Rutinas de Cuidado Personal\n• Escuchar y Hablar / Lenguaje-Razonamiento\n• Actividades\n• Interacción\n• Estructura del programa\n• Padres y Personal", :colspan => 2}],["Antecedentes", {:content => "Evalúan la calidad del proceso y cuantifican la observación de lo que ocurre en el aula.\n\nCuentan con respaldo científico: estudios de validación, confiabilidad y coherencia interna.\n\nLas fuentes principales para su creación tienen base en evidencias empíricas: pruebas de investigación en el campo de la salud, del desarrollo y de la educación.\n\nHan sido utilizadas en importantes proyectos de investigación, lo que ha evidenciado su confiabilidad en a cuanto uso y validez (EEUU, Canadá, Alemania, Italia, Rusia, Inglaterra, Brasil, Hong Kong, Corea, entre otros).", :colspan => 2}]])
       pdf.font_size original_size.to_i
       pdf.start_new_page
 
@@ -290,14 +300,14 @@ class EvaluacionsController < ApplicationController
 
       string = "PUNTUACIÓN GENERAL DEL CENTRO\n"
       pdf.text string, :style => :bold 
-      string = "A continuación se presenta el puntaje promedio obtenido por el Centro en su conjunto para cada Sub Escala.\n\nLos ítemes con puntajes iguales o superiores a 3 son considerados por las Escalas de Calificación del Ambiente Educativo como prácticas apropiadas al desarrollo, por lo que se ubican en un rango de calidad que va desde \"Mínimo\" (3 puntos) a \"Excelente\" (7 puntos). Estos Ítemes son considerados como los aspectos más fuertes en EL Centro, ya que promueven y apoyan el desarrollo positivo del niño/a.\n\nLos ítemes con puntajes inferiores a 3 en las Escalas de Calificación del Ambiente Educativo reflejan prácticas inapropiadas o insuficientes para el desarrollo del niño/a.\n\n"
+      string = "A continuación se presenta el puntaje promedio obtenido por el Centro en su conjunto para cada Sub Escala.\n\nLos ítemes con puntajes iguales o superiores a 3 son considerados por las Escalas de Calificación del Ambiente Educativo como prácticas apropiadas al desarrollo, por lo que se ubican en un rango de calidad que va desde \"Mínimo\" (3 puntos) a \"Excelente\" (7 puntos). Estos Ítemes son considerados como los aspectos más fuertes en el Centro, ya que promueven y apoyan el desarrollo positivo del niño/a.\n\nLos ítemes con puntajes inferiores a 3 en las Escalas de Calificación del Ambiente Educativo reflejan prácticas inapropiadas o insuficientes para el desarrollo del niño/a.\n\n"
       pdf.text string
 
       pdf.table ([["Sub Escala", "Puntaje" ],["Espacio y muebles",notas[0]],["Rutinas de cuidado personal", notas[1]],["Escuchar y hablar / Lenguaje y razonamiento",notas[2]],["Actividades",notas[3]],["Interacción",notas[4]],["Estructura del programa",notas[5]],["Padres y personal",notas[6]],["PUNTUACIÓN TOTAL",nota_final]]), :position => :center, :width => pdf.bounds.width
       pdf.start_new_page
 
       ##################################################
-      # Evaluation graph ###############################
+      # Evaluation graph pag.6 #########################
       ##################################################
       string = "GRÁFICO GENERAL DEL CENTRO\n\n"
       pdf.text string, :style => :bold 
@@ -413,7 +423,7 @@ class EvaluacionsController < ApplicationController
 
         string = "ÁREAS DE CRECIMIENTO POTENCIAL: ITEMES CON PUNTAJES INFERIORES A 3\n\n"
         pdf.text string, :style => :bold 
-        string = "Los ítemes con puntajes inferiores a 3 en las Escalas de Calificación del Ambiente Educativo reflejan prácticas inapropiadas para el desarrollo del niño/a. La sección ''áreas de crecimiento potencial '' proporciona información acerca de la razón para la puntuación de ciertos indicadores. Este detalle puede ayudar a entender cómo el evaluador llegó a la puntuación de cada ítem de esta sección."
+        string = "Los ítemes con puntajes inferiores a 3 en las Escalas de Calificación del Ambiente Educativo reflejan prácticas inapropiadas para el desarrollo del niño/a. La sección ''áreas de crecimiento potencial'' proporciona información acerca de la razón para la puntuación de ciertos indicadores. Este detalle puede ayudar a entender cómo el evaluador llegó a la puntuación de cada ítem de esta sección.\n"
         pdf.text string
         eval.escala.subescala.each_with_index do |sub,index|
           bullet_item(1,sub.subescala_template.nombre+"\n\n",pdf,roman[index]+" ")
