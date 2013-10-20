@@ -20,6 +20,10 @@ $(function(){
 	// Vinculamos los errores a goToError:	
 	$("body").delegate("li.alert.alert-error","click",goToError);
 
+	// vinculamos onClick de los links en los indicadores con deleteIndicador:
+	$("body").delegate("a.details_btn.btn-mini.close.active","click", deleteIndicador);
+
+
 	// Variable para almacenar el valor previamente seleccionado en select#escala:
 	var previous_option = 0;
 	
@@ -30,8 +34,6 @@ $(function(){
 		if($("div#escala_container").find("input:checked").length > 0)
 		{
 			// TODO: Agregar diálogo que confirme acción
-			alert("NO puede, hay elementos seleccionados. DES-SELECCIONE TODO MANUALMENTE ANTES DE CONTINUAR... o wait... NO PUEDES! MUAJAJAJAAA!!!! >:D");
-			return;
 		}
 	
 		// Primero, extraemos el id seleccionado
@@ -50,7 +52,7 @@ $(function(){
 		$.ajax({
 			url: '/evaluaciones/escala/' + id,
 			type: "GET",
-			timeout: 8000,
+			timeout: 15000,
 			before: function(){
 				// Ponemos el gif de "cargando"
 			},
@@ -70,7 +72,6 @@ $(function(){
 						// vinculamos con delegate:
 						$("section.item input.no_node").click(markPreviousIndicators);
 						$("div#ajax_container header").click(toggleVisibility)
-						//$("form#new_evaluacion").submit(validateData);
 
 						// Actualizamos el valor de previous_option
 						previous_option = id;
@@ -84,7 +85,7 @@ $(function(){
 			{
 				// volvemos select#escala al previous_option y mostramos mensaje de error:
 				$("select#escala").val(previous_option);
-				alert("An error ocurred! " + previous_option);
+				alert("No se ha podido cargar el form, por favor intente nuevamente");
 			}
 		});
 	
@@ -179,10 +180,10 @@ $(function(){
 	function buildError($obj, $errorUl, error)
 	{
 			// Obtenemos scroll position del objeto:
-			var scrollTop = $obj.position().top;
+			var objScrollTop = $obj.offset().top;
 			
 			// construimos error:
-			var errorHTML = "<li class='alert alert-error' data-scrollTop='"+scrollTop+"'><button type='button' class='close' data-dismiss='alert'>&times;</button>"+error+"</li>"
+			var errorHTML = "<li class='alert alert-error' data-scrollTop='"+objScrollTop+"'><button type='button' class='close' data-dismiss='alert'>&times;</button>"+error+"</li>"
 					
 			// Agregamos el error a $errorUl:
 			$errorUl.append(errorHTML);	
@@ -222,10 +223,6 @@ $(function(){
 		
 		var salaOk = checkIfBlank($salaObj, $errorUl, "El nombre de la sala no puede estar vacío.")
 		var centroOk = checkIfBlank($centroObj, $errorUl, "La evaluación debe tener un centro asociado.")
-
-		// NO ES NECESARIO VALIDARLO PUES SE HACE AL llamar a validateEscala
-		//var $escalaObj = $("select#escala");
-		// var escalaOk = checkIfBlank($escalaObj, $errorUl, "Debe .")
 		
 		// Validamos que tenga escala:
 		$escalaContainer = $('div#escala_container');
@@ -243,7 +240,6 @@ $(function(){
 			$('html, body').animate({
 			scrollTop: 0
 			}, 1000);
-
 		}
 			
 		return dataOk;
@@ -348,34 +344,15 @@ $(function(){
 		
 		return escalaOk;
 	}
-});
-
-// OBSERVACIÓN!!!
-// -----------------------------------------------------------------------------------------
-// USAR :onclick en f.radio_button_field entrega como this otro objeto! (ni idea cual es)...
-// => usamos :class => 'no_node' y $("input.no_node").click(...) => entrega radio button! ;)
-
-// Sólo vincularemos los radio buttons de 'NO':
-function markPreviousIndicators_obsolete()
-{
-	// en este caso, this es el radio button => td es el padre... tr es el padre del padre!
-	row = $(this).parent().parent();
 	
-	alert($(this).is('input') + " " + $(e).localName);
-	
-	var count = 0;
-	
-	while(row.length != 0)
-	{
-		if(row.is('tr'))
-		{
-		    count = count + 1;
-		    alert(count);
-		}
+	// Función para borrar un indicador
+	function deleteIndicador(event){
+		event.preventDefault();
 
-		row = row.prev();
+		// borramos todos los indicadores de la fila:	
+		$(this).parents("tr").find("input[type='radio']").each(function(index, indicador){
+			$(indicador).prop('checked', false);
+		});
 	}
 	
-		
-	//alert("the checkbox has " + count + " previous rows");
-}
+});

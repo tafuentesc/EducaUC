@@ -93,3 +93,19 @@ div.controls.time select { width: 45%;}
 #pdf_download_button{
 	display: none;
 }
+
+a.close {
+  font-weight: bold;
+  color: #000000;
+  text-shadow: 0 1px 0 #ffffff;
+  opacity: 0.8;
+  filter: alpha(opacity=80);
+  text-decoration: none;
+}
+a.close:hover {
+  color: #000000;
+  text-decoration: none;
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+  cursor: pointer;
+}

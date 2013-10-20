@@ -10,6 +10,7 @@
 		<th>SI</th>
 		<th>NO</th>
 		<th>N/A</th>
+		<th></th>
 	</tr>
 <% end %>
 
@@ -24,5 +25,8 @@
 		<% if indicador.indicador_template.has_na %>
 			<%= ind_f.radio_button :eval, "nil", :class => '' %>
 		<% end %>
+	</td>
+	<td>
+		<a href="javascript:void(0);" class="details_btn btn-mini close active">×</a>
 	</td>
 </tr>
