@@ -229,9 +229,10 @@ $(function(){
 				
 		// validamos la escala:
 		escalaOk = validateEscala($escalaContainer, $errorUl);
-		
+
 		// Agrupamos resultados:		
 		dataOk = salaOk && centroOk && escalaOk;
+		alert("escalaOk= " + escalaOk + ", dataOk= " + dataOk);
 		
 		// si la data tiene errores, desplazamos la ventana hacia arriba
 		if(!dataOk)
@@ -247,6 +248,7 @@ $(function(){
 	
 	function validateEscala($escalaContainer, $errorUl)
 	{
+		alert("validando escala...");
 		// variable que indica si la escala está correcta:
 		escalaOk = true;
 		
@@ -284,11 +286,17 @@ $(function(){
 				$first_no =	$(item).find('div.item_body input[type="radio"].no_node:checked').first();
 				si_count = $(item).find('div.item_body input[type="radio"]:checked').length;
 				
+				//alert("#no's= " + $first_no.length + ", #si's= " + si_count);
+				
 				// si está vacío, debemos ver si tiene algún 'sí'; en ese caso, levantamos un error:
-				if($first_no.length == 0 && si_count > 0)
+				if($first_no.length == 0)
 				{
-					buildError($(item),$errorUl,"Ítem inválido: El último indicador marcado debe ser 'no'.");
-					$(item).addClass("blank_entry");
+					if(si_count > 0){
+						buildError($(item),$errorUl,"Ítem inválido: El último indicador marcado debe ser 'no'.");
+						$(item).addClass("blank_entry");
+						escalaOk = false;
+						itemOk = false;
+					}
 				}
 				else
 				{
