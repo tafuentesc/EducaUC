@@ -221,8 +221,8 @@ $(function(){
 		var $salaObj = $("input#evaluacion_nombre_sala");
 		var $centroObj = $("select#evaluacion_centro_id");
 		
-		var salaOk = checkIfBlank($salaObj, $errorUl, "El nombre de la sala no puede estar vacío.")
-		var centroOk = checkIfBlank($centroObj, $errorUl, "La evaluación debe tener un centro asociado.")
+		var salaOk = !checkIfBlank($salaObj, $errorUl, "El nombre de la sala no puede estar vacío.")
+		var centroOk = !checkIfBlank($centroObj, $errorUl, "La evaluación debe tener un centro asociado.")
 		
 		// Validamos que tenga escala:
 		$escalaContainer = $('div#escala_container');
@@ -232,7 +232,11 @@ $(function(){
 
 		// Agrupamos resultados:		
 		dataOk = salaOk && centroOk && escalaOk;
-		alert("escalaOk= " + escalaOk + ", dataOk= " + dataOk);
+		alert("salaOk= " + salaOk + 
+					"\ncentroOk= " + centroOk +
+					"\nescalaOk= " + escalaOk + 
+					"\n--------------------------" +
+					"\ndataOk= " + dataOk);
 		
 		// si la data tiene errores, desplazamos la ventana hacia arriba
 		if(!dataOk)
