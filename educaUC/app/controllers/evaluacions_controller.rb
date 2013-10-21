@@ -5,7 +5,7 @@ class EvaluacionsController < ApplicationController
   def index
     if(@logged_user.admin)
       @evaluacions = Evaluacion.all
-	  @pendientes = Evaluacion.where('estado = ?', 0)
+		  @pendientes = Evaluacion.where('estado = ?', 0)
       @enviadas = Evaluacion.where('estado = ?', 1)
       @completadas = Evaluacion.where('estado = ?', 2)
     else
