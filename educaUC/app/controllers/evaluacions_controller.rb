@@ -5,13 +5,8 @@ class EvaluacionsController < ApplicationController
   def index
     if(@logged_user.admin)
       @evaluacions = Evaluacion.all
-		  @pendientes = Evaluacion.where('estado = ?', 0)
-      @enviadas = Evaluacion.where('estado = ?', 1)
-      @completadas = Evaluacion.where('estado = ?', 2)
     else
       @evaluacions = Evaluacion.where("encargado = ?", @logged_user.id)
-      @objetadas = @evaluacions.where('estado = ?', -1)
-      @pendientes = @evaluacions.where('estado != ?', 0)
     end
 
     respond_to do |format|
@@ -44,10 +39,10 @@ class EvaluacionsController < ApplicationController
 		#@escala = Escala.new(:escala_template_id => escala_template.id)
 		@escala = @evaluacion.build_escala(:escala_template_id => escala_template.id)
 		
-		escala_template.subescala_template.each do |subescala_template|
+		escala_template.subescala_template.order("id ASC").each do |subescala_template|
 			sub_escala = @escala.subescala.build(:subescala_template_id => subescala_template.id)
 			
-			subescala_template.item_template.each do |item_template|
+			subescala_template.item_template.order("id ASC").each do |item_template|
 				item = sub_escala.item.build(:item_template_id => item_template.id)
 				
 				item_template.indicador_template.order("id ASC").each do |indicador_template|
@@ -96,8 +91,8 @@ class EvaluacionsController < ApplicationController
 		    
     respond_to do |format|
       if @evaluacion.save
-        format.html { redirect_to @evaluacion, notice: 'Evaluacion was successfully created.' }
-        format.json { render json: @evaluacion, status: :created, location: @evaluacion }
+        format.html { redirect_to evaluacions_path, notice: 'Evaluacion was successfully created.' }
+        format.json { render json: evaluacions_path, status: :created, location: @evaluacion }
       else
       	# Si lanzó error, debemos re-construir la escala:
 				@user = @logged_user

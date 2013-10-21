@@ -232,6 +232,7 @@ $(function(){
 
 		// Agrupamos resultados:		
 		dataOk = salaOk && centroOk && escalaOk;
+
 		alert("salaOk= " + salaOk + 
 					"\ncentroOk= " + centroOk +
 					"\nescalaOk= " + escalaOk + 

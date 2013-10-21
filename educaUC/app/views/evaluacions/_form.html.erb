@@ -67,7 +67,9 @@
   
   <!-- Por ahora cargaremos Iters por defecto  -->
   <% if @evaluacion.escala != nil %>
-  	<%= render 'escala' %>
+		<div id="escala_container">
+  		<%= render 'escala' %>
+  	</div>
   <% else %>
   	<div id="ajax_container">
 			<div id="error"></div>
