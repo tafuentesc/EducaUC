@@ -4,7 +4,6 @@ class Escala < ActiveRecord::Base
   belongs_to :evaluacion, :inverse_of => :escala
   belongs_to :escala_template
   
-  validates_presence_of :evaluacion
   accepts_nested_attributes_for :subescala
   
   #TODO: Agregar condiciones de rechazo (:reject_if)
