@@ -12,6 +12,11 @@ class Evaluacion < ActiveRecord::Base
 	
 	before_save :check_sala
   
+  # método para calcular la nota de la evaluación
+  def calcular_nota
+  	self.escala.calcular_nota
+  end
+  
   def check_sala
   	c = self.centro
   	s = Sala.find_by_nombre_and_centro_id(self.nombre_sala, self.centro.id)

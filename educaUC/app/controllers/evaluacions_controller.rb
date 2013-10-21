@@ -91,6 +91,9 @@ class EvaluacionsController < ApplicationController
 		    
     respond_to do |format|
       if @evaluacion.save
+      
+      	@evaluacion.calcular_nota
+      
         format.html { redirect_to evaluacions_path, notice: 'Evaluacion was successfully created.' }
         format.json { render json: evaluacions_path, status: :created, location: @evaluacion }
       else
@@ -111,6 +114,8 @@ class EvaluacionsController < ApplicationController
 
     respond_to do |format|
       if @evaluacion.update_attributes(params[:evaluacion])
+      	@evaluacion.calcular_nota
+      
         format.html { redirect_to @evaluacion, notice: 'Evaluacion was successfully updated.' }
         format.json { head :no_content }
       else

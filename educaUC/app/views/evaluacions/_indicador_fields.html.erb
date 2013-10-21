@@ -19,8 +19,14 @@
 		<%="#{indicador.indicador_template.columna}.#{indicador.indicador_template.fila}"%>
 	</td>
 
-	<td><%= ind_f.radio_button :eval, 1, :class => "#{indicador.indicador_template.columna==1? 'no_node' : ''}"%></td>
-	<td><%= ind_f.radio_button :eval, 0, :class =>"#{indicador.indicador_template.columna!=1? 'no_node' : ''}" %></td>
+	<% if(indicador.columna == 1) %>
+		<td><%= ind_f.radio_button :eval, 0, :class => "no_node"%></td>
+		<td><%= ind_f.radio_button :eval, 1, :class => ""%></td>
+	<% else %>		
+		<td><%= ind_f.radio_button :eval, 1, :class => ""%></td>
+		<td><%= ind_f.radio_button :eval, 0, :class => "no_node"%></td>
+	<% end %>
+
 	<td>
 		<% if indicador.indicador_template.has_na %>
 			<%= ind_f.radio_button :eval, -1, :class => '' %>

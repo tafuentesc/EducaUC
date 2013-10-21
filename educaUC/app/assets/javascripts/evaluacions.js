@@ -233,11 +233,11 @@ $(function(){
 		// Agrupamos resultados:		
 		dataOk = salaOk && centroOk && escalaOk;
 
-		alert("salaOk= " + salaOk + 
-					"\ncentroOk= " + centroOk +
-					"\nescalaOk= " + escalaOk + 
-					"\n--------------------------" +
-					"\ndataOk= " + dataOk);
+//		alert("salaOk= " + salaOk + 
+//					"\ncentroOk= " + centroOk +
+//					"\nescalaOk= " + escalaOk + 
+//					"\n--------------------------" +
+//					"\ndataOk= " + dataOk);
 		
 		// si la data tiene errores, desplazamos la ventana hacia arriba
 		if(!dataOk)
