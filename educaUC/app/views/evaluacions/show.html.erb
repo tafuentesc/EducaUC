@@ -3,49 +3,49 @@
   <h1><%=t '.title', :default => model_class.model_name.human %></h1>
 </div>
 
-<dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:nombre_sala) %>:</strong></dt>
-  <dd><%= @evaluacion.nombre_sala %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:fecha_de_evaluacion) %>:</strong></dt>
-  <dd><%= @evaluacion.fecha_de_evaluacion %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:encargado) %>:</strong></dt>
-  <dd><%= @evaluacion.encargado %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:horario_inicial) %>:</strong></dt>
-  <dd><%= @evaluacion.horario_inicial %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:horario_final) %>:</strong></dt>
-  <dd><%= @evaluacion.horario_final %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:estado) %>:</strong></dt>
-  <dd><%= @evaluacion.estado %></dd>
-  <dt><strong>Centro:</strong></dt>
-  <dd><%= @evaluacion.centro.nombre %></dd>
-</dl>
+<table class="table table-bordered">
+  <tr>
+  	<th>Nombre centro:</th>
+  	<td><%= @evaluacion.centro.nombre %></td>
+  </tr>
+  <tr>
+  	<th><%= model_class.human_attribute_name(:nombre_sala) %>:</th>
+  	<td><%= @evaluacion.nombre_sala %></td>
+  </tr>
+  <tr>
+  	<th><%= model_class.human_attribute_name(:encargado) %>:</th>
+		<td><%= "#{@user.name} #{@user.lastname}"%></td>
+	</tr>
+  <tr>
+  	<th><%= model_class.human_attribute_name(:fecha_de_evaluacion) %>:</th>
+  	<% date = @evaluacion.fecha_de_evaluacion %>
+  	<td><%= "#{date.day}-#{date.month}-#{date.year}" %></td>
+  </tr>
+  <tr>
+  	<th><%= model_class.human_attribute_name(:horario_inicial) %>:</th>
+  	<% h_ini = @evaluacion.horario_inicial.in_time_zone("Santiago") %>
+  	<td><%= h_ini.to_s(:time) %></td>
+  </tr>
+  <tr>
+  	<th><%= model_class.human_attribute_name(:horario_final) %>:</th>
+  	<% h_fin = @evaluacion.horario_final.in_time_zone("Santiago") %>
+  	<td><%= h_fin.to_s(:time) %></td>
+  </tr>
+</table>
 
 <div id="show-escala">
 	<%= render :partial => 'escala' %>
 </div>
 
-<div id="razon-objecion">
-  <%= form_for :objetado, :url => { :action => :objetar } do |form| %>
-    <%= form.hidden_field :admin_id, :value => @logged_user.id %>
-		<%= form.hidden_field :evaluacion_id, :value => @evaluacion.id %>
-   	<p> 
-    	<label for="razon">Razón:</label>
-    	<%= form.text_area :razon, :rows => 3, :cols => 40 %>
-   	</p>
-   	<%= form.submit "Objetar", :class => "submit" %>
-   <% end %>
-</div>
-
-<%= button_to "Aceptar", :action => "aceptar/#{@evaluacion.id}" %>
-
-<div class="form-actions">
-  <%= link_to t('.back', :default => t("helpers.links.back")),
-              evaluacions_path, :class => 'btn'  %>
-  <%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_evaluacion_path(@evaluacion), :class => 'btn' %>
-  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-              evaluacion_path(@evaluacion),
-              :method => 'delete',
-              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-              :class => 'btn btn-danger' %>
+<% confirm_string = "¿Está seguro que desea borrar esta evaluación? Esta acción es irreversible." %>
+<div class="btn-group float-right">
+	<%= link_to "Atrás",
+	            evaluacions_path, :class => 'btn'  %>
+	<%= link_to "Editar Evaluación",
+	            edit_evaluacion_path(@evaluacion), :class => 'btn' %>
+	<%= link_to "Eliminar",
+	            evaluacion_path(@evaluacion),
+	            :method => 'delete',
+	            :data => { :confirm => "#{confirm_string}" },
+	            :class => 'btn btn-danger float-right' %>
 </div>

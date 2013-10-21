@@ -25,6 +25,7 @@ class EvaluacionsController < ApplicationController
   def show
     @evaluacion = Evaluacion.find(params[:id])
 		@escala = @evaluacion.escala
+		@user = @logged_user
 		
 		if(!(@logged_user.admin?))
     	redirect_to user_path(@logged_user), :error => "No tiene permisos para acceder a esta vista"
@@ -81,7 +82,7 @@ class EvaluacionsController < ApplicationController
     @escala = @evaluacion.escala
     @user = @evaluacion.user
 	
-	if(!(@user == @logged_user || @logged_user.admin?))
+		if(!(@user == @logged_user || @logged_user.admin?))
     	redirect_to user_path(@logged_user), :error => "No tiene permisos para acceder a esta vista"
     end
   end
