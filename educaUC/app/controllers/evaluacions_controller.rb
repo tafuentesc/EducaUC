@@ -138,8 +138,8 @@ class EvaluacionsController < ApplicationController
   end
 
   def createPDF
-    evaluacion = Evaluacion.find(params[:id])
-    file = createFileName(evaluacion.centro,"abril","mayo")
+  	centro = Centro.find(params[:id])
+    file = createFileName(centro)
     puts file
     Prawn::Document.generate(file) do |pdf|
 
@@ -153,10 +153,10 @@ class EvaluacionsController < ApplicationController
       pdf.text "Escalas de Calificación del ambiente Educativo", :align => :center, :size => 22, :style => :bold
       pdf.text "(ITERS-R/ECERS-R)", :align => :center, :size => 22, :style => :bold
       pdf.move_down 40
-      pdf.text "Jardín Infantil #{evaluacion.centro.nombre}", :align => :center, :size => 18, :style => :bold
+      pdf.text "Jardín Infantil #{centro.nombre}", :align => :center, :size => 18, :style => :bold
       pdf.move_down (pdf.bounds.height/3)
       months = %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre)
-      pdf.text "#{months[evaluacion.fecha_de_evaluacion.month]}", :align => :center, :size => 18, :style => :bold
+      #pdf.text "#{months[evaluacion.fecha_de_evaluacion.month]}", :align => :center, :size => 18, :style => :bold
       pdf.start_new_page
       
       ##################################################
@@ -170,7 +170,7 @@ class EvaluacionsController < ApplicationController
       pdf.text string, :size => 14, :align => :justify    	
       
       # Agregamos pie de nota con la explicación de las escalas:
-      pdf.bounding_box [pdf.bounds.left, pdf.bounds.bottom + 25], :width  => pdf.bounds.width do
+      pdf.bounding_box [pdf.bounds.left, pdf.bounds.bottom + 35], :width  => pdf.bounds.width do
       	#pdf.stroke_bounds
         #pdf.font "Helvetica"
         pdf.stroke_horizontal_rule
@@ -236,32 +236,50 @@ class EvaluacionsController < ApplicationController
       ##################################################
       # Resumen de las Sub-escalas #####################
       ##################################################
-      #lista de evaluaciones de un mes dado (el informe seleccionado)
-      year = evaluacion.fecha_de_evaluacion.year
-      month = evaluacion.fecha_de_evaluacion.month
-      evaluaciones = evaluacion.centro.evaluacions.where('extract(month from fecha_de_evaluacion) = ? AND extract(year from fecha_de_evaluacion) = ?', month,year)
-      notas = Array.new(7,0)
+      
+      # Lista de evaluaciones de un centro dado (el informe seleccionado)
+      # (Sólo se consideran aquellas sub-escalas cuya nota es mayor a 0)
+      
+      evaluaciones = centro.evaluacions.order("nombre_sala ASC")
+      notas = Array.new(7,0)	# arreglo para almacenar las notas
+      nCount = Array.new(7,0) # arreglo para almacenar la cant de notas > 0 para determinada subescala
       sub_escalas = []
       evaluaciones.each do |eval|
-        eval.escala.subescala.each_with_index do |sub,index|
+        eval.escala.subescala.order("id ASC").each_with_index do |sub,index|
           sub_escalas.push sub.subescala_template.nombre
           notas[index] += sub.eval.to_i
+          
+          if(sub.eval.to_i > 0)
+          	nCount[index] += 1
+          end
         end
       end
+      
       nota_final = 0
+      nf_count = 0
+      
       notas.each_with_index do |nota,index|
-        notas[index] = nota/evaluaciones.count
-        nota_final += notas[index]
+      	if(nCount[index] == 0)
+      		notas[index] = 0
+      	else
+	        notas[index] = (nota.to_f/nCount[index]).round
+  	      nota_final += notas[index]
+  	      nf_count += 1
+  	    end
       end
-      nota_final = nota_final/notas.count
-      #
+      
+      if(nf_count == 0)
+      	nota_final = 0
+      else
+	      nota_final = (nota_final.to_f/nf_count).round
+	    end
 
       string = "III. RESUMEN DEL CENTRO\n"
       pdf.text string, :style => :bold 
       string = "DATOS CENTRO\n"
       pdf.text string, :style => :bold 
       
-      pdf.table ([["Centro", evaluacion.centro.nombre ],["Directora", evaluacion.centro.directora ],["Año", evaluacion.centro.created_at.year]]), :position => :center, :width => pdf.bounds.width
+      pdf.table ([["Centro", centro.nombre ],["Directora", centro.directora ],["Año", centro.created_at.year]]), :position => :center, :width => pdf.bounds.width
       pdf.move_down 20
 
       string = "PUNTUACIÓN GENERAL DEL CENTRO\n"
@@ -269,7 +287,7 @@ class EvaluacionsController < ApplicationController
       string = "A continuación se presenta el puntaje promedio obtenido por el Centro en su conjunto para cada Sub Escala.\n\nLos ítemes con puntajes iguales o superiores a 3 son considerados por las Escalas de Calificación del Ambiente Educativo como prácticas apropiadas al desarrollo, por lo que se ubican en un rango de calidad que va desde \"Mínimo\" (3 puntos) a \"Excelente\" (7 puntos). Estos Ítemes son considerados como los aspectos más fuertes en el Centro, ya que promueven y apoyan el desarrollo positivo del niño/a.\n\nLos ítemes con puntajes inferiores a 3 en las Escalas de Calificación del Ambiente Educativo reflejan prácticas inapropiadas o insuficientes para el desarrollo del niño/a.\n\n"
       pdf.text string
 
-      pdf.table ([["Sub Escala", "Puntaje" ],["Espacio y muebles",notas[0]],["Rutinas de cuidado personal", notas[1]],["Escuchar y hablar / Lenguaje y razonamiento",notas[2]],["Actividades",notas[3]],["Interacción",notas[4]],["Estructura del programa",notas[5]],["Padres y personal",notas[6]],["PUNTUACIÓN TOTAL",nota_final]]), :position => :center, :width => pdf.bounds.width
+      pdf.table ([["Sub Escala", "Puntaje" ],[sub_escalas[0],notas[0]],[sub_escalas[1], notas[1]],[sub_escalas[2],notas[2]],[sub_escalas[3],notas[3]],[sub_escalas[4],notas[4]],[sub_escalas[5],notas[5]],[sub_escalas[6],notas[6]],["PUNTUACIÓN TOTAL",nota_final]]), :position => :center, :width => pdf.bounds.width
       pdf.start_new_page
 
       ##################################################
@@ -282,9 +300,8 @@ class EvaluacionsController < ApplicationController
 
       graph = {:bottom => pdf.bounds.height/3, :top => (pdf.bounds.height/3)*2 }
       stroke_axis({:height => pdf.bounds.height/3},pdf,sub_escalas,notas)
-
-
       pdf.start_new_page
+
       ##################################################
       # Repeatable Evaluations #########################
       ##################################################
@@ -326,7 +343,7 @@ class EvaluacionsController < ApplicationController
           element[0] = ""
           not_applicable_count = 0
           sub.item.each do |item|
-            if item.eval.to_i.to_s == "0"
+            if item.eval.to_i.to_s == "-1"
               element[0] = element[0]+item.item_template.nombre+"\n"
               not_applicable_count+=1
             end
@@ -373,7 +390,7 @@ class EvaluacionsController < ApplicationController
               indicadores.each do |indicador|
                 bullet_item(5,indicador.indicador_template.descripcion+"\n",pdf,nil)
               end
-                bullet_item(5,"Observaciones: "+item.observaciones+"\n\n",pdf,nil)
+                bullet_item(3,"\nObservaciones: "+item.observaciones+"\n\n",pdf,nil)
             end
           end
           unless written
@@ -399,6 +416,7 @@ class EvaluacionsController < ApplicationController
             if punt < 3 && punt > 0
               bullet_item(3,item.item_template.nombre,pdf,(1+sub_index).to_s+". ")
               pdf.text "Puntuación: "+punt.to_s+"\n", :align => :right
+              written = true;
               col = punt
               if punt%2 == 0
                 col+=1
@@ -457,21 +475,20 @@ class EvaluacionsController < ApplicationController
     end
   end
 
-  def createFileName(centro,fechaIncial,fechaFinal)
+  def createFileName(centro)
       base = "#{Rails.root}/tmp/pdfs"
       nombre = centro.nombre
-      fecha = "_"+fechaIncial.to_s+"_"+fechaFinal.to_s
       ext = ".pdf"
 
       finalPath = base+"/"+nombre+"/"
-      absolutePath = finalPath+nombre+fecha+ext
+      absolutePath = finalPath+nombre+ext
       FileUtils.mkdir_p finalPath
       return absolutePath
   end
 
   def download
-    evaluacion = Evaluacion.find(params[:id])
-    file = createFileName(evaluacion.centro,"abril","mayo")
+    centro = Centro.find(params[:id])
+    file = createFileName(centro)
     send_file file, :type=>"application/pdf", :x_sendfile=>true
   end
 

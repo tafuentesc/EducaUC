@@ -1,55 +1,55 @@
 <%- model_class = Evaluacion -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => "Evaluaciones" %></h1>
+  <h1><%=t '.title', :default => "Evaluaciones por Centro" %></h1>
 </div>
-<table class="table">
-  <thead>
-    <tr>
-      <th><%= model_class.human_attribute_name(:nombre_sala) %></th>
-      <th><%= model_class.human_attribute_name(:fecha_de_evaluacion) %></th>
-      <th><%= model_class.human_attribute_name(:encargado) %></th>
-      <th>Centro</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @evaluacions.each do |evaluacion| %>
-    <tr class="record" data-class= "evaluaciones" data-id="<%= evaluacion.id %>">
-      <td><%= evaluacion.nombre_sala %></td>
-      <td><% date = evaluacion.fecha_de_evaluacion %>
-      		<%= "#{date.day}-#{date.month}-#{date.year}" %>
-      </td>
-      <td><%= "#{evaluacion.user.name} #{evaluacion.user.lastname}" %></td>
-      <td><%= evaluacion.centro.nombre %></td>
-      <td class="btn-group">
-        <%= link_to edit_evaluacion_path(evaluacion), :class => 'btn btn-mini' do %>
-        	<i class="icon-pencil"></i>
-        <% end %>
-        <%= link_to evaluacion_path(evaluacion),
-                    :method => :delete,
-                    :data => { :confirm => "¿Está seguro que desea eliminar esta evaluación?" },
-                    :class => 'btn btn-mini btn-danger' do %>
-          <i class="icon-trash"></i>
-        <% end %>
 
-        <%= link_to 'Generar PDF', '/evaluaciones/generate/'+evaluacion.id.to_s, :remote => true, :id => 'pdf_create_button'+evaluacion.id.to_s, :class => 'btn btn-mini' %>
-        <%= link_to 'Download PDF', "/evaluaciones/download/#{evaluacion.id}", :id => 'pdf_download_button'+evaluacion.id.to_s, :class => 'btn btn-mini', :style => 'display: none;' %>
+<% @evaluacions.group_by(&:centro).each do |centro, evaluaciones| %>
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th colspan="3"><%= centro.nombre %></th>
+				<th>
+		      <%= link_to 'Generar PDF', '/evaluaciones/generate/'+centro.id.to_s, :remote => true, :id => 'pdf_create_button'+centro.id.to_s, :class => 'btn btn-mini' %>
+		      <%= link_to 'Download PDF', "/evaluaciones/download/#{centro.id}", :id => 'pdf_download_button'+centro.id.to_s, :class => 'btn btn-mini', :style => 'display: none;' %>
+				</th>
+		  <tr>
+		    <th><%= model_class.human_attribute_name(:nombre_sala) %></th>
+		    <th><%= model_class.human_attribute_name(:fecha_de_evaluacion) %></th>
+		    <th><%= model_class.human_attribute_name(:encargado) %></th>
+		    <th></th>
+		  </tr>
+		</thead>
+		<tbody>
+		<% evaluaciones.each do |evaluacion| %>
+		  <tr class="record" data-class= "evaluaciones" data-id="<%= evaluacion.id %>">
+		    <td><%= evaluacion.nombre_sala %></td>
+		    <td><% date = evaluacion.fecha_de_evaluacion %>
+		    		<%= "#{date.day}-#{date.month}-#{date.year}" %>
+		    </td>
+		    <td><%= "#{evaluacion.user.name} #{evaluacion.user.lastname}" %></td>
+		    <td class="btn-group">
+		      <%= link_to edit_evaluacion_path(evaluacion), :class => 'btn btn-mini' do %>
+		      	<i class="icon-pencil"></i>
+		      <% end %>
+		      <%= link_to evaluacion_path(evaluacion),
+		                  :method => :delete,
+		                  :data => { :confirm => "¿Está seguro que desea eliminar esta evaluación?" },
+		                  :class => 'btn btn-mini btn-danger' do %>
+		        <i class="icon-trash"></i>
+		      <% end %>
+		    </td>
+		  </tr>
+			<% end %>
+		</tbody>
+	</table>
 
-        <script>
-          $("#pdf_create_button<%=evaluacion.id.to_s%>").bind('ajax:loading',function(evt,data,status,xhr){
+  <script>
+    $("#pdf_create_button<%=centro.id.to_s%>").bind('ajax:loading',function(evt,data,status,xhr){
 
-          }); 
-          $("#pdf_create_button<%=evaluacion.id.to_s%>").bind('ajax:success',function(evt,data,status,xhr){
-            $('#pdf_download_button<%=evaluacion.id.to_s%>').fadeToggle();
-            $('#pdf_create_button<%=evaluacion.id.to_s%>').fadeToggle();
-          });
-        </script>
-      </td>
-    </tr>
-	  <% end %>
-  </tbody>
-</table>
-
-<%= link_to "Crear Evaluación",
-            new_evaluacion_path,
-            :class => 'btn btn-primary' %>
+    }); 
+    $("#pdf_create_button<%=centro.id.to_s%>").bind('ajax:success',function(evt,data,status,xhr){
+      $('#pdf_download_button<%=centro.id.to_s%>').fadeToggle();
+      $('#pdf_create_button<%=centro.id.to_s%>').fadeToggle();
+    });
+  </script>
+<% end %>
