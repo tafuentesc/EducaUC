@@ -9,7 +9,7 @@ EscalaTemplate.create(nombre: 'ITERS-R');
 EscalaTemplate.create(nombre: 'ECERS-R');
 
 #SubEscalas --- Escala ITERS-R
-SubescalaTemplate.create(nombre: 'Espacio y Mueble', numero: 1, escala_template_id: 1);
+SubescalaTemplate.create(nombre: 'Espacio y Muebles', numero: 1, escala_template_id: 1);
 SubescalaTemplate.create(nombre: 'Rutinas del Cuidado Personal', numero: 2, escala_template_id: 1);
 SubescalaTemplate.create(nombre: 'Escuchar y Hablar', numero: 3, escala_template_id: 1);
 SubescalaTemplate.create(nombre: 'Actividades', numero: 4, escala_template_id: 1);
@@ -18,7 +18,7 @@ SubescalaTemplate.create(nombre: 'Estructura del Programa', numero: 6, escala_te
 SubescalaTemplate.create(nombre: 'Padres y Personal', numero: 7, escala_template_id: 1);
 
 #SubEscalas --- Escala ECERS-R
-SubescalaTemplate.create(nombre: 'Espacio y Mueble', numero: 1, escala_template_id: 2);
+SubescalaTemplate.create(nombre: 'Espacio y Muebles', numero: 1, escala_template_id: 2);
 SubescalaTemplate.create(nombre: 'Rutinas del Cuidado Personal', numero: 2, escala_template_id: 2);
 SubescalaTemplate.create(nombre: 'Lenguaje-Razonamiento', numero: 3, escala_template_id: 2);
 SubescalaTemplate.create(nombre: 'Actividades', numero: 4, escala_template_id: 2);
