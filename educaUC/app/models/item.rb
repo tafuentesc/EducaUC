@@ -5,4 +5,10 @@ class Item < ActiveRecord::Base
   belongs_to :item_template
   
   accepts_nested_attributes_for :indicador
+  
+  after_save :calcular_nota
+  
+  def calcular_nota
+  
+  end
 end

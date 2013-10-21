@@ -253,7 +253,6 @@ $(function(){
 	
 	function validateEscala($escalaContainer, $errorUl)
 	{
-		alert("validando escala...");
 		// variable que indica si la escala está correcta:
 		escalaOk = true;
 		
@@ -350,7 +349,7 @@ $(function(){
 						$(item).addClass("blank_entry");
 					}
 					else
-						$(item).addClass("blank_entry");				
+						$(item).removeClass("blank_entry");				
 				}				
 			});
 		});
