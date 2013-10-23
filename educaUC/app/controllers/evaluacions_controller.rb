@@ -116,7 +116,7 @@ class EvaluacionsController < ApplicationController
       if @evaluacion.update_attributes(params[:evaluacion])
       	@evaluacion.calcular_nota
       
-        format.html { redirect_to @evaluacion, notice: 'Evaluacion was successfully updated.' }
+        format.html { redirect_to evaluacions_path, notice: 'Evaluacion was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -323,7 +323,7 @@ class EvaluacionsController < ApplicationController
         pdf.text string, :style => :bold
         ###tabla de puntuacion de evaluacion
         table = []
-        eval.escala.subescala.each do |sub|
+        eval.escala.subescala.order("id ASC").each do |sub|
           element = []
           element.push sub.subescala_template.nombre
           element.push sub.eval.to_i.to_s
@@ -338,7 +338,8 @@ class EvaluacionsController < ApplicationController
         pdf.text string, :style => :bold 
         ###tabla de datos de evaluacion
         table = []
-        eval.escala.subescala.each do |sub|
+        total_count = 0
+        eval.escala.subescala.order("id ASC").each do |sub|
           element = []
           element[0] = ""
           not_applicable_count = 0
@@ -351,8 +352,12 @@ class EvaluacionsController < ApplicationController
           if not_applicable_count>0
             element.unshift sub.subescala_template.nombre
             table.push element
+            total_count += not_applicable_count
           end
         end
+        if(total_count == 0)
+	        table.push ["\n\n\n\n\n"]
+	      end
         pdf.table table, :position => :center, :width => pdf.bounds.width
         pdf.move_down 20
 
@@ -368,10 +373,10 @@ class EvaluacionsController < ApplicationController
         string = "En esta sección se describen los ítemes con puntajes iguales o superiores a 3. Las puntuaciones en este rango son consideradas por las Escalas de Calificación del Ambiente Educativo como prácticas apropiadas al desarrollo, por lo que se ubican en un rango de calidad que va desde \"Mínimo\" (3 puntos) a \"Excelente\" (7 puntos). Estos Ítemes son considerados como los aspectos más fuertes en esta Sala, ya que promueven y apoyan el desarrollo positivo del niño/a\n\n\n"
         pdf.text string
         ###tabla de datos de evaluacion
-        eval.escala.subescala.each_with_index do |sub,index|
+        eval.escala.subescala.order("id ASC").each_with_index do |sub,index|
           bullet_item(1,sub.subescala_template.nombre+"\n\n",pdf,roman[index]+" ")
           written = false;
-          sub.item.each_with_index do |item, sub_index|
+          sub.item.order("id ASC").each_with_index do |item, sub_index|
             punt = item.eval.to_i
             if punt >= 3 
               bullet_item(3,item.item_template.nombre+"\n\n",pdf,(1+sub_index).to_s+". ")
@@ -382,7 +387,7 @@ class EvaluacionsController < ApplicationController
                 col+=1
               end
               indicadores = []
-              item.indicador.each do |indicador|
+              item.indicador.order("id ASC").each do |indicador|
                 if(indicador.indicador_template.columna == col && indicador.eval)
                   indicadores.push indicador
                 end
@@ -408,10 +413,10 @@ class EvaluacionsController < ApplicationController
         pdf.text string, :style => :bold 
         string = "Los ítemes con puntajes inferiores a 3 en las Escalas de Calificación del Ambiente Educativo reflejan prácticas inapropiadas para el desarrollo del niño/a. La sección ''áreas de crecimiento potencial'' proporciona información acerca de la razón para la puntuación de ciertos indicadores. Este detalle puede ayudar a entender cómo el evaluador llegó a la puntuación de cada ítem de esta sección.\n"
         pdf.text string
-        eval.escala.subescala.each_with_index do |sub,index|
+        eval.escala.subescala.order("id ASC").each_with_index do |sub,index|
           bullet_item(1,sub.subescala_template.nombre+"\n\n",pdf,roman[index]+" ")
           written = false;
-          sub.item.each_with_index do |item, sub_index|
+          sub.item.order("id ASC").each_with_index do |item, sub_index|
             punt = item.eval.to_i
             if punt < 3 && punt > 0
               bullet_item(3,item.item_template.nombre,pdf,(1+sub_index).to_s+". ")
@@ -422,7 +427,7 @@ class EvaluacionsController < ApplicationController
                 col+=1
               end
               indicadores = []
-              item.indicador.each do |indicador|
+              item.indicador.order("id ASC").each do |indicador|
                 if(indicador.indicador_template.columna == col)
                   if(col == 1 && indicador.eval)
                     indicadores.push indicador
@@ -504,8 +509,8 @@ class EvaluacionsController < ApplicationController
       step_num = 0
       (100..options[:width]).step(options[:width]/8) do |point|
         note = notas[step_num]
-        if(note<1)
-          note = 1
+        if(note<0)
+          note = 0
         end
         old_color = pdf.fill_color
         pdf.fill_color = "598EDE"

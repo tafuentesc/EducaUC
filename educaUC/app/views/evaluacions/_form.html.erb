@@ -45,7 +45,7 @@
 	  <%= label_tag :escala, "Seleccione centro en que se realizó la evaluación", :class => 'control-label' %>
 	  <div class="controls">
 	  <% @centros = Centro.all %>
-	  <%= f.select :centro_id, options_from_collection_for_select(@centros, "id", "nombre"), :class => 'select_field', :prompt => "--------------------" %>
+	  <%= collection_select(:evaluacion, :centro_id, @centros, :id, :nombre, :prompt => "--------------------") %>
 	  </div>
 	</div>
   <% if @evaluacion.escala != nil %>
