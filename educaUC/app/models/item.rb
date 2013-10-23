@@ -8,10 +8,9 @@ class Item < ActiveRecord::Base
 
 	# método usado para recalcular la nota  
   def calcular_nota
-  	nota = 1
-  	
+
   	# Buscamos el primer no:
-  	first_no = indicador.order("id ASC").where(:eval => 0).first
+  	first_no = self.indicador.order("id ASC").where(:eval => 0).first
   	
   	# si no tiene, significa que el item está vacío => lo dejamos como está
   	if(first_no == nil)
@@ -22,22 +21,29 @@ class Item < ActiveRecord::Base
   	# si pertenece a la primera, sabemos que la nota es 1
   	if(first_no.columna == 1)
   		self.eval = 1
-  	# en otro caso, debemos chequear si su fila es mayor
+  		
+  	# en otro caso, debemos contar la cantidad de sis en dicha columna
   	else
-  		# obtenemos cantidad de indicadores en dicha columna
-  		count = 0
-  		indicador.each do |ind|
+  		si_count = 0
+  		ind_count = 0
+  		self.indicador.each do |ind|
   			if(ind.columna == first_no.columna)
-  				count = count + 1
+  				ind_count += 1	# Contador para almacenar la cantidad totol de indicadores en la columna
+
+  				if(ind.eval == 1)
+  					si_count += 1	# Contador para almacenar la cantidad de sis en la columna
+  				end
   			end
   		end
   		
-  		# si está pasado la mitad, entonces eval = columna -1;
+  		# Evaluamos la cantidad de si's respecto al total de indicadores
+  		# si es más de la mitad, entonces eval = columna -1;
   		# en caso contrario, eval = columna - 2:
-  		if(first_no.fila >= (count + 1)/2)
-  			self.eval = first_no.columna - 1
+			self.eval = first_no.columna
+  		if((si_count.to_f/ind_count) >= 0.5)
+  			self.eval -= 1
   		else
-  			self.eval = first_no.columna - 2
+  			self.eval -= 2
   		end
   	end
   	

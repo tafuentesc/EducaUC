@@ -388,14 +388,16 @@ class EvaluacionsController < ApplicationController
               end
               indicadores = []
               item.indicador.order("id ASC").each do |indicador|
-                if(indicador.indicador_template.columna == col && indicador.eval)
+                if(indicador.indicador_template.columna == col && indicador.eval == 1)
                   indicadores.push indicador
                 end
               end
               indicadores.each do |indicador|
-                bullet_item(5,indicador.indicador_template.descripcion+"\n",pdf,nil)
+              	ind_name = "Indicador #{indicador.columna}.#{indicador.fila}: "
+                bullet_item(5,ind_name + indicador.indicador_template.descripcion+"\n",pdf,nil)
               end
-                bullet_item(3,"\nObservaciones: "+item.observaciones+"\n\n",pdf,nil)
+              	pdf.text "\n"
+                bullet_item(5,"Observaciones: "+item.observaciones+"\n\n",pdf,nil)
             end
           end
           unless written
@@ -429,16 +431,16 @@ class EvaluacionsController < ApplicationController
               indicadores = []
               item.indicador.order("id ASC").each do |indicador|
                 if(indicador.indicador_template.columna == col)
-                  if(col == 1 && indicador.eval)
+                  if(indicador.eval == 0)
                     indicadores.push indicador
-                  elsif(col == 3 && !indicador.eval)
-                    indicadores.push indicador 
                   end
                 end
               end
               indicadores.each do |indicador|
-                bullet_item(5,indicador.indicador_template.descripcion+"\n",pdf,nil)
+              	ind_name = "Indicador #{indicador.columna}.#{indicador.fila}: "
+                bullet_item(5,ind_name + indicador.indicador_template.descripcion+"\n",pdf,nil)
               end
+              	pdf.text "\n"
                 bullet_item(5,"Observaciones: "+item.observaciones+"\n\n",pdf,nil)
             end
           end
