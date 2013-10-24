@@ -389,11 +389,20 @@ class EvaluacionsController < ApplicationController
                 col+=1
               end
               indicadores = []
-              item.indicador.order("id ASC").each do |indicador|
-                if(indicador.indicador_template.columna == col && indicador.eval == 1)
-                  indicadores.push indicador
-                end
-              end
+              has_no = false
+              begin
+		            item.indicador.order("id ASC").each do |indicador|
+		              if(indicador.indicador_template.columna == col)
+		              	if(indicador.eval == 1)
+			                indicadores.push indicador
+			              elsif(indicador.eval == 0)
+			              	has_no = true
+			              end
+		              end
+		            end
+		         		col += 2
+		         	end while(!has_no)
+		         
               indicadores.each do |indicador|
               	ind_name = "Indicador #{indicador.columna}.#{indicador.fila}: "
                 bullet_item(5,ind_name + indicador.indicador_template.descripcion+"\n",pdf,nil)
@@ -431,13 +440,18 @@ class EvaluacionsController < ApplicationController
                 col+=1
               end
               indicadores = []
-              item.indicador.order("id ASC").each do |indicador|
-                if(indicador.indicador_template.columna == col)
-                  if(indicador.eval == 0)
-                    indicadores.push indicador
-                  end
-                end
-              end
+              has_no = false
+              begin
+		            item.indicador.order("id ASC").each do |indicador|
+		              if(indicador.indicador_template.columna == col)
+		                if(indicador.eval == 0)
+		                  indicadores.push indicador
+		                  has_no = true
+		                end
+		              end
+		            end
+		          	col += 2
+		          end while(!has_no)
               indicadores.each do |indicador|
               	ind_name = "Indicador #{indicador.columna}.#{indicador.fila}: "
                 bullet_item(5,ind_name + indicador.indicador_template.descripcion+"\n",pdf,nil)
