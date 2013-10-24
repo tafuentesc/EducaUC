@@ -510,6 +510,7 @@ class EvaluacionsController < ApplicationController
   end
 
   def download
+  	createPDF				# creamos el pdf a enviar
     centro = Centro.find(params[:id])
     file = createFileName(centro)
     send_file file, :type=>"application/pdf", :x_sendfile=>true

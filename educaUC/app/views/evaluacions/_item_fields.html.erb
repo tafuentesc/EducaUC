@@ -3,9 +3,9 @@
 		<%= item_f.hidden_field :item_template_id %>				
 
 		<ul class="nav">
-			<li class="number"><h4><%="#{item_index+1}"%></h4></li>
+			<li class="number"><h5><%="#{item_index+1}"%></h5></li>
 			<li class="divider-vertical"></li>
-			<li><h4><%="#{item.item_template.nombre}" %></h4></li>
+			<li><h5><%="#{item.item_template.nombre}" %></h5></li>
 		</ul>
 		<ul class="nav pull-right">
 			<% if item.item_template.has_na %>

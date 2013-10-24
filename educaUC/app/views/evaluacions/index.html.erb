@@ -9,8 +9,11 @@
 			<tr>
 				<th colspan="3"><%= centro.nombre %></th>
 				<th>
-		      <%= link_to 'Generar PDF', '/evaluaciones/generate/'+centro.id.to_s, :remote => true, :id => 'pdf_create_button'+centro.id.to_s, :class => 'btn btn-mini' %>
-		      <%= link_to 'Download PDF', "/evaluaciones/download/#{centro.id}", :id => 'pdf_download_button'+centro.id.to_s, :class => 'btn btn-mini', :style => 'display: none;' %>
+		      <%= link_to "/evaluaciones/download/#{centro.id}", :rel => 'tooltip', :title => "Descargar pdf",
+		      	:id => 'pdf_download_button'+centro.id.to_s, :class => 'btn btn-mini' do %>
+		      	
+		      	<i class="icon-download-alt"></i> Descargar
+		      <% end %>
 				</th>
 		  <tr>
 		    <th><%= model_class.human_attribute_name(:nombre_sala) %></th>
@@ -27,14 +30,19 @@
 		    		<%= "#{date.day}-#{date.month}-#{date.year}" %>
 		    </td>
 		    <td><%= "#{evaluacion.user.name} #{evaluacion.user.lastname}" %></td>
-		    <td class="btn-group">
-		      <%= link_to edit_evaluacion_path(evaluacion), :class => 'btn btn-mini' do %>
+		    <td>
+		      
+		      <%= link_to edit_evaluacion_path(evaluacion), :rel => 'tooltip', :title => "Editar evaluación", 
+		      	:class => 'btn btn-mini' do %>
 		      	<i class="icon-pencil"></i>
 		      <% end %>
+		      
 		      <%= link_to evaluacion_path(evaluacion),
-		                  :method => :delete,
-		                  :data => { :confirm => "¿Está seguro que desea eliminar esta evaluación?" },
-		                  :class => 'btn btn-mini btn-danger' do %>
+            :method => :delete,
+            :data => { :confirm => "¿Está seguro que desea eliminar esta evaluación?" },
+            :rel => 'tooltip', :title => "Eliminar evaluación",
+            :class => 'btn btn-mini btn-danger' do %>
+		        
 		        <i class="icon-trash"></i>
 		      <% end %>
 		    </td>
@@ -42,14 +50,4 @@
 			<% end %>
 		</tbody>
 	</table>
-
-  <script>
-    $("#pdf_create_button<%=centro.id.to_s%>").bind('ajax:loading',function(evt,data,status,xhr){
-
-    }); 
-    $("#pdf_create_button<%=centro.id.to_s%>").bind('ajax:success',function(evt,data,status,xhr){
-      $('#pdf_download_button<%=centro.id.to_s%>').fadeToggle();
-      $('#pdf_create_button<%=centro.id.to_s%>').fadeToggle();
-    });
-  </script>
 <% end %>
