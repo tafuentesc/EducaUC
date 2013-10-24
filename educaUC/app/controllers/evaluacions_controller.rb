@@ -119,6 +119,10 @@ class EvaluacionsController < ApplicationController
         format.html { redirect_to evaluacions_path, notice: 'Evaluacion was successfully updated.' }
         format.json { head :no_content }
       else
+      	# Si lanzó error, debemos re-construir la escala:
+				@user = @logged_user
+				@escala = @evaluacion.escala
+      
         format.html { render action: "edit" }
         format.json { render json: @evaluacion.errors, status: :unprocessable_entity }
       end
