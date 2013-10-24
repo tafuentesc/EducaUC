@@ -345,23 +345,21 @@ class EvaluacionsController < ApplicationController
         total_count = 0
         eval.escala.subescala.order("id ASC").each do |sub|
           element = []
-          element[0] = ""
+          element[0] = sub.subescala_template.nombre
           not_applicable_count = 0
-          sub.item.each do |item|
+          sub.item.order("id ASC").each do |item|
             if item.eval.to_i.to_s == "-1"
-              element[0] = element[0]+item.item_template.nombre+"\n"
+              element[1] = element[1]+item.numero + ". " + item.item_template.nombre+"\n"
               not_applicable_count+=1
             end
           end
-          if not_applicable_count>0
-            element.unshift sub.subescala_template.nombre
-            table.push element
-            total_count += not_applicable_count
+          if not_applicable_count == 0
+          	element[1] = ""
           end
+          table.push element
+          total_count += not_applicable_count
         end
-        if(total_count == 0)
-	        table.push ["\n\n\n\n\n"]
-	      end
+	      
         pdf.table table, :position => :center, :width => pdf.bounds.width
         pdf.move_down 20
 
@@ -417,7 +415,7 @@ class EvaluacionsController < ApplicationController
 
         string = "ÁREAS DE CRECIMIENTO POTENCIAL: ITEMES CON PUNTAJES INFERIORES A 3\n\n"
         pdf.text string, :style => :bold 
-        string = "Los ítemes con puntajes inferiores a 3 en las Escalas de Calificación del Ambiente Educativo reflejan prácticas inapropiadas para el desarrollo del niño/a. La sección ''áreas de crecimiento potencial'' proporciona información acerca de la razón para la puntuación de ciertos indicadores. Este detalle puede ayudar a entender cómo el evaluador llegó a la puntuación de cada ítem de esta sección.\n"
+        string = "Los ítemes con puntajes inferiores a 3 en las Escalas de Calificación del Ambiente Educativo reflejan prácticas inapropiadas para el desarrollo del niño/a. La sección ''áreas de crecimiento potencial'' proporciona información acerca de la razón para la puntuación de ciertos indicadores. Este detalle puede ayudar a entender cómo el evaluador llegó a la puntuación de cada ítem de esta sección.\n\n\n"
         pdf.text string
         eval.escala.subescala.order("id ASC").each_with_index do |sub,index|
           bullet_item(1,sub.subescala_template.nombre+"\n\n",pdf,roman[index]+" ")
