@@ -23,6 +23,9 @@ $(function(){
 	// vinculamos onClick de los links en los indicadores con deleteIndicador:
 	$("body").delegate("a.details_btn.btn-mini.close.active","click", deleteIndicador);
 
+	// delegate para mostrar la cruz de limpiar registro:
+	$("section.item").delegate("input[type='radio']:not(.default_node)","click",showClearIndicador);
+
 
 	// Variable para almacenar el valor previamente seleccionado en select#escala:
 	var previous_option = 0;
@@ -126,7 +129,7 @@ $(function(){
 				else
 				{
 					// En caso contrario, revisamos si tiene NA node: 
-				  input = row.find("input[class=''], input.si_node");
+				  input = row.find("input.na_node, input.si_node");
 				  
 				  // En caso de haber sólo uno, implica que no tiene NA node,
 				  // por lo que procedemos a marcarlo:
@@ -331,7 +334,7 @@ $(function(){
 							// De no ser así, lo marcamos como en blanco:
 							// (omitimos el radiobutton de default, puesto que de lo contrario siempre
 							// habrá un valor seleccionado)
-							if(row.find('input.si_node:checked, input.no_node:checked, input[class=""]:checked').length == 0)
+							if(row.find('input.si_node:checked, input.no_node:checked, input.na_node:checked').length == 0)
 							{
 								escalaOk = false;
 								itemOk = false;
@@ -360,6 +363,15 @@ $(function(){
 		return escalaOk;
 	}
 	
+	// función para mostrar la 'X' que permite limpiar el indicador:
+	function showClearIndicador(){
+		// buscamos el link oculto que permite 'limpiar' el indicador:
+		$clear_indicador = $(this).parents("tr").find("a.clearIndicador");
+	
+		// Procedemos a mostrarlo:
+		$clear_indicador.addClass("active");
+	}
+	
 	// Función para borrar un indicador, es decir, setearlo a su valor por defecto
 	function deleteIndicador(event){
 		event.preventDefault();
@@ -369,6 +381,9 @@ $(function(){
 		
 		// hecho esto, lo seleccionamos (hacer esto deseleccionará el valor previo automáticamente):
 		$default_node.prop('checked', true);
+		
+		// Finalmente lo ocultamos:
+		$(this).removeClass("active");
 	}
 	
 });

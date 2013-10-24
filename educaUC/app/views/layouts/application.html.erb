@@ -35,13 +35,13 @@
 	<!-- creamos vista 3/9 para menú al lado izquierdo -->
 		<% if !(@logged_user.nil?) %>
 			<ul id="left-menu" class="nav nav-tabs nav-stacked span3">
-				<li><%= link_to 'Ver Perfil', user_path(@logged_user) %></li>
-				<li><%= link_to 'Crear Evaluación', new_evaluacion_path %></li>
 				<li><%= link_to 'Ver Evaluaciones', evaluacions_path %></li>
+				<li><%= link_to 'Crear Evaluación', new_evaluacion_path %></li>
 				<li></li>
 				<% if(@logged_user.admin?) %>
 				<li><%= link_to "Editar Centros", centros_path %></li>
 				<li><%= link_to "Editar Usuarios", users_path %></li>
+				<li><%= link_to 'Ver Perfil', user_path(@logged_user) %></li>
 				<% end %>
 			</ul>
 		<% end %>

@@ -11,7 +11,7 @@
 			<% if item.item_template.has_na %>
 				<li>
 					<%= item_f.label "N/A" %>
-					<%= item_f.check_box :eval, -1 %>
+					<%= item_f.check_box :eval, {}, -1, 0 %>
 				</li>
 				<li class="divider-vertical"></li>
 			<% end %>											

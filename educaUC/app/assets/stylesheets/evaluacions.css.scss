@@ -113,3 +113,7 @@ a.close:hover {
 input[type='radio'].default_node{
 	display: none;
 }
+
+a.clearIndicador:not(.active){
+	visibility: hidden;
+}

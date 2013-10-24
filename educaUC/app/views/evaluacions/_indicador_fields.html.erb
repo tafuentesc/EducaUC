@@ -29,13 +29,18 @@
 
 	<td>
 		<% if indicador.indicador_template.has_na %>
-			<%= ind_f.radio_button :eval, -1, :class => '' %>
+			<%= ind_f.radio_button :eval, -1, :class => "na_node" %>
 		<% end %>
 	</td>
 	<td>
 		<!-- Agregamos botón para borrar indicador y un radiobutton oculto que se encargue de
 		volver a setear :eval a su valor por defecto (en este caso, -2) -->
-		<a href="javascript:void(0);" class="details_btn btn-mini close active">×</a>
+		<% classes = "details_btn btn-mini close clearIndicador" %>
+		<% if(indicador.eval != -2) 
+				classes = classes + " active" 
+		   end %>
+		
+		<a href="javascript:void(0);" class="<%= classes %>">×</a>
 		<%= ind_f.radio_button :eval, -2, :class => 'default_node'%>
 	</td>
 </tr>

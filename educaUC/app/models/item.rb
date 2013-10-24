@@ -5,15 +5,39 @@ class Item < ActiveRecord::Base
   belongs_to :item_template
   
   accepts_nested_attributes_for :indicador
+  
+  before_save :check_eval
+  
+  # método que revisa que la nota asignada a un determinado ítem sea correcta.
+  # por ahora lo usaremos para validar que si el ítem puede ser NA o no.
+  def check_eval
+  	if(self.eval <= 7 && self.eval >= 0)
+  		return true
+  	elsif(self.item_template.has_na && self.eval == -1)
+  		return true
+  	else
+  		return false
+  	end
+  end
 
 	# método usado para recalcular la nota  
   def calcular_nota
+		# Primero, revisamos si el ítem está marcado como NA. En caso de ser así,
+		# seteamos su nota como 0 y no hacemos nada
+		if(self.eval == -1)
+  		self.eval = 0								# lo actualizamos de todas formas por si antes había sido llenado
+  		self.save										# (no lo juntamos con el first_no para evitar la consulta a la BD)
+  		return											# => más eficiente.
+  	end
+			
 
   	# Buscamos el primer no:
   	first_no = self.indicador.order("id ASC").where(:eval => 0).first
   	
-  	# si no tiene, significa que el item está vacío => lo dejamos como está
+  	# si no tiene, significa que el item está vacío => lo seteamos en 0
   	if(first_no == nil)
+  		self.eval = 0								# lo actualizamos de todas formas por si antes había sido llenado
+  		self.save
   		return
   	end
   	
