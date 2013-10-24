@@ -39,8 +39,8 @@
 				<li><%= link_to 'Crear Evaluación', new_evaluacion_path %></li>
 				<li></li>
 				<% if(@logged_user.admin?) %>
-				<li><%= link_to "Editar Centros", centros_path %></li>
-				<li><%= link_to "Editar Usuarios", users_path %></li>
+				<li><%= link_to "Administrar Centros", centros_path %></li>
+				<li><%= link_to "Administrar Usuarios", users_path %></li>
 				<li><%= link_to 'Ver Perfil', user_path(@logged_user) %></li>
 				<% end %>
 			</ul>

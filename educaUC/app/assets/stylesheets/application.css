@@ -68,5 +68,6 @@ ul#errorUl li:hover
 { 
 	border: solid 1px;
 	margin-bottom: 5px;	
+	cursor: hand; cursor: pointer;
 } 
 

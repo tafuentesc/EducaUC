@@ -346,15 +346,13 @@ class EvaluacionsController < ApplicationController
         eval.escala.subescala.order("id ASC").each do |sub|
           element = []
           element[0] = sub.subescala_template.nombre
+          element[1] = ""
           not_applicable_count = 0
           sub.item.order("id ASC").each do |item|
             if item.eval.to_i.to_s == "-1"
-              element[1] = element[1]+item.numero + ". " + item.item_template.nombre+"\n"
+              element[1] = element[1]+item.item_template.numero.to_s + ". " + item.item_template.nombre+"\n"
               not_applicable_count+=1
             end
-          end
-          if not_applicable_count == 0
-          	element[1] = ""
           end
           table.push element
           total_count += not_applicable_count

@@ -9,10 +9,7 @@
 		</ul>
 		<ul class="nav pull-right">
 			<% if item.item_template.has_na %>
-				<li>
-					<%= item_f.label "N/A" %>
-					<%= item_f.check_box :eval, {}, -1, 0 %>
-				</li>
+				<li><h6>N/A <%= item_f.check_box :eval, {}, -1, 0 %></h6></li>
 				<li class="divider-vertical"></li>
 			<% end %>											
 			<li class="pull-right"><a href="#"><i class="icon-chevron-left"></i></a> </li>											

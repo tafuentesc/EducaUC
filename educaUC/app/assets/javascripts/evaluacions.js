@@ -10,6 +10,10 @@ $(function(){
 	//$("ajax_container").delegate("input.no_node","click",markPreviousIndicators);
 	// vinculamos con la función toggleVisibility
 	$("div.sub-escala").delegate("header", "click", toggleVisibility)
+	$("div.sub-escala").delegate("header input[type='checkbox']", "click", function(e){
+		e.stopPropagation();
+	})
+	
 	//$("ajax_container").delegate("a", "click", toggleVisibility)
 	
 	//$("form#new_evaluacion").live("submit",validateData);
@@ -385,5 +389,4 @@ $(function(){
 		// Finalmente lo ocultamos:
 		$(this).removeClass("active");
 	}
-	
 });

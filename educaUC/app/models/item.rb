@@ -25,9 +25,7 @@ class Item < ActiveRecord::Base
 		# Primero, revisamos si el ítem está marcado como NA. En caso de ser así,
 		# seteamos su nota como 0 y no hacemos nada
 		if(self.eval == -1)
-  		self.eval = 0								# lo actualizamos de todas formas por si antes había sido llenado
-  		self.save										# (no lo juntamos con el first_no para evitar la consulta a la BD)
-  		return											# => más eficiente.
+  		return											
   	end
 			
 

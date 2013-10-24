@@ -7,7 +7,7 @@
 	<table class="table table-bordered">
 		<thead>
 			<tr>
-				<th colspan="3"><%= centro.nombre %></th>
+				<th colspan="4"><%= centro.nombre %></th>
 				<th>
 		      <%= link_to "/evaluaciones/download/#{centro.id}", :rel => 'tooltip', :title => "Descargar pdf",
 		      	:id => 'pdf_download_button'+centro.id.to_s, :class => 'btn btn-mini' do %>
@@ -17,6 +17,7 @@
 				</th>
 		  <tr>
 		    <th><%= model_class.human_attribute_name(:nombre_sala) %></th>
+		    <th>Escala de evaluación</th>
 		    <th><%= model_class.human_attribute_name(:fecha_de_evaluacion) %></th>
 		    <th><%= model_class.human_attribute_name(:encargado) %></th>
 		    <th></th>
@@ -26,6 +27,7 @@
 		<% evaluaciones.each do |evaluacion| %>
 		  <tr class="record" data-class= "evaluaciones" data-id="<%= evaluacion.id %>">
 		    <td><%= evaluacion.nombre_sala %></td>
+		    <td><%= evaluacion.escala.escala_template.nombre %></td>
 		    <td><% date = evaluacion.fecha_de_evaluacion %>
 		    		<%= "#{date.day}-#{date.month}-#{date.year}" %>
 		    </td>
