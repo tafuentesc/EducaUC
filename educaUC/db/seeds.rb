@@ -36,7 +36,7 @@ ItemTemplate.create(nombre: 'Exhibiciones para los niños', numero: 5, subescala
 #Item --- Sub-escala 2, Escala ITERS-R
 ItemTemplate.create(nombre: 'Recibimiento y Despedida', numero: 1, subescala_template_id: 2);
 ItemTemplate.create(nombre: 'Comidas y meriendas', numero: 2, subescala_template_id: 2);
-ItemTemplate.create(nombre: 'Siesta', numero: 3, subescala_template_id: 2);
+ItemTemplate.create(nombre: 'Siesta / descanso', numero: 3, subescala_template_id: 2, has_na: true);
 ItemTemplate.create(nombre: 'Cambio de pañales y uso del baño', numero: 4, subescala_template_id: 2);
 ItemTemplate.create(nombre: 'Prácticas de salud', numero: 5, subescala_template_id: 2);
 ItemTemplate.create(nombre: 'Prácticas de seguridad', numero: 6, subescala_template_id: 2);

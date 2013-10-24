@@ -121,14 +121,15 @@ $(function(){
 			{
 				// Si es fila, revisamos si algún valor está chequeado
 				// de ser así, se marca que se encontró un registro
-				if(row.find('input:checked').length > 0)
+				if(row.find('input.si_node:checked, input.no_node:checked').length > 0)
 					has_checked_value = true;
 				else
 				{
-					// En caso contrario, se busca el que no tenga clase 
-				  input = row.find("input[class='']");
+					// En caso contrario, revisamos si tiene NA node: 
+				  input = row.find("input[class=''], input.si_node");
 				  
-				  // En caso de haber sólo uno, lo marcamos
+				  // En caso de haber sólo uno, implica que no tiene NA node,
+				  // por lo que procedemos a marcarlo:
 				  if(input.length == 1)
 				  	input.prop('checked',true);
 
@@ -288,7 +289,7 @@ $(function(){
 			
 				// Buscamos el primer no_node
 				$first_no =	$(item).find('div.item_body input[type="radio"].no_node:checked').first();
-				si_count = $(item).find('div.item_body input[type="radio"]:checked').length;
+				si_count = $(item).find('div.item_body input[type="radio"].si_node:checked').length;
 				
 				//alert("#no's= " + $first_no.length + ", #si's= " + si_count);
 				
@@ -328,7 +329,9 @@ $(function(){
 						{
 							// Si es fila, revisamos si algún valor está chequeado
 							// De no ser así, lo marcamos como en blanco:
-							if(row.find('input:checked').length == 0)
+							// (omitimos el radiobutton de default, puesto que de lo contrario siempre
+							// habrá un valor seleccionado)
+							if(row.find('input.si_node:checked, input.no_node:checked, input[class=""]:checked').length == 0)
 							{
 								escalaOk = false;
 								itemOk = false;
@@ -357,14 +360,15 @@ $(function(){
 		return escalaOk;
 	}
 	
-	// Función para borrar un indicador
+	// Función para borrar un indicador, es decir, setearlo a su valor por defecto
 	function deleteIndicador(event){
 		event.preventDefault();
 
-		// borramos todos los indicadores de la fila:	
-		$(this).parents("tr").find("input[type='radio']").each(function(index, indicador){
-			$(indicador).prop('checked', false);
-		});
+		// buscamos el radio button oculto que permite setear el valor a su valor por defecto:
+		$default_node = $(this).parents("tr").find("input[type='radio'].default_node");
+		
+		// hecho esto, lo seleccionamos (hacer esto deseleccionará el valor previo automáticamente):
+		$default_node.prop('checked', true);
 	}
 	
 });

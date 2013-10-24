@@ -109,3 +109,7 @@ a.close:hover {
   filter: alpha(opacity=40);
   cursor: pointer;
 }
+
+input[type='radio'].default_node{
+	display: none;
+}

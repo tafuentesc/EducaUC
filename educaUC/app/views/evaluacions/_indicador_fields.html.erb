@@ -21,9 +21,9 @@
 
 	<% if(indicador.columna == 1) %>
 		<td><%= ind_f.radio_button :eval, 0, :class => "no_node"%></td>
-		<td><%= ind_f.radio_button :eval, 1, :class => ""%></td>
+		<td><%= ind_f.radio_button :eval, 1, :class => "si_node"%></td>
 	<% else %>		
-		<td><%= ind_f.radio_button :eval, 1, :class => ""%></td>
+		<td><%= ind_f.radio_button :eval, 1, :class => "si_node"%></td>
 		<td><%= ind_f.radio_button :eval, 0, :class => "no_node"%></td>
 	<% end %>
 
@@ -33,6 +33,9 @@
 		<% end %>
 	</td>
 	<td>
+		<!-- Agregamos botón para borrar indicador y un radiobutton oculto que se encargue de
+		volver a setear :eval a su valor por defecto (en este caso, -2) -->
 		<a href="javascript:void(0);" class="details_btn btn-mini close active">×</a>
+		<%= ind_f.radio_button :eval, -2, :class => 'default_node'%>
 	</td>
 </tr>
