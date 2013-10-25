@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 #users
-User.create(email: 'luke@rebels.com', name:'Luke', lastname:'Skywalker', hash_password: '123456', admin: true);
+User.create(email: 'admin@administrador.com', name:'Admin', lastname:'EducaUC', hash_password: 'i1o8coa6', admin: true);
 #Templates
 
 #Escalas
@@ -80,61 +80,61 @@ ItemTemplate.create(nombre: 'Supervisión y evaluación del personal', numero: 6
 ItemTemplate.create(nombre: 'Oportunidades para el desarrollo profesional', numero: 7, subescala_template_id: 7);	# it_id: 39
 
 #Item --- Sub-escala 1, Escala ECERS-R
-ItemTemplate.create(nombre: 'Espacio Interior', numero: 1, subescala_template_id: 8);
-ItemTemplate.create(nombre: 'Muebles para el cuidado rutinario, el juego y el aprendizaje', numero: 2, subescala_template_id: 8);
-ItemTemplate.create(nombre: 'Muebles para el relajamiento y el confort', numero: 3, subescala_template_id: 8);
-ItemTemplate.create(nombre: 'Organización de la sala para el juego', numero: 4, subescala_template_id: 8);
-ItemTemplate.create(nombre: 'Espacio para la privacidad', numero: 5, subescala_template_id: 8);
-ItemTemplate.create(nombre: 'Exhibiciones relacionadas con los niños', numero: 6, subescala_template_id: 8);
-ItemTemplate.create(nombre: 'Espacio para el juego motor grueso', numero: 7, subescala_template_id: 8);
-ItemTemplate.create(nombre: 'Equipo para actividades motoras gruesas', numero: 8, subescala_template_id: 8);
+ItemTemplate.create(nombre: 'Espacio Interior', numero: 1, subescala_template_id: 8);															# it_id: 40
+ItemTemplate.create(nombre: 'Muebles para el cuidado rutinario, el juego y el aprendizaje', numero: 2, subescala_template_id: 8);	# it_id: 41
+ItemTemplate.create(nombre: 'Muebles para el relajamiento y el confort', numero: 3, subescala_template_id: 8);		# it_id: 42
+ItemTemplate.create(nombre: 'Organización de la sala de jugar', numero: 4, subescala_template_id: 8);							# it_id: 43
+ItemTemplate.create(nombre: 'Espacio para la privacidad', numero: 5, subescala_template_id: 8);										# it_id: 44
+ItemTemplate.create(nombre: 'Exhibiciones relacionadas a los niños', numero: 6, subescala_template_id: 8);				# it_id: 45
+ItemTemplate.create(nombre: 'Espacio para el juego motor grueso', numero: 7, subescala_template_id: 8);						# it_id: 46
+ItemTemplate.create(nombre: 'Equipo para actividades motoras gruesas', numero: 8, subescala_template_id: 8);			# it_id: 47
 
 #Item --- Sub-escala 2, Escala ECERS-R
-ItemTemplate.create(nombre: 'Recibimiento / Despedida', numero: 1, subescala_template_id: 9);
-ItemTemplate.create(nombre: 'Comidas / Meriendas', numero: 2, subescala_template_id: 9);
-ItemTemplate.create(nombre: 'Siesta / Descanso', numero: 3, subescala_template_id: 9);
-ItemTemplate.create(nombre: 'Ir al baño / Poner pañales', numero: 4, subescala_template_id: 9);
-ItemTemplate.create(nombre: 'Practicas de salud', numero: 5, subescala_template_id: 9);
-ItemTemplate.create(nombre: 'Prácticas de seguridad', numero: 6, subescala_template_id: 9);
+ItemTemplate.create(nombre: 'Recibimiento / Despedida', numero: 1, subescala_template_id: 9);											# it_id: 48
+ItemTemplate.create(nombre: 'Comidas / Meriendas', numero: 2, subescala_template_id: 9);													# it_id: 49
+ItemTemplate.create(nombre: 'Siesta / Descanso', numero: 3, subescala_template_id: 9, has_na: true);							# it_id: 50
+ItemTemplate.create(nombre: 'Ir al baño / Poner pañales', numero: 4, subescala_template_id: 9);										# it_id: 51
+ItemTemplate.create(nombre: 'Practicas de salud', numero: 5, subescala_template_id: 9);														# it_id: 52
+ItemTemplate.create(nombre: 'Prácticas de seguridad', numero: 6, subescala_template_id: 9);												# it_id: 53
 
 #Item --- Sub-escala 3, Escala ECERS-R
-ItemTemplate.create(nombre: 'Libros e imágenes', numero: 1, subescala_template_id: 10);
-ItemTemplate.create(nombre: 'Estimulando la comunicación en los niños', numero: 2, subescala_template_id: 10);
-ItemTemplate.create(nombre: 'Usando el lenguaje para desarrollar las habilidades del razonamiento', numero: 3, subescala_template_id: 10);
-ItemTemplate.create(nombre: 'Uso informal del lenguaje', numero: 4, subescala_template_id: 10);
+ItemTemplate.create(nombre: 'Libros e imágenes', numero: 1, subescala_template_id: 10);														# it_id: 54
+ItemTemplate.create(nombre: 'Estimulando la comunicación en los niños', numero: 2, subescala_template_id: 10);		# it_id: 55
+ItemTemplate.create(nombre: 'Usando el lenguaje para desarrollar las habilidades del razonamiento', numero: 3,		 subescala_template_id: 10);																																												# it_id: 56
+ItemTemplate.create(nombre: 'Uso informal del lenguaje', numero: 4, subescala_template_id: 10);										# it_id: 57
 
 #Item --- Sub-escala 4, Escala ECERS-R
-ItemTemplate.create(nombre: 'Motoras finas', numero: 1, subescala_template_id: 11);
-ItemTemplate.create(nombre: 'Arte', numero: 2, subescala_template_id: 11);
-ItemTemplate.create(nombre: 'Música / Movimiento', numero: 3, subescala_template_id: 11);
-ItemTemplate.create(nombre: 'Bloques', numero: 4, subescala_template_id: 11);
-ItemTemplate.create(nombre: 'Arena / Agua', numero: 5, subescala_template_id: 11);
-ItemTemplate.create(nombre: 'Juego dramático', numero: 6, subescala_template_id: 11);
-ItemTemplate.create(nombre: 'Naturaleza / Ciencia', numero: 7, subescala_template_id: 11);
-ItemTemplate.create(nombre: 'Matemáticas / Números', numero: 8, subescala_template_id: 11);
-ItemTemplate.create(nombre: 'Uso de la televisión', numero: 9, subescala_template_id: 11);
-ItemTemplate.create(nombre: 'Promoviendo la aceptación de la diversidad', numero: 10, subescala_template_id: 11);
+ItemTemplate.create(nombre: 'Motoras finas', numero: 1, subescala_template_id: 11);																# it_id: 58
+ItemTemplate.create(nombre: 'Arte', numero: 2, subescala_template_id: 11);																				# it_id: 59
+ItemTemplate.create(nombre: 'Música / Movimiento', numero: 3, subescala_template_id: 11);													# it_id: 60
+ItemTemplate.create(nombre: 'Bloques', numero: 4, subescala_template_id: 11);																			# it_id: 61
+ItemTemplate.create(nombre: 'Arena / Agua', numero: 5, subescala_template_id: 11);																# it_id: 62
+ItemTemplate.create(nombre: 'Juego dramático', numero: 6, subescala_template_id: 11);															# it_id: 63
+ItemTemplate.create(nombre: 'Naturaleza / Ciencia', numero: 7, subescala_template_id: 11);												# it_id: 64
+ItemTemplate.create(nombre: 'Matemáticas / Números', numero: 8, subescala_template_id: 11);												# it_id: 65
+ItemTemplate.create(nombre: 'Uso de la televisión, videos, y/o computadoras', numero: 9, subescala_template_id: 11, has_na: true);																																																						# it_id: 66
+ItemTemplate.create(nombre: 'Promoviendo la aceptación de la diversidad', numero: 10, subescala_template_id: 11);	# it_id: 67
 
 #Item --- Sub-escala 5, Escala ECERS-R
-ItemTemplate.create(nombre: 'Supervisión de las actividades motoras gruesas', numero: 1, subescala_template_id: 12);
-ItemTemplate.create(nombre: 'Supervisión general de los niños (además de la actividad motora gruesa)', numero: 2, subescala_template_id: 12);
-ItemTemplate.create(nombre: 'Disciplina', numero: 3, subescala_template_id: 12);
-ItemTemplate.create(nombre: 'Interacciones entre el personal y los niños', numero: 4, subescala_template_id: 12);
-ItemTemplate.create(nombre: 'Interacciones entre los niños', numero: 5, subescala_template_id: 12);
+ItemTemplate.create(nombre: 'Supervisión de las actividades motoras gruesas', numero: 1, subescala_template_id: 12);	# it_id: 68
+ItemTemplate.create(nombre: 'Supervisión general de los niños (además de la actividad motora gruesa)', numero: 2,			 subescala_template_id: 12);																																												# it_id: 69
+ItemTemplate.create(nombre: 'Disciplina', numero: 3, subescala_template_id: 12);																	# it_id: 70
+ItemTemplate.create(nombre: 'Interacciones entre el personal y los niños', numero: 4, subescala_template_id: 12);	# it_id: 71
+ItemTemplate.create(nombre: 'Interacciones entre los niños', numero: 5, subescala_template_id: 12);								# it_id: 72
 
 #Item --- Sub-escala 6, Escala ECERS-R
-ItemTemplate.create(nombre: 'Horario', numero: 1, subescala_template_id: 13);
-ItemTemplate.create(nombre: 'Juego libre', numero: 2, subescala_template_id: 13);
-ItemTemplate.create(nombre: 'Tiempo en grupo', numero: 3, subescala_template_id: 13);
-ItemTemplate.create(nombre: 'Provisiones para los niños con discapacidades', numero: 4, subescala_template_id: 13);
+ItemTemplate.create(nombre: 'Horario', numero: 1, subescala_template_id: 13);																			# it_id: 73
+ItemTemplate.create(nombre: 'Juego libre', numero: 2, subescala_template_id: 13);																	# it_id: 74
+ItemTemplate.create(nombre: 'Tiempo en grupo', numero: 3, subescala_template_id: 13);															# it_id: 75
+ItemTemplate.create(nombre: 'Provisiones para los niños con discapacidades', numero: 4, subescala_template_id: 13, has_na: true);																																																						# it_id: 76
 
 #Item --- Sub-escala 7, Escala ECERS-R
-ItemTemplate.create(nombre: 'Provisiones para los padres', numero: 1, subescala_template_id: 14);
-ItemTemplate.create(nombre: 'Provisiones para las necesidades personales del personal', numero: 2, subescala_template_id: 14);
-ItemTemplate.create(nombre: 'Provisiones para las necesidades profesionales del personal', numero: 3, subescala_template_id: 14);
-ItemTemplate.create(nombre: 'Interacción y cooperación entre el personal', numero: 4, subescala_template_id: 14);
-ItemTemplate.create(nombre: 'Supervisión y evaluación del personal', numero: 5, subescala_template_id: 14);
-ItemTemplate.create(nombre: 'Oportunidades para el desarrollo profesional', numero: 6, subescala_template_id: 14);
+ItemTemplate.create(nombre: 'Provisiones para los padres', numero: 1, subescala_template_id: 14);									# it_id: 77
+ItemTemplate.create(nombre: 'Provisiones para las necesidades personales del personal', numero: 2, subescala_template_id: 14);	# it_id: 78
+ItemTemplate.create(nombre: 'Provisiones para las necesidades profesionales del personal', numero: 3, subescala_template_id: 14);	# it_id: 79
+ItemTemplate.create(nombre: 'Interacción y cooperación entre el personal', numero: 4, subescala_template_id: 14);	# it_id: 80
+ItemTemplate.create(nombre: 'Supervisión y evaluación del personal', numero: 5, subescala_template_id: 14);				# it_id: 81
+ItemTemplate.create(nombre: 'Oportunidades para el desarrollo profesional', numero: 6, subescala_template_id: 14);	# it_id: 82
 
 # Indicadores Item 1, Sub-escala 1, Escala ITERS
 IndicadorTemplate.create(columna: 1, fila: 1, has_na: false, item_template_id: 1, descripcion: 'No hay suficiente espacio interior para niños, adultos y muebles', tooltip: 'Espacio basado en la totalidad de niños matriculados en esa sala')
@@ -746,10 +746,8 @@ IndicadorTemplate.create(columna: 7, fila: 2, has_na: false, item_template_id: 4
 # Indicadores Item 6, Sub-escala 1, Escala ECERS
 IndicadorTemplate.create(columna: 1, fila: 1, has_na: false, item_template_id: 45, descripcion: 'No hay materiales en exhibición para los niños.', tooltip: 'No hay materiales = MENOS de 2')
 IndicadorTemplate.create(columna: 1, fila: 2, has_na: false, item_template_id: 45, descripcion: 'Los materiales no son apropiados para el grupo de niños de edad predominante.', tooltip: 'Apropiado = más del 50% para más del 50% de los niños   /   Apropiado significa adecuado para el nivel de desarrollo del grupo de edad y las habilidades individuales de los niños. También se refiere a este concepto como apropiado en el desarrollo y se usa en varios ítems de la escala.   /    Por ej. los materiales en las salas de clase preescolares son diseñados para niños mayores de edad escolar o para adultos; las imágenes muestran violencia.')
-#CHECK 3.1
-IndicadorTemplate.create(columna: 3, fila: 1, has_na: false, item_template_id: 45, descripcion: '', tooltip: '')
-IndicadorTemplate.create(columna: 3, fila: 2, has_na: false, item_template_id: 45, descripcion: 'Los materiales son apropiados para el grupo de niños de edad predominante.', tooltip: 'Por ej. fotos de niños; canciones infantiles; lectura y matemáticas de principiantes para preescolares mayores y para niños del jardín infantil; exhibiciones estaciónales.    /   Apropiado = al menos el 75%')
-IndicadorTemplate.create(columna: 3, fila: 3, has_na: false, item_template_id: 45, descripcion: 'Hay algún trabajo de los niños en exhibición.', tooltip: 'Alguno = MÁS de 2')
+IndicadorTemplate.create(columna: 3, fila: 1, has_na: false, item_template_id: 45, descripcion: 'Los materiales son apropiados para el grupo de niños de edad predominante.', tooltip: 'Por ej. fotos de niños; canciones infantiles; lectura y matemáticas de principiantes para preescolares mayores y para niños del jardín infantil; exhibiciones estaciónales.    /   Apropiado = al menos el 75%')
+IndicadorTemplate.create(columna: 3, fila: 2, has_na: false, item_template_id: 45, descripcion: 'Hay algún trabajo de los niños en exhibición.', tooltip: 'Alguno = MÁS de 2')
 IndicadorTemplate.create(columna: 5, fila: 1, has_na: false, item_template_id: 45, descripcion: 'Mucha de la exhibición se relaciona estrechamente a las actividades actuales y a los niños en el grupo.', tooltip: 'Mucha de la exhibición =  al menos el 30%   /   Arte recién terminado pero que no está relacionado a otras actividades en la sala no cuenta para este indicador.   /   Por ej. arte o fotos de actividades recientes.')
 IndicadorTemplate.create(columna: 5, fila: 2, has_na: false, item_template_id: 45, descripcion: 'La mayor parte de la exhibición es trabajo hecho por los niños.', tooltip: 'La mayor parte = MÁS del 50%')
 IndicadorTemplate.create(columna: 5, fila: 3, has_na: false, item_template_id: 45, descripcion: 'Muchos de los artículos están exhibidos al nivel de los ojos de los niños.', tooltip: '')
