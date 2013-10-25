@@ -9,75 +9,75 @@ EscalaTemplate.create(nombre: 'ITERS-R');
 EscalaTemplate.create(nombre: 'ECERS-R');
 
 #SubEscalas --- Escala ITERS-R
-SubescalaTemplate.create(nombre: 'Espacio y Muebles', numero: 1, escala_template_id: 1);
-SubescalaTemplate.create(nombre: 'Rutinas del Cuidado Personal', numero: 2, escala_template_id: 1);
-SubescalaTemplate.create(nombre: 'Escuchar y Hablar', numero: 3, escala_template_id: 1);
-SubescalaTemplate.create(nombre: 'Actividades', numero: 4, escala_template_id: 1);
-SubescalaTemplate.create(nombre: 'Interacción', numero: 5, escala_template_id: 1);
-SubescalaTemplate.create(nombre: 'Estructura del Programa', numero: 6, escala_template_id: 1);
-SubescalaTemplate.create(nombre: 'Padres y Personal', numero: 7, escala_template_id: 1);
+SubescalaTemplate.create(nombre: 'Espacio y Muebles', numero: 1, escala_template_id: 1);						# s_id: 1
+SubescalaTemplate.create(nombre: 'Rutinas del Cuidado Personal', numero: 2, escala_template_id: 1);	# s_id: 2
+SubescalaTemplate.create(nombre: 'Escuchar y Hablar', numero: 3, escala_template_id: 1);						# s_id: 3
+SubescalaTemplate.create(nombre: 'Actividades', numero: 4, escala_template_id: 1);									# s_id: 4
+SubescalaTemplate.create(nombre: 'Interacción', numero: 5, escala_template_id: 1);									# s_id: 5
+SubescalaTemplate.create(nombre: 'Estructura del Programa', numero: 6, escala_template_id: 1);			# s_id: 6
+SubescalaTemplate.create(nombre: 'Padres y Personal', numero: 7, escala_template_id: 1);						# s_id: 7
 
 #SubEscalas --- Escala ECERS-R
-SubescalaTemplate.create(nombre: 'Espacio y Muebles', numero: 1, escala_template_id: 2);
-SubescalaTemplate.create(nombre: 'Rutinas del Cuidado Personal', numero: 2, escala_template_id: 2);
-SubescalaTemplate.create(nombre: 'Lenguaje-Razonamiento', numero: 3, escala_template_id: 2);
-SubescalaTemplate.create(nombre: 'Actividades', numero: 4, escala_template_id: 2);
-SubescalaTemplate.create(nombre: 'Interacción', numero: 5, escala_template_id: 2);
-SubescalaTemplate.create(nombre: 'Estructura del Programa', numero: 6, escala_template_id: 2);
-SubescalaTemplate.create(nombre: 'Padres y Personal', numero: 7, escala_template_id: 2);
+SubescalaTemplate.create(nombre: 'Espacio y Muebles', numero: 1, escala_template_id: 2);						# s_id: 8
+SubescalaTemplate.create(nombre: 'Rutinas del Cuidado Personal', numero: 2, escala_template_id: 2);	# s_id: 9
+SubescalaTemplate.create(nombre: 'Lenguaje-Razonamiento', numero: 3, escala_template_id: 2);				# s_id: 10
+SubescalaTemplate.create(nombre: 'Actividades', numero: 4, escala_template_id: 2);									# s_id: 11
+SubescalaTemplate.create(nombre: 'Interacción', numero: 5, escala_template_id: 2);									# s_id: 12
+SubescalaTemplate.create(nombre: 'Estructura del Programa', numero: 6, escala_template_id: 2);			# s_id: 13
+SubescalaTemplate.create(nombre: 'Padres y Personal', numero: 7, escala_template_id: 2);						# s_id: 14
 
 #Item --- Sub-escala 1, Escala ITERS-R
-ItemTemplate.create(nombre: 'Espacio Interior', numero: 1, subescala_template_id: 1);
-ItemTemplate.create(nombre: 'Muebles para el cuidado rutinario y el juego', numero: 2, subescala_template_id: 1);
-ItemTemplate.create(nombre: 'Previsiones para el relajamiento y el confort', numero: 3, subescala_template_id: 1);
-ItemTemplate.create(nombre: 'Organización de la sala', numero: 4, subescala_template_id: 1);
-ItemTemplate.create(nombre: 'Exhibiciones para los niños', numero: 5, subescala_template_id: 1);
+ItemTemplate.create(nombre: 'Espacio Interior', numero: 1, subescala_template_id: 1);															# it_id: 1
+ItemTemplate.create(nombre: 'Muebles para el cuidado rutinario y el juego', numero: 2, subescala_template_id: 1);	# it_id: 2
+ItemTemplate.create(nombre: 'Previsiones para el relajamiento y el confort', numero: 3, subescala_template_id: 1);# it_id: 3
+ItemTemplate.create(nombre: 'Organización de la sala', numero: 4, subescala_template_id: 1);											# it_id: 4
+ItemTemplate.create(nombre: 'Exhibiciones para los niños', numero: 5, subescala_template_id: 1);									# it_id: 5
 
 #Item --- Sub-escala 2, Escala ITERS-R
-ItemTemplate.create(nombre: 'Recibimiento y Despedida', numero: 1, subescala_template_id: 2);
-ItemTemplate.create(nombre: 'Comidas y meriendas', numero: 2, subescala_template_id: 2);
-ItemTemplate.create(nombre: 'Siesta / descanso', numero: 3, subescala_template_id: 2, has_na: true);
-ItemTemplate.create(nombre: 'Cambio de pañales y uso del baño', numero: 4, subescala_template_id: 2);
-ItemTemplate.create(nombre: 'Prácticas de salud', numero: 5, subescala_template_id: 2);
-ItemTemplate.create(nombre: 'Prácticas de seguridad', numero: 6, subescala_template_id: 2);
+ItemTemplate.create(nombre: 'Recibimiento y Despedida', numero: 1, subescala_template_id: 2);											# it_id: 6
+ItemTemplate.create(nombre: 'Comidas y meriendas', numero: 2, subescala_template_id: 2);													# it_id: 7
+ItemTemplate.create(nombre: 'Siesta', numero: 3, subescala_template_id: 2, has_na: true);													# it_id: 8
+ItemTemplate.create(nombre: 'Cambio de pañales y uso del baño', numero: 4, subescala_template_id: 2);							# it_id: 9
+ItemTemplate.create(nombre: 'Prácticas de salud', numero: 5, subescala_template_id: 2);														# it_id: 10
+ItemTemplate.create(nombre: 'Prácticas de seguridad', numero: 6, subescala_template_id: 2);												# it_id: 11
 
 #Item --- Sub-escala 3, Escala ITERS-R
-ItemTemplate.create(nombre: 'Ayudar a los niños a entender el lenguaje', numero: 1, subescala_template_id: 3);
-ItemTemplate.create(nombre: 'Ayudar a los niños a utilizar el lenguaje', numero: 2, subescala_template_id: 3);
-ItemTemplate.create(nombre: 'Uso de libros', numero: 3, subescala_template_id: 3);
+ItemTemplate.create(nombre: 'Ayudar a los niños a entender el lenguaje', numero: 1, subescala_template_id: 3);		# it_id: 12
+ItemTemplate.create(nombre: 'Ayudar a los niños a utilizar el lenguaje', numero: 2, subescala_template_id: 3);		# it_id: 13
+ItemTemplate.create(nombre: 'Uso de libros', numero: 3, subescala_template_id: 3);																# it_id: 14
 
 #Item --- Sub-escala 4, Escala ITERS-R
-ItemTemplate.create(nombre: 'Motricidad fina', numero: 1, subescala_template_id: 4);
-ItemTemplate.create(nombre: 'Juego físico activo', numero: 2, subescala_template_id: 4);
-ItemTemplate.create(nombre: 'Arte', numero: 3, subescala_template_id: 4);
-ItemTemplate.create(nombre: 'Música y movimiento', numero: 4, subescala_template_id: 4);
-ItemTemplate.create(nombre: 'Bloques', numero: 5, subescala_template_id: 4);
-ItemTemplate.create(nombre: 'Juego dramático', numero: 6, subescala_template_id: 4);
-ItemTemplate.create(nombre: 'Juego con arena y agua', numero: 7, subescala_template_id: 4);
-ItemTemplate.create(nombre: 'Naturaleza y ciencias', numero: 8, subescala_template_id: 4);
-ItemTemplate.create(nombre: 'Uso de televisores', numero: 9, subescala_template_id: 4);
-ItemTemplate.create(nombre: 'Promoción de la aceptación de la diversidad', numero: 10, subescala_template_id: 4);
+ItemTemplate.create(nombre: 'Motricidad fina', numero: 1, subescala_template_id: 4);															# it_id: 15
+ItemTemplate.create(nombre: 'Juego físico activo', numero: 2, subescala_template_id: 4);													# it_id: 16
+ItemTemplate.create(nombre: 'Arte', numero: 3, subescala_template_id: 4, has_na: true);														# it_id: 17
+ItemTemplate.create(nombre: 'Música y movimiento', numero: 4, subescala_template_id: 4);													# it_id: 18
+ItemTemplate.create(nombre: 'Bloques', numero: 5, subescala_template_id: 4, has_na: true);												# it_id: 19
+ItemTemplate.create(nombre: 'Juego dramático', numero: 6, subescala_template_id: 4);															# it_id: 20
+ItemTemplate.create(nombre: 'Juego con arena y agua', numero: 7, subescala_template_id: 4, has_na: true);					# it_id: 21
+ItemTemplate.create(nombre: 'Naturaleza y ciencias', numero: 8, subescala_template_id: 4);												# it_id: 22
+ItemTemplate.create(nombre: 'Uso de televisores, videos y/o computadoras', numero: 9, subescala_template_id: 4, has_na: true);																																																						# it_id: 23
+ItemTemplate.create(nombre: 'Promoción de la aceptación de la diversidad', numero: 10, subescala_template_id: 4);	# it_id: 24
 
 #Item --- Sub-escala 5, Escala ITERS-R
-ItemTemplate.create(nombre: 'Supervisión del juego y del aprendizaje', numero: 1, subescala_template_id: 5);
-ItemTemplate.create(nombre: 'Interacción entre los niños', numero: 2, subescala_template_id: 5);
-ItemTemplate.create(nombre: 'Interacción entre el personal y los niños', numero: 3, subescala_template_id: 5);
-ItemTemplate.create(nombre: 'Disciplina', numero: 4, subescala_template_id: 5);
+ItemTemplate.create(nombre: 'Supervisión del juego y del aprendizaje', numero: 1, subescala_template_id: 5);			# it_id: 25
+ItemTemplate.create(nombre: 'Interacción entre los niños', numero: 2, subescala_template_id: 5);									# it_id: 26
+ItemTemplate.create(nombre: 'Interacción entre el personal y los niños', numero: 3, subescala_template_id: 5);		# it_id: 27
+ItemTemplate.create(nombre: 'Disciplina', numero: 4, subescala_template_id: 5);																		# it_id: 28
 
 #Item --- Sub-escala 6, Escala ITERS-R
-ItemTemplate.create(nombre: 'Horario', numero: 1, subescala_template_id: 6);
-ItemTemplate.create(nombre: 'Juego libre', numero: 2, subescala_template_id: 6);
-ItemTemplate.create(nombre: 'Actividades de juego en grupo', numero: 3, subescala_template_id: 6);
-ItemTemplate.create(nombre: 'Previsiones para niños discapacitados', numero: 4, subescala_template_id: 6);
+ItemTemplate.create(nombre: 'Horario', numero: 1, subescala_template_id: 6);																			# it_id: 29
+ItemTemplate.create(nombre: 'Juego libre', numero: 2, subescala_template_id: 6);																	# it_id: 30
+ItemTemplate.create(nombre: 'Actividades de juego en grupo', numero: 3, subescala_template_id: 6, has_na: true);	# it_id: 31
+ItemTemplate.create(nombre: 'Previsiones para niños discapacitados', numero: 4, subescala_template_id: 6, has_na: true);	# it_id: 32
 
 #Item --- Sub-escala 7, Escala ITERS-R
-ItemTemplate.create(nombre: 'Previsiones para los padres', numero: 1, subescala_template_id: 7);
-ItemTemplate.create(nombre: 'Previsiones para las necesidades personales del personal', numero: 2, subescala_template_id: 7);
-ItemTemplate.create(nombre: 'Previsiones para las necesidades profesionales del personal', numero: 3, subescala_template_id: 7);
-ItemTemplate.create(nombre: 'Interacción y cooperación entre el personal', numero: 4, subescala_template_id: 7);
-ItemTemplate.create(nombre: 'Continuidad del personal', numero: 5, subescala_template_id: 7);
-ItemTemplate.create(nombre: 'Supervisión y evaluación del personal', numero: 6, subescala_template_id: 7);
-ItemTemplate.create(nombre: 'Oportunidades para el desarrollo profesional', numero: 7, subescala_template_id: 7);
+ItemTemplate.create(nombre: 'Previsiones para los padres', numero: 1, subescala_template_id: 7);									# it_id: 33
+ItemTemplate.create(nombre: 'Previsiones para las necesidades personales del personal', numero: 2, subescala_template_id: 7);	# it_id: 34
+ItemTemplate.create(nombre: 'Previsiones para las necesidades profesionales del personal', numero: 3, subescala_template_id: 7);	# it_id: 35
+ItemTemplate.create(nombre: 'Interacción y cooperación entre el personal', numero: 4, subescala_template_id: 7, has_na: true);	# it_id: 36
+ItemTemplate.create(nombre: 'Continuidad del personal', numero: 5, subescala_template_id: 7);											# it_id: 37
+ItemTemplate.create(nombre: 'Supervisión y evaluación del personal', numero: 6, subescala_template_id: 7, has_na: true);	# it_id: 38
+ItemTemplate.create(nombre: 'Oportunidades para el desarrollo profesional', numero: 7, subescala_template_id: 7);	# it_id: 39
 
 #Item --- Sub-escala 1, Escala ECERS-R
 ItemTemplate.create(nombre: 'Espacio Interior', numero: 1, subescala_template_id: 8);
@@ -423,7 +423,7 @@ IndicadorTemplate.create(columna: 5, fila: 2, has_na: false, item_template_id: 2
 IndicadorTemplate.create(columna: 5, fila: 3, has_na: false, item_template_id: 20, descripcion: 'Los materiales están organizados por tipo.', tooltip: 'Por ej. platos de juguetes en contenedores separados; muñecas; sombreros y carteras para disfrazarse colgados en clavijas etc..')
 IndicadorTemplate.create(columna: 5, fila: 4, has_na: true, item_template_id: 20, descripcion: 'Hay algunos muebles de tamaño infantil para los niños pequeños.', tooltip: 'Por ej. pequeño fregadero o cocina cochecito para bebés carrito de supermercado etc.')
 IndicadorTemplate.create(columna: 7, fila: 1, has_na: false, item_template_id: 20, descripcion: 'La utilería representa diversidad.', tooltip: 'Por ej. las muñecas representan varias razas y culturas; hay equipo que usan las personas de diferentes cultura y las personas con discapacidad comidas de otras culturas. ')
-IndicadorTemplate.create(columna: 7, fila: 2, has_na: false, item_template_id: 20, descripcion: 'Hay utilería para el juego dramático de los niños pequeños al aire libre o en otros espacio grandes.', tooltip: '')
+IndicadorTemplate.create(columna: 7, fila: 2, has_na: true, item_template_id: 20, descripcion: 'Hay utilería para el juego dramático de los niños pequeños al aire libre o en otros espacio grandes.', tooltip: '')	# in_id: 248
 IndicadorTemplate.create(columna: 7, fila: 3, has_na: false, item_template_id: 20, descripcion: 'El personal juega a hacer cuenta que llevan a cabo diferentes actividades domésticas.', tooltip: 'Por ej. hablar con el niño por teléfono con un teléfono de juguete; acunar y hablarle a una muñeca bebé.    /   observar este indicador como mínimo una vez durante la observación.')
 
 # Indicadores Item 7, Sub-escala 4, Escala ITERS

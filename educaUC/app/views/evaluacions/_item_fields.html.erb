@@ -9,7 +9,12 @@
 		</ul>
 		<ul class="nav pull-right">
 			<% if item.item_template.has_na %>
-				<li><h6>N/A <%= item_f.check_box :eval, {}, -1, 0 %></h6></li>
+				<li>
+					<h6>N/A <%= item_f.check_box :eval, {:data => { :confirm => "¿Está seguro que desea eliminar esta evaluación?" },
+}, -1, 0 %>
+					
+					</h6>
+				</li>
 				<li class="divider-vertical"></li>
 			<% end %>											
 			<li class="pull-right"><a href="#"><i class="icon-chevron-left"></i></a> </li>											
