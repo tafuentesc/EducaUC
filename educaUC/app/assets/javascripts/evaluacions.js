@@ -5,6 +5,9 @@
 $(function(){
 	// NOTA: Delegates no funcionan si el selector también se carga dede ajax!
 
+	// Variable que indica la cantidad de errores actuales:
+	var errorCount = 0;
+
 	// vinculamos con la función markPreviousIndicators
 	$("section.item").delegate("input.no_node","click",markPreviousIndicators);
 	//$("ajax_container").delegate("input.no_node","click",markPreviousIndicators);
@@ -163,13 +166,19 @@ $(function(){
 		$item_body = $(this).siblings('div.item_body');
 		$icon = $(this).find('ul.nav.pull-right li a i');
 		
-		// Si está expandido, lo contraemos
+		// llamamos a toggleObjectVisibility con los parámetros extraídos:
+		toggleObjectVisibility($item_body, $icon);
+	}
+	
+	function toggleObjectVisibility($item_body, $icon){
+			// Si está expandido, lo contraemos
 		if($icon.hasClass("icon-chevron-down"))
 		{
 			$icon.removeClass("icon-chevron-down");
 			$item_body.slideUp();
 			$icon.addClass("icon-chevron-left");
 		}
+		// En caso contrario, lo expandimos
 		else if($icon.hasClass("icon-chevron-left"))
 		{
 			$icon.removeClass("icon-chevron-left");
@@ -179,14 +188,54 @@ $(function(){
 	}
 	
 	function goToError(){
-		// buscamos pading del body:
+		// buscamos padding del body:
 		var offset = parseInt($('body').css('padding-top'));
 	
 		// Leemos posición del error:
 		var scrollPos = $(this).attr("data-scrollTop");
 		var scrollPos = scrollPos - offset;
 		
-		// Animamos hacia el scrollTop
+		// Obtenemos el objeto associado:
+		var errorId = $(this).data("error");
+		var $obj = $("[data-error='" + errorId + "']");
+		
+		// Vamos hacia el objeto
+		goToObject($obj, scrollPos);
+	}
+	
+	function goToObject($obj, scrollPos){
+		
+		// Revisamos si el elemento es un item. En caso de serlo, debemos
+		// ocultar todos los items previos a éste en su sub-escala y
+		// todas las sub-escalas previas:
+		if($obj.is("section.item")){
+			// 1. Ocultar hermanos previos:
+			$obj.prevAll("section.item").each(function(item_index, item){
+				// Revisamos si está expandido; si es así, lo comprimimos:
+				var $item_body = $(item).children("div.item_body");
+				var displayOption = $item_body.css("display");
+				
+				if(displayOption == "block"){
+					var $icon = $(item).find("ul.nav.pull-right li a i");
+					toggleObjectVisibility($item_body, $icon)				
+				}
+			});
+			
+			// 2. Ocultar sub-escalas anteriores: 
+			var $sub_escala = $obj.parents("div.sub-escala");
+			$sub_escala.prevAll("div.sub-escala").each(function(s_esc_index, sub){
+				// Revisamos si está expandido; si es así, lo comprimimos:
+				var $sub_body = $(sub).children("div.item_body");
+				var displayOption = $sub_body.css("display");
+				
+				if(displayOption == "block"){
+					var $icon = $(sub).find("ul.nav.pull-right li a i:first");
+					toggleObjectVisibility($sub_body, $icon)				
+				}
+			});
+		}
+		
+		// Finalmente, animamos hacia el scrollTop
 		 $('html, body').animate({
 		  scrollTop: scrollPos
 		 }, 1000);
@@ -194,12 +243,21 @@ $(function(){
 	
 	function buildError($obj, $errorUl, error)
 	{
+			// incrementamos la cantidad de errores actualmente registrados:
+			errorCount = errorCount + 1;
+	
 			// Obtenemos scroll position del objeto:
 			var objScrollTop = $obj.offset().top;
 			
 			// construimos error:
-			var errorHTML = "<li class='alert alert-error' data-scrollTop='"+objScrollTop+"'><button type='button' class='close' data-dismiss='alert'>&times;</button>"+error+"</li>"
-					
+			var errorHTML = "<li class='alert alert-error' data-scrollTop='"+ objScrollTop + 
+			"' data-error='" + errorCount + 
+			"'><button type='button' class='close' data-dismiss='alert'>&times;</button>" + error + 
+			"</li>";
+			
+			// Agregamos data-error al $obj para identificarlo más tarde:
+			$obj.attr("data-error", errorCount);
+			
 			// Agregamos el error a $errorUl:
 			$errorUl.append(errorHTML);	
 	}
@@ -227,6 +285,8 @@ $(function(){
 		
 		// limpiamos su contenido:
 		$errorUl.html('');		
+		
+		// TODO: resetar objectos con data-error y resetear errorCount
 		
 		// ----------------------------------------
 		// Comenzamos las validaciones:
