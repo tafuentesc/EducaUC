@@ -239,8 +239,12 @@ $(function(){
 		
 		// construimos error:
 		var errorHTML = "<li class='alert alert-error' data-error='" + errorId + 
-		"'><button type='button' class='close' data-dismiss='alert'>&times;</button>" + error + 
+		"'>" + error + 
 		"</li>";
+		
+		// Botón que usamos para cerrar los errores (o bien cierra y redirije, o bien no funciona
+		// al llamar a e.stopPropagation())
+		//<button type='button' class='close' data-dismiss='alert'>&times;</button>
 		
 		// Agregamos data-error al $obj para identificarlo más tarde:
 		$obj.attr("data-error", errorId);

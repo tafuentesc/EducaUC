@@ -371,7 +371,7 @@ class EvaluacionsController < ApplicationController
         string = "FORTALEZAS: ITEMES CON RESULTADOS IGUALES O SUPERIORES A 3\n\n"
         pdf.text string, :style => :bold 
         string = "En esta sección se describen los ítemes con puntajes iguales o superiores a 3. Las puntuaciones en este rango son consideradas por las Escalas de Calificación del Ambiente Educativo como prácticas apropiadas al desarrollo, por lo que se ubican en un rango de calidad que va desde \"Mínimo\" (3 puntos) a \"Excelente\" (7 puntos). Estos Ítemes son considerados como los aspectos más fuertes en esta Sala, ya que promueven y apoyan el desarrollo positivo del niño/a\n\n\n"
-        pdf.text string
+        pdf.text string, :align => :justify
         ###tabla de datos de evaluacion
         eval.escala.subescala.order("id ASC").each_with_index do |sub,index|
           bullet_item(1,sub.subescala_template.nombre+"\n\n",pdf,roman[index]+" ")
@@ -423,7 +423,7 @@ class EvaluacionsController < ApplicationController
         string = "ÁREAS DE CRECIMIENTO POTENCIAL: ITEMES CON PUNTAJES INFERIORES A 3\n\n"
         pdf.text string, :style => :bold 
         string = "Los ítemes con puntajes inferiores a 3 en las Escalas de Calificación del Ambiente Educativo reflejan prácticas inapropiadas para el desarrollo del niño/a. La sección ''áreas de crecimiento potencial'' proporciona información acerca de la razón para la puntuación de ciertos indicadores. Este detalle puede ayudar a entender cómo el evaluador llegó a la puntuación de cada ítem de esta sección.\n\n\n"
-        pdf.text string
+        pdf.text string, :align => :justify
         eval.escala.subescala.order("id ASC").each_with_index do |sub,index|
           bullet_item(1,sub.subescala_template.nombre+"\n\n",pdf,roman[index]+" ")
           written = false;
@@ -489,9 +489,9 @@ class EvaluacionsController < ApplicationController
           num = "• "
         end
         if(level == 1)
-          pdf.text num + string, :style => :bold
+          pdf.text num + string, :style => :bold, :align => :justify
         else
-          pdf.text num + string
+          pdf.text num + string, :align => :justify
         end
     end
   end

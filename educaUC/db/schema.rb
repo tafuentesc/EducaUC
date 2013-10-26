@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131025183459) do
+ActiveRecord::Schema.define(:version => 20131026064908) do
 
   create_table "centros", :force => true do |t|
     t.string   "nombre"
@@ -84,7 +84,7 @@ ActiveRecord::Schema.define(:version => 20131025183459) do
     t.integer  "eval",             :default => 0
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
-    t.string   "observaciones"
+    t.text     "observaciones"
   end
 
   create_table "objetados", :force => true do |t|
