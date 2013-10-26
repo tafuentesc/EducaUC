@@ -57,7 +57,7 @@ module EducaUC
     config.assets.enabled = true
 
     # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.0'
+    config.assets.version = '1.2'
     
     # Added to load twitter-bootstrap-rails in heroku
     config.assets.initialize_on_precompile = false

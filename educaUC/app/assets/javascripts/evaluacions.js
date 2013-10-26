@@ -12,14 +12,15 @@ $(function(){
 	$("section.item").delegate("input.no_node","click",markPreviousIndicators);
 
 	// vinculamos con la función toggleVisibility
-	$("div.sub-escala").delegate("header", "click", toggleVisibility)
+	$("div.sub-escala").delegate("header", "click", toggleVisibility);
 	$("div.sub-escala").delegate("header input[type='checkbox']", "click", function(e){
 		e.stopPropagation();
-	})
+	});
 
 	// Vinculamos submit de la escala con validar la información
-	$("form[name='evaluacion_form'] input[name='commit']").click(validateData)
+	$("form[name='evaluacion_form'] input[name='commit']").click(validateData);
 
+	// Hacemos que la escala no se pueda editar en show:
 	$("div#show-escala input").attr("disabled", "disabled");
 	
 	// Vinculamos los errores a goToError:	
@@ -79,11 +80,12 @@ $(function(){
 
 						// vinculamos con delegate:
 						$("section.item input.no_node").click(markPreviousIndicators);
-						$("div#ajax_container header").click(toggleVisibility)
+						$("div#ajax_container header").click(toggleVisibility);
 
-						$("div.sub-escala").delegate("header input[type='checkbox']", "click", function(e){
+						$("div.sub-escala header input[type='checkbox']").click(function(e){
 							e.stopPropagation();
-						})
+						});
+						
 						// vinculamos onClick de los links en los indicadores con deleteIndicador:
 						$("body").delegate("a.details_btn.btn-mini.close.active","click", deleteIndicador);
 
@@ -96,7 +98,7 @@ $(function(){
 					});
 					// Quitamos clase not_loaded:
 					$("div#escala_container").removeClass("not_loaded");
-				})								
+				});								
 			},
 			error: function()
 			{
@@ -121,8 +123,7 @@ $(function(){
 	
 		count = 0;
 		// row.length == 0 <=> row = []
-		while(!has_checked_value && row.length != 0)
-		{			
+		while(!has_checked_value && row.length != 0){			
 			// En caso de que row sea el header de la tabla, cambiamos de tabla
 			if(row.hasClass('table_header'))
 				row = row.parent().parent().prev().find('tr:last')
@@ -130,14 +131,12 @@ $(function(){
 			// NOTA: parent() es tbody => parent().parent() es table!
 			// row.children().length == 3 <=> no tiene N/A (esos los dejamos vacíos)
 			// => no funciona! (todos tienen 4 hijos)
-			if(row.is('tr'))
-			{
+			if(row.is('tr')){
 				// Si es fila, revisamos si algún valor está chequeado
 				// de ser así, se marca que se encontró un registro
 				if(row.find('input[type="radio"].si_node:checked, input[type="radio"].no_node:checked').length > 0)
 					has_checked_value = true;
-				else
-				{
+				else{
 					// En caso contrario, revisamos si tiene NA node: 
 				  input = row.find("input.na_node, input.si_node");
 				  
@@ -337,7 +336,7 @@ $(function(){
 
 			
 		// Si se cargó, verificamos que haya, al menos, un indicador seleccionado:
-		if($escalaContainer.find('div.sub-escala section.item div.item_body input[type="radio"]:checked').length == 0)
+		if($escalaContainer.find('div.sub-escala section.item div.item_body input[type="radio"]:not(.default_node):checked').length == 0)
 		{
 			// agregamos error:
 			buildError($escalaContainer,$errorUl, "La evaluación no puede estar vacía.");

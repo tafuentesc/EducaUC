@@ -151,6 +151,7 @@ class EvaluacionsController < ApplicationController
       # TITLE PAGE ####################################
       #################################################
 
+			#pdf.image "#{Rails.root.join('app', 'assets', 'images', 'logo-educauc2.png')}", :width => 150
       pdf.move_down (pdf.bounds.height/3)
       pdf.text "INFORME DE RESULTADOS", :align => :center, :size => 22, :style => :bold
       pdf.move_down 20
