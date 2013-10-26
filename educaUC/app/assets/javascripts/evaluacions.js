@@ -10,16 +10,15 @@ $(function(){
 
 	// vinculamos con la función markPreviousIndicators
 	$("section.item").delegate("input.no_node","click",markPreviousIndicators);
-	//$("ajax_container").delegate("input.no_node","click",markPreviousIndicators);
+
 	// vinculamos con la función toggleVisibility
 	$("div.sub-escala").delegate("header", "click", toggleVisibility)
 	$("div.sub-escala").delegate("header input[type='checkbox']", "click", function(e){
 		e.stopPropagation();
 	})
-	//$("ajax_container").delegate("a", "click", toggleVisibility)
-	
-	//$("form#new_evaluacion").live("submit",validateData);
-	$("form input[name='commit']").click(validateData)
+
+	// Vinculamos submit de la escala con validar la información
+	$("form[name='evaluacion_form'] input[name='commit']").click(validateData)
 
 	$("div#show-escala input").attr("disabled", "disabled");
 	
@@ -163,79 +162,63 @@ $(function(){
 	{
 		e.preventDefault();
 	
-		$item_body = $(this).siblings('div.item_body');
-		$icon = $(this).find('ul.nav.pull-right li a i');
+		// Obtenemos la sección contenedora:
+		var $obj = $(this).parent();
 		
-		// llamamos a toggleObjectVisibility con los parámetros extraídos:
-		toggleObjectVisibility($item_body, $icon);
+		// verificamos si está colapsado:
+		if($obj.hasClass("collapsed")){
+			expandSection($obj);
+		}
+		else
+			collapseSection($obj);
 	}
 	
-	function toggleObjectVisibility($item_body, $icon){
-			// Si está expandido, lo contraemos
-		if($icon.hasClass("icon-chevron-down"))
-		{
-			$icon.removeClass("icon-chevron-down");
-			$item_body.slideUp();
-			$icon.addClass("icon-chevron-left");
-		}
-		// En caso contrario, lo expandimos
-		else if($icon.hasClass("icon-chevron-left"))
-		{
-			$icon.removeClass("icon-chevron-left");
-			$item_body.slideDown();
-			$icon.addClass("icon-chevron-down");
-		}
+	function collapseSection($obj){
+		// Obtenemos su cuerpo y su ícono asociado:
+		var $body = $obj.children("div.item_body");
+		var $icon = $obj.find('ul.nav.pull-right li a i:first');
+		
+		// Colapsamos:
+		$icon.removeClass("icon-chevron-down");
+		$body.slideUp();
+		$icon.addClass("icon-chevron-left");
+		$obj.addClass("collapsed");
+	}
+	
+	function expandSection($obj){
+		// Obtenemos su cuerpo y su ícono asociado:
+		var $body = $obj.children("div.item_body");
+		var $icon = $obj.find('ul.nav.pull-right li a i:first');
+
+		// Expandimos:
+		$icon.removeClass("icon-chevron-left");
+		$body.slideDown();
+		$icon.addClass("icon-chevron-down");
+		$obj.removeClass("collapsed");	
 	}
 	
 	function goToError(){
-		// buscamos padding del body:
-		var offset = parseInt($('body').css('padding-top'));
-	
-		// Leemos posición del error:
-		var scrollPos = $(this).attr("data-scrollTop");
-		var scrollPos = scrollPos - offset;
-		
 		// Obtenemos el objeto associado:
 		var errorId = $(this).data("error");
-		var $obj = $("[data-error='" + errorId + "']");
+		var $obj = $("[data-error='" + errorId + "']:not(li)");
 		
 		// Vamos hacia el objeto
-		goToObject($obj, scrollPos);
+		goToObject($obj);
 	}
 	
-	function goToObject($obj, scrollPos){
+	function goToObject($obj){
 		
 		// Revisamos si el elemento es un item. En caso de serlo, debemos
-		// ocultar todos los items previos a éste en su sub-escala y
-		// todas las sub-escalas previas:
+		// expandirlo así como también a su sub-escala asociada:
 		if($obj.is("section.item")){
-			// 1. Ocultar hermanos previos:
-			$obj.prevAll("section.item").each(function(item_index, item){
-				// Revisamos si está expandido; si es así, lo comprimimos:
-				var $item_body = $(item).children("div.item_body");
-				var displayOption = $item_body.css("display");
-				
-				if(displayOption == "block"){
-					var $icon = $(item).find("ul.nav.pull-right li a i");
-					toggleObjectVisibility($item_body, $icon)				
-				}
-			});
-			
-			// 2. Ocultar sub-escalas anteriores: 
-			var $sub_escala = $obj.parents("div.sub-escala");
-			$sub_escala.prevAll("div.sub-escala").each(function(s_esc_index, sub){
-				// Revisamos si está expandido; si es así, lo comprimimos:
-				var $sub_body = $(sub).children("div.item_body");
-				var displayOption = $sub_body.css("display");
-				
-				if(displayOption == "block"){
-					var $icon = $(sub).find("ul.nav.pull-right li a i:first");
-					toggleObjectVisibility($sub_body, $icon)				
-				}
-			});
+			expandSection($obj);
+			expandSection($obj.parents("div.sub-escala"));
 		}
 		
-		// Finalmente, animamos hacia el scrollTop
+		// Finalmente obtenemos su scrollTop y animamos hacia éste: 
+		var offset = parseInt($('body').css('padding-top'));	// padding del body:
+		var scrollPos = $obj.offset().top - 2*offset;
+
 		 $('html, body').animate({
 		  scrollTop: scrollPos
 		 }, 1000);
@@ -243,23 +226,27 @@ $(function(){
 	
 	function buildError($obj, $errorUl, error)
 	{
+		// revisamos si el objeto ya tenía un error asociado. De ser así, usamos este mismo identificador,
+		// en caso contrario debemos generar un nuevo id:
+		var errorId = $obj.data("error");
+		
+		if(errorId == undefined){
 			// incrementamos la cantidad de errores actualmente registrados:
 			errorCount = errorCount + 1;
+			errorId = errorCount;
+		}
 	
-			// Obtenemos scroll position del objeto:
-			var objScrollTop = $obj.offset().top;
-			
-			// construimos error:
-			var errorHTML = "<li class='alert alert-error' data-scrollTop='"+ objScrollTop + 
-			"' data-error='" + errorCount + 
-			"'><button type='button' class='close' data-dismiss='alert'>&times;</button>" + error + 
-			"</li>";
-			
-			// Agregamos data-error al $obj para identificarlo más tarde:
-			$obj.attr("data-error", errorCount);
-			
-			// Agregamos el error a $errorUl:
-			$errorUl.append(errorHTML);	
+		
+		// construimos error:
+		var errorHTML = "<li class='alert alert-error' data-error='" + errorId + 
+		"'><button type='button' class='close' data-dismiss='alert'>&times;</button>" + error + 
+		"</li>";
+		
+		// Agregamos data-error al $obj para identificarlo más tarde:
+		$obj.attr("data-error", errorId);
+		
+		// Agregamos el error a $errorUl:
+		$errorUl.append(errorHTML);	
 	}
 	
 	// chequea si el valor de $obj es '' o null; en caso de serlo, agrega el
