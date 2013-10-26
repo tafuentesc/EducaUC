@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131024003856) do
+ActiveRecord::Schema.define(:version => 20131025183459) do
 
   create_table "centros", :force => true do |t|
     t.string   "nombre"
@@ -81,9 +81,9 @@ ActiveRecord::Schema.define(:version => 20131024003856) do
   create_table "items", :force => true do |t|
     t.integer  "item_template_id"
     t.integer  "subescala_id"
-    t.integer  "eval"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.integer  "eval",             :default => 0
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
     t.string   "observaciones"
   end
 
@@ -113,9 +113,9 @@ ActiveRecord::Schema.define(:version => 20131024003856) do
   create_table "subescalas", :force => true do |t|
     t.integer  "subescala_template_id"
     t.integer  "escala_id"
-    t.integer  "eval"
-    t.datetime "created_at",            :null => false
-    t.datetime "updated_at",            :null => false
+    t.integer  "eval",                  :default => 0
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
   end
 
   create_table "users", :force => true do |t|

@@ -247,13 +247,13 @@ class EvaluacionsController < ApplicationController
       evaluaciones = centro.evaluacions.order("nombre_sala ASC")
       notas = Array.new(7,0)	# arreglo para almacenar las notas
       nCount = Array.new(7,0) # arreglo para almacenar la cant de notas > 0 para determinada subescala
-      sub_escalas = []
+      sub_escalas = Array.new(7, "")
       evaluaciones.each do |eval|
         eval.escala.subescala.order("id ASC").each_with_index do |sub,index|
-          sub_escalas.push sub.subescala_template.nombre
-          notas[index] += sub.eval.to_i
+          sub_escalas[index] = sub.subescala_template.nombre
+          notas[index] += sub.eval
           
-          if(sub.eval.to_i > 0)
+          if(sub.eval > 0)
           	nCount[index] += 1
           end
         end

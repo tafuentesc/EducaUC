@@ -13,7 +13,6 @@ $(function(){
 	$("div.sub-escala").delegate("header input[type='checkbox']", "click", function(e){
 		e.stopPropagation();
 	})
-	
 	//$("ajax_container").delegate("a", "click", toggleVisibility)
 	
 	//$("form#new_evaluacion").live("submit",validateData);
@@ -80,6 +79,15 @@ $(function(){
 						$("section.item input.no_node").click(markPreviousIndicators);
 						$("div#ajax_container header").click(toggleVisibility)
 
+						$("div.sub-escala").delegate("header input[type='checkbox']", "click", function(e){
+							e.stopPropagation();
+						})
+						// vinculamos onClick de los links en los indicadores con deleteIndicador:
+						$("body").delegate("a.details_btn.btn-mini.close.active","click", deleteIndicador);
+
+						// delegate para mostrar la cruz de limpiar registro:
+						$("section.item").delegate("input[type='radio']:not(.default_node)","click",showClearIndicador);
+
 						// Actualizamos el valor de previous_option
 						previous_option = id;
 
@@ -97,13 +105,10 @@ $(function(){
 		});
 	
 	});
-	
+
 	// Función para rellenar con "SI" los espacios vacíos	
 	function markPreviousIndicators(){
-		// Obtenemos el valor del radio_button (si es la primera columna, true; caso contrario, false)
-		value = $(this).attr("value")=="true";
-		
-		// en este caso, this es el radio button => td es el padre... tr es el padre del padre!
+		// En este caso, this es el radio button => td es el padre... tr es el padre del padre!
 		row = $(this).parent().parent();
 
 		// no nos interesa partir de éste, sino de su antecesor:
@@ -113,7 +118,6 @@ $(function(){
 		has_checked_value = false;
 	
 		count = 0;
-	
 		// row.length == 0 <=> row = []
 		while(!has_checked_value && row.length != 0)
 		{			
@@ -128,7 +132,7 @@ $(function(){
 			{
 				// Si es fila, revisamos si algún valor está chequeado
 				// de ser así, se marca que se encontró un registro
-				if(row.find('input.si_node:checked, input.no_node:checked').length > 0)
+				if(row.find('input[type="radio"].si_node:checked, input[type="radio"].no_node:checked').length > 0)
 					has_checked_value = true;
 				else
 				{
@@ -137,14 +141,17 @@ $(function(){
 				  
 				  // En caso de haber sólo uno, implica que no tiene NA node,
 				  // por lo que procedemos a marcarlo:
-				  if(input.length == 1)
+				  if(input.length == 1){
 				  	input.prop('checked',true);
-
+						
+						// Mostramos la cruz para limpiar el indicador:
+						$clear_indicador = input.parents("tr").find("a.clearIndicador");
+						$clear_indicador.addClass("active");
+					}
 				  // Si hay más de uno => hay N/A => no hacemos nada
 				  count = count + 1;				  
 				}
 			}
-
 			row = row.prev();
 		}
 	};
@@ -298,8 +305,6 @@ $(function(){
 				$first_no =	$(item).find('div.item_body input[type="radio"].no_node:checked').first();
 				si_count = $(item).find('div.item_body input[type="radio"].si_node:checked').length;
 				
-				//alert("#no's= " + $first_no.length + ", #si's= " + si_count);
-				
 				// si está vacío, debemos ver si tiene algún 'sí'; en ese caso, levantamos un error:
 				if($first_no.length == 0)
 				{
@@ -310,10 +315,26 @@ $(function(){
 						itemOk = false;
 					}
 				}
+				// En caso contrario, procedemos a evaluar el resto:
 				else
 				{
-					// En caso contrario, procedemos a evaluar el resto:
 					$(item).addClass("blank_entry");				
+
+					// Primero revisamos que todos los elementos de la columna estén marcados:
+					// ==================================================================
+					$first_no.parents("tr").nextAll("tr").each(function(tr_index, tr_entry){
+						// revisamos si la entrada está vacía. En ese caso, señalamos el error:
+						if($(tr_entry).find("input[type='radio']:not(.default_node):checked").length == 0){
+							$(tr_entry).addClass("blank_entry");
+							escalaOk = false;
+							itemOk = false;
+						}
+					});
+					
+					if(!itemOk){
+						buildError($(item),$errorUl,"Ítem inválido: No todos los indicadores después del primer 'no' están marcados.");
+						itemOk = true;	// reseteamos el flag de errores en el item.
+					}
 
 					// Ahora, revisamos que todos los elementos antes de estén marcados:
 					// ==================================================================
@@ -366,7 +387,7 @@ $(function(){
 		
 		return escalaOk;
 	}
-	
+		
 	// función para mostrar la 'X' que permite limpiar el indicador:
 	function showClearIndicador(){
 		// buscamos el link oculto que permite 'limpiar' el indicador:

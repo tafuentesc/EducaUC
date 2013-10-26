@@ -11,6 +11,11 @@ class Item < ActiveRecord::Base
   # método que revisa que la nota asignada a un determinado ítem sea correcta.
   # por ahora lo usaremos para validar que si el ítem puede ser NA o no.
   def check_eval
+  	# si es nil lo dejamos => el default se setea una vez guardado:
+  	if(self.eval == nil)
+  		return true
+  	end
+  
   	if(self.eval <= 7 && self.eval >= 0)
   		return true
   	elsif(self.item_template.has_na && self.eval == -1)
